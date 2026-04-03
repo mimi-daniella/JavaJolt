@@ -1,0 +1,42 @@
+<div th:fragment="cards">
+  <div class="mt-[40px] flex flex-wrap justify-center items-center gap-4 md:w-[900px] md:justify-between md:m-auto md:mt-[42px]">
+    
+    <!-- Quizzes -->
+    <div class="flex flex-col items-center justify-center 
+                border-b border-black pb-4 
+                md:border-b-0 md:border-r md:pr-10 
+                transition-transform duration-300 ease-in-out hover:scale-105">
+      <div class="flex flex-row items-center justify-center">
+        <img th:src="@{/images/quiz.png}" alt="Quiz doodle" class="w-40 h-40">
+      </div>
+      <p class="mt-1 text-md">Interactive quizzes</p>
+      <p class="text-[var(--light-text)] text-center text-sm leading-tight">Enjoy fun <br/> challenging quizzes</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="flex flex-col items-center justify-center 
+                border-b border-black pb-4 
+                md:border-b-0 md:border-r md:pr-10 
+                transition-transform duration-300 ease-in-out hover:scale-105">
+      <div class="flex flex-row items-center justify-center">
+        <img th:src="@{/images/graph.png}" alt="Graph doodle" class="w-40 h-40 object-cover mx-auto">
+      </div>
+      <p class="mt-1 text-md">Track your progress</p>
+      <p class="text-[var(--light-text)] text-center text-sm leading-tight">Watch your knowledge<br/> grow</p>
+    </div>
+
+    <!-- Earn -->
+    <div class="flex flex-col items-center justify-center 
+                border-b border-black pb-4 
+                md:border-b-0 md:pr-0 
+                transition-transform duration-300 ease-in-out hover:scale-105 
+                last:md:border-r-0">
+      <div class="flex flex-row items-center justify-center">
+        <img th:src="@{/images/earn.png}" alt="Study doodle" class="w-40 h-40">
+      </div>
+      <p class="mt-1 text-md">Learn & Earn</p>
+      <p class="text-[var(--light-text)] text-center text-sm leading-tight">Gain rewards as you<br/> play</p>
+    </div>
+
+  </div>
+</div>
