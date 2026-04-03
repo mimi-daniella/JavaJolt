@@ -1,0 +1,38 @@
+<!-- fragments/backToTop.html -->
+<div th:fragment="backToTop">
+  <button id="back-to-top"
+          class="fixed bottom-6 right-6 hidden 
+                 bg-[var(--light-brown)] text-black font-semibold 
+                 px-4 py-2 rounded-full shadow-md 
+                 transition-all duration-300 ease-in-out 
+                 hover:scale-105 hover:bg-[var(--yellow)] hover:text-[var(--espresso)]">
+    ↑ Back to Top
+  </button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const backToTopBtn = document.getElementById('back-to-top');
+
+      // Show button when scrolled down
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {   // appears sooner
+          backToTopBtn.classList.remove('hidden');
+        } else {
+          backToTopBtn.classList.add('hidden');
+        }
+      });
+
+      // Smooth scroll + gamified effect
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // XP popup effect
+        const xp = document.createElement('span');
+        xp.textContent = "+10 XP!";
+        xp.className = "absolute bottom-16 right-6 bg-[var(--yellow)] text-black px-2 py-1 rounded text-xs shadow animate-bounce";
+        document.body.appendChild(xp);
+        setTimeout(() => xp.remove(), 1000);
+      });
+    });
+  </script>
+</div>

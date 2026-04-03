@@ -7,11 +7,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title th:text="${title}">JavaJolt</title>
 
-	<!--tailwindcss -->
-	
+	<link rel="icon" th:href="@{/images/cup2.png}" type="imge/svg+xml">
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Kavoon&display=swap" rel="stylesheet">
 	<link rel="stylesheet" th:href="@{/css/index.css}">
 	<th:block th:replace="${extra_css} ?: ~{}"></th:block>
 	<th:block th:replace="${js_file} ?: ~{}"></th:block>
 
+	<!--tailwindcss -->
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>

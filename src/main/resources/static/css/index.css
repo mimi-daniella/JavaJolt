@@ -1,0 +1,17 @@
+:root{
+	--espresso: #B23918;   /* dark brown */
+	--light-brown: #D45A3A;      /* lighter brown */
+	--yellow: #FFCF22;  /*dark yellow*/ 
+	--light-text:#4D3E3E;   /* Lighter black text */    
+
+}
+
+body {             
+	font-family: "Jua", sans-serif;
+	color:black;
+	background-color: #F5F5DC;
+}
+
+.kavoon{
+	font-family: "Kavoon", serif;
+}
