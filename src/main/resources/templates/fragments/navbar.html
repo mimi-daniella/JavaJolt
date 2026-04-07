@@ -1,5 +1,5 @@
 <nav th:fragment="navbar">
-  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 mt-2">
+  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 mt-2" data-aos="fade-in">
     <div class="flex h-16 items-center justify-between">
       <!-- Logo -->
       <a class="block" th:href="@{/}">
@@ -10,13 +10,13 @@
       <div class="hidden md:flex md:items-center md:gap-12">
         <nav aria-label="Global">
           <ul class="flex items-center gap-9 text-xl">
-            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">about</a></li>
+            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/about}">about</a></li>
             <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">quizzes</a></li>
-            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">contact us</a></li>
-            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">login</a></li>
+            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/contact}">contact us</a></li>
+            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/auth/login}">login</a></li>
           </ul>
         </nav>
-        <a class="rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] shadow-lg" href="#">register</a>
+        <a class="rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] shadow-lg" th:href="@{/auth/register}">register</a>
       </div>
 
       <!-- Mobile hamburger -->
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <!-- Mobile slide-in men -->
+  <!-- Mobile slide-in menu -->
   <div id="mobile-menu" 
        style="background-color: #F5F5DC;" 
        class="fixed top-0 right-0 w-64 h-[85vh] border-l-4 border-b-none border-[var(--espresso)] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out md:hidden z-50 torn-paper">
@@ -45,14 +45,14 @@
     </div>
 
     <ul class="flex flex-col gap-6 p-6 text-lg">
-      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">about</a></li>
+      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/about}">about</a></li>
       <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">quizzes</a></li>
-      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">contact us</a></li>
-      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" href="#">login</a></li>
+      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/contact}">contact us</a></li>
+      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[4px] after:bottom-[-5px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/auth/login}">login</a></li>
     </ul>
 
     <div class="p-6">
-      <a class="mobile-nav rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] w-full block text-center" href="#">register</a>
+      <a class="mobile-nav rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] w-full block text-center" th:href="@{/auth/register}">register</a>
     </div>
   </div>
 

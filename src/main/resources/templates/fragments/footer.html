@@ -1,46 +1,59 @@
-<footer th:fragment="footer" class="bg-[var(--espresso)] text-white mt-10">
-  <div class="max-w-screen-xl mx-auto px-6 py-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+<footer th:fragment="footer" class="mt-20 relative overflow-hidden">
+
+  <div class="absolute inset-0 bg-gradient-to-br from-[#432e29] via-[#2d1e1a] to-[var(--espresso)] -z-10"></div>
+
+
+  <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+  <div class="max-w-screen-xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-white">
     
     <!-- Logo / Brand -->
-    <div class="flex flex-col items-center md:items-start">
-      <img th:src="@{/images/fullLogo.png}" alt="Logo" class="w-28 mb-3">
-      <p class="text-sm text-black leading-tight text-center md:text-left">
+    <div class="flex flex-col items-center md:items-start space-y-4">
+      <img th:src="@{/images/fullLogo.png}" alt="Logo" class="w-32 brightness-110 drop-shadow-lg">
+      <p class="text-sm text-white/60 leading-relaxed text-center md:text-left max-w-xs">
         Empowering learning through fun quizzes, progress tracking, and rewards.
       </p>
     </div>
 
     <!-- Quick Links -->
     <div class="flex flex-col items-center md:items-start">
-      <h3 class="text-lg font-semibold mb-2 text-[var(--yellow)]">Quick Links</h3>
-      <ul class="space-y-1 text-sm">
-        <li><a href="#" class="hover:text-[var(--yellow)] transition">About</a></li>
-        <li><a href="#" class="hover:text-[var(--yellow)] transition">Quizzes</a></li>
-        <li><a href="#" class="hover:text-[var(--yellow)] transition">Contact Us</a></li>
-        <li><a href="#" class="hover:text-[var(--yellow)] transition">Login</a></li>
+      <h3 class="text-lg font-bold mb-4 text-[var(--yellow)] tracking-wide">Quick Links</h3>
+      <ul class="space-y-2 text-sm text-white/70 font-medium">
+        <li><a th:href="@{/public/about}" class="hover:text-[var(--yellow)] transition-all flex items-center gap-2 group">
+          <span class="w-1 h-1 bg-[var(--yellow)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>About</a>
+        </li>
+        <li><a href="#" class="hover:text-[var(--yellow)] transition-all flex items-center gap-2 group">
+          <span class="w-1 h-1 bg-[var(--yellow)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>Quizzes</a>
+        </li>
+        <li><a th:href="@{/public/contact}" class="hover:text-[var(--yellow)] transition-all flex items-center gap-2 group">
+          <span class="w-1 h-1 bg-[var(--yellow)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>Contact Us</a>
+        </li>
       </ul>
     </div>
 
     <!-- Social / Newsletter -->
     <div class="flex flex-col items-center md:items-start">
-      <h3 class="text-lg font-semibold mb-2 text-[var(--yellow)]">Stay Connected</h3>
-      <div class="flex gap-3 mb-3 text-sm">
-        <a href="#" class="hover:text-[var(--light-brown)] transition">Facebook</a>
-        <a href="#" class="hover:text-[var(--light-brown)] transition">Twitter</a>
-        <a href="#" class="hover:text-[var(--light-brown)] transition">Instagram</a>
+      <h3 class="text-lg font-bold mb-4 text-[var(--yellow)] tracking-wide">Stay Connected</h3>
+      <div class="flex gap-5 mb-6 text-sm">
+        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Facebook</a>
+        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Twitter</a>
+        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Instagram</a>
       </div>
       
       <form class="flex flex-col sm:flex-row w-full gap-2">
         <input type="email" placeholder="Your email"
-               class="flex-1 px-3 py-2 rounded-sm text-black focus:outline-none">
-        <button class="bg-[var(--light-brown)] px-4 py-2 rounded-sm text-black font-medium hover:bg-[var(--espresso)] hover:text-white transition">
+               class="flex-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--light-brown)] transition-all">
+        <button class="bg-[var(--light-brown)] px-6 py-2 rounded-xl font-bold hover:bg-[var(--yellow)] transition-all shadow-md">
           Subscribe
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Bottom bar -->
-  <div class="border-t border-white/20 mt-6 py-3 text-center text-xs text-black">
-    © 2026 YourSite. All rights reserved.
+
+  <div class="border-t border-white/5 py-8 text-center">
+    <p class="text-[10px] uppercase tracking-[0.2em] text-white/30 italic">
+      © 2026 JavaJolt • v1.0 
+    </p>
   </div>
 </footer>
