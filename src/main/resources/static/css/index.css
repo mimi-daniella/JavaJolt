@@ -2,8 +2,7 @@
 	--espresso: #B23918;   /* dark brown */
 	--light-brown: #D45A3A;      /* lighter brown */
 	--yellow: #FFCF22;  /*dark yellow*/ 
-	--light-text:#4D3E3E;   /* Lighter black text */    
-
+	--light-text:#4D3E3E;   /* Lighter black text */  
 }
 
 body {             
@@ -15,3 +14,11 @@ body {
 .kavoon{
 	font-family: "Kavoon", serif;
 }
+
+.comic-panel {
+  border: 4px solid var(--espresso);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 var(--light-brown);
+  padding: 1rem;
+  background-color: var(--cream); /* optional accent */
+} 

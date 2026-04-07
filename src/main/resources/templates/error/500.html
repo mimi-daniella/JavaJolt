@@ -1,11 +1,35 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Access Denied</title>
-</head>
-<body>
-    <h1>500 - Internal Server Error</h1>
-    <p>Something is wrong in the app</p>
-    <a th:href="@{/}">Back to Home</a>
+<div th:replace="fragments/head :: head"></div>
+
+<body class="bg-gradient-to-b from-[var(--yellow)] to-white 
+             flex flex-col items-center justify-center min-h-screen text-center px-6">
+
+ 
+  <img th:src="@{/images/500-doodle.png}" alt="Lost doodle"
+       class=" w-40 md:w-56 opacity-80">
+
+
+  <h1 class="text-6xl md:text-7xl font-bold kavoon text-white [-webkit-text-stroke:1px_black]">
+    500
+  </h1>
+
+ 
+  <p class="mt-4 text-lg md:text-2xl text-[var(--espresso)] font-semibold">
+    Internal Server Error
+  </p>
+  <p class="text-md md:text-lg text-[var(--light-text)] mt-2">
+    The server encountered an unexpected error.<br/> Don’t worry, our team is on it.
+  </p>
+
+
+  <div class="mt-8 flex flex-col sm:flex-row gap-6 text-lg md:text-xl kavoon">
+    <a th:href="@{/}" 
+       class="text-[var(--espresso)] hover:border-b-2 hover:border-[var(--espresso)] transition">
+    Go Back Home
+    </a>
+    <a th:href="@{/public/contact}" 
+       class="text-[var(--light-brown)] hover:border-b-2 hover:border-[var(--light-brown)] transition">
+      Contact Support
+    </a>
+  </div>
+
 </body>
-</html>
