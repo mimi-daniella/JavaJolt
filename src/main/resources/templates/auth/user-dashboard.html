@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body class="min-h-screen bg-gradient-to-br from-[var(--espresso)]/5 to-[var(--light-brown)]/5">
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<main class="flex-grow pt-20 pb-12 px-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Welcome Header -->
+    <div class="text-center mb-12" data-aos="fade-down">
+      <h1 class="text-4xl font-bold text-[var(--espresso)] mb-4">Welcome to Your Dashboard!</h1>
+      <p class="text-xl text-[var(--light-brown)]">Ready to test your knowledge and climb the leaderboard?</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid md:grid-cols-3 gap-8 mb-12" data-aos="fade-up">
+      <!-- Total Quizzes -->
+      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg hover:-translate-y-1 transition-all">
+        <div class="flex items-center justify-center mb-4">
+          <div class="w-16 h-16 bg-gradient-to-r from-[var(--espresso)] to-[var(--light-brown)] rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-2xl font-bold text-[var(--espresso)] text-center mb-2">0</h3>
+        <p class="text-gray-600 text-center font-bold">Quizzes Completed</p>
+      </div>
+
+      <!-- Average Score -->
+      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--light-brown)] shadow-lg hover:-translate-y-1 transition-all">
+        <div class="flex items-center justify-center mb-4">
+          <div class="w-16 h-16 bg-gradient-to-r from-[var(--light-brown)] to-[var(--espresso)] rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-2xl font-bold text-[var(--espresso)] text-center mb-2">0%</h3>
+        <p class="text-gray-600 text-center font-bold">Average Score</p>
+      </div>
+
+      <!-- Best Score -->
+      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg hover:-translate-y-1 transition-all">
+        <div class="flex items-center justify-center mb-4">
+          <div class="w-16 h-16 bg-gradient-to-r from-[var(--espresso)] to-[var(--light-brown)] rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-2xl font-bold text-[var(--espresso)] text-center mb-2">0</h3>
+        <p class="text-gray-600 text-center font-bold">Best Score</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12" data-aos="fade-up" data-aos-delay="200">
+      <!-- Start Quiz -->
+      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg hover:-translate-y-1 transition-all">
+        <div class="text-center">
+          <div class="w-20 h-20 bg-gradient-to-r from-[var(--espresso)] to-[var(--light-brown)] rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[var(--espresso)] mb-4">Start a Quiz</h3>
+          <p class="text-gray-600 mb-6">Challenge yourself with our exciting questions across different topics and difficulty levels.</p>
+          <button class="bg-[var(--espresso)] text-white font-bold py-3 px-8 rounded-xl border-b-4 border-[#352521] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all">
+            Begin Quiz
+          </button>
+        </div>
+      </div>
+
+      <!-- View History -->
+      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--light-brown)] shadow-lg hover:-translate-y-1 transition-all">
+        <div class="text-center">
+          <div class="w-20 h-20 bg-gradient-to-r from-[var(--light-brown)] to-[var(--espresso)] rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[var(--espresso)] mb-4">Quiz History</h3>
+          <p class="text-gray-600 mb-6">Review your past performances and track your improvement over time.</p>
+          <button class="bg-[var(--light-brown)] text-white font-bold py-3 px-8 rounded-xl border-b-4 border-[#8B4513] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all">
+            View History
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg" data-aos="fade-up" data-aos-delay="400">
+      <h3 class="text-2xl font-bold text-[var(--espresso)] mb-6">Recent Activity</h3>
+      <div class="text-center py-12">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <p class="text-gray-500 font-bold">No recent activity yet</p>
+        <p class="text-gray-400 text-sm mt-2">Complete your first quiz to see your activity here!</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 600 });
+</script>
+</body>
+<script>AOS.init({ once: true, duration: 600 });</script>
+</body>
+</html>
