@@ -1,47 +1,54 @@
 package com.daniella.security;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Service;
-
 import com.daniella.entity.User;
 import com.daniella.enums.Role;
 import com.daniella.repository.UserRepository;
-import com.daniella.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.UUID;
 
 @Service
-public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+public class CustomOAuth2UserService extends OidcUserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
-
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oauth2User = super.loadUser(userRequest);
+    @Transactional
+    public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
+        // Fetch user from Google
+        OidcUser oidcUser = super.loadUser(userRequest);
 
-        String email = oauth2User.getAttribute("email");
-        String name = oauth2User.getAttribute("name");
-
-        Optional<User> existingUser = userRepository.findByEmail(email);
-        if (existingUser.isEmpty()) {
-            // Create new user
+        String email = oidcUser.getEmail();
+        
+        // 1. Find or Register User
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
             User newUser = new User();
-            newUser.setFirstName(name != null ? name : email);
-            newUser.setLastName("");
             newUser.setEmail(email);
-            newUser.setRole(Role.ROLE_CLIENT); // Default to CLIENT role
-            newUser.setPassword(""); // OAuth2 users don't have passwords
-            userRepository.save(newUser);
-        }
+            // Get names from Google OIDC claims
+            newUser.setFirstName(oidcUser.getGivenName() != null ? oidcUser.getGivenName() : "Google");
+            newUser.setLastName(oidcUser.getFamilyName() != null ? oidcUser.getFamilyName() : "User");
+            newUser.setRole(Role.ROLE_CLIENT);
+            // Set random password to satisfy @NotBlank constraint
+            newUser.setPassword(UUID.randomUUID().toString());
+            return userRepository.save(newUser);
+        });
 
-        return oauth2User;
+        // 2. Return OidcUser with authorities and email as principal name
+        return new DefaultOidcUser(
+            Collections.singleton(new SimpleGrantedAuthority(user.getRole().name())),
+            oidcUser.getIdToken(),
+            oidcUser.getUserInfo(),
+            "email"
+        );
     }
 }
