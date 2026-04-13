@@ -188,3 +188,8 @@ If you encounter issues:
 2. Verify all environment variables are set
 3. Ensure all prerequisites are installed
 4. Check Google Cloud Console configuration
+
+##Daniella
+- Added env variables
+- Changed port from smtp(587) to ssl(465)
+- Added mimemessage helper for customizing email ui

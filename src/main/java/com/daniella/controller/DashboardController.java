@@ -25,7 +25,7 @@ public class DashboardController {
         }
         UserResponseDTO user = userService.getByEmail(principal.getName());
         model.addAttribute("user", user);
-        return "auth/user-dashboard";
+        return "user/dashboard";
     }
 
     @GetMapping("/admin/dashboard")
@@ -35,6 +35,6 @@ public class DashboardController {
         }
         UserResponseDTO user = userService.getByEmail(principal.getName());
         model.addAttribute("user", user);
-        return "auth/admin-dashboard";
+        return "admin/dashboard";
     }
 }
