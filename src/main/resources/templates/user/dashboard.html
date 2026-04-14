@@ -1,114 +1,117 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head"></head>
-<body class="min-h-screen bg-gradient-to-br from-[var(--espresso)]/5 to-[var(--light-brown)]/5">
-<div th:replace="fragments/navbar :: navbar"></div>
+<head th:replace="fragments/head :: head">
+    
+</head>
+<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
+	
+	<nav>
+		<img th:src="@{/images/fullLogo.png}" alt="Logo" class="w-32 brightness-110 drop-shadow-lg ml-4 mt-2"/>
+	</nav>
+	
+<main class="max-w-6xl mx-auto pt-24 pb-12 px-6">
+    <!-- Hero / Start Section (Reference: CodeChef Practice Header) -->
+    <section class="mb-16 text-center md:text-left flex flex-col md:flex-row items-center justify-between p-10 rounded-2xl border-4 border-[var(--espresso)] shadow-[8px_8px_0px_var(--yellow)] bg-white" data-aos="fade-down">
+        <div class="md:max-w-2xl">
+            <h1 class="kavoon text-5xl text-[var(--espresso)] mb-4 tracking-wide">JAVA QUEST</h1>
+            <p class="text-xl mb-8 opacity-90 leading-relaxed">
+                Master Java from Syntax to Collections. Solve bite-sized challenges and level up your coding skills in a comic-style adventure.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#levels" class="bg-[var(--yellow)] text-[var(--espresso)] font-bold py-4 px-10 rounded-xl border-4 border-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase tracking-wider">
+                    Start Learning
+                </a>
+                <button class="bg-white text-[var(--espresso)] font-bold py-4 px-10 rounded-xl border-4 border-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase tracking-wider">
+                    View Leaderboard
+                </button>
+            </div>
+        </div>
+        <!-- Decorative Icon/Mascot Placeholder -->
+        <div class="hidden md:block w-48 h-48 bg-[var(--yellow)] border-4 border-[var(--espresso)] rounded-full flex items-center justify-center shadow-[8px_8px_0px_var(--light-brown)]">
+            <span class="text-6xl">☕</span>
+        </div>
+    </section>
 
-<main class="flex-grow pt-20 pb-12 px-6">
-  <div class="max-w-6xl mx-auto">
-    <!-- Welcome Header -->
-    <div class="text-center mb-12" data-aos="fade-down">
-      <h1 class="text-4xl font-bold text-[var(--espresso)] mb-4">Welcome to Your Dashboard!</h1>
-      <p class="text-xl text-[var(--light-brown)]">Ready to test your knowledge and climb the leaderboard?</p>
+    <!-- Stats Grid (Serious but Stylized) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16" data-aos="fade-up">
+        <div class="bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--light-brown)]">
+            <p class="text-sm uppercase font-bold text-[var(--light-brown)] mb-1">Rank</p>
+            <h3 class="text-3xl font-bold text-[var(--espresso)]">Beginner</h3>
+        </div>
+        <div class="bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--light-brown)]">
+            <p class="text-sm uppercase font-bold text-[var(--light-brown)] mb-1">Accuracy</p>
+            <h3 class="text-3xl font-bold text-[var(--espresso)]">85%</h3>
+        </div>
+        <div class="bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--light-brown)]">
+            <p class="text-sm uppercase font-bold text-[var(--light-brown)] mb-1">Points</p>
+            <h3 class="text-3xl font-bold text-[var(--espresso)]">1,240</h3>
+        </div>
     </div>
 
-    <!-- Stats Cards -->
-    <div class="grid md:grid-cols-3 gap-8 mb-12" data-aos="fade-up">
-      <!-- Total Quizzes -->
-      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg hover:-translate-y-1 transition-all">
-        <div class="flex items-center justify-center mb-4">
-          <div class="w-16 h-16 bg-gradient-to-r from-[var(--espresso)] to-[var(--light-brown)] rounded-full flex items-center justify-center">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold text-[var(--espresso)] text-center mb-2">0</h3>
-        <p class="text-gray-600 text-center font-bold">Quizzes Completed</p>
-      </div>
+    <!-- Levels Section (CodeChef Practice Style) -->
+    <div id="levels" class="mb-12" data-aos="fade-up">
+        <h2 class="kavoon text-3xl text-[var(--espresso)] mb-8 flex items-center">
+            <span class="bg-[var(--yellow)] px-4 py-1 border-4 border-[var(--espresso)] mr-4 shadow-[4px_4px_0px_var(--espresso)]">LEVELS</span>
+            CHOOSE YOUR CHALLENGE
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Level Card Item -->
+            <div th:each="level : ${levels}" class="group bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--espresso)] hover:shadow-[10px_10px_0px_var(--yellow)] transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h4 class="text-2xl font-bold text-[var(--espresso)] mb-1" th:text="${level.title}">Basic Syntax</h4>
+                        <p class="text-sm text-gray-500" th:text="${level.topicCount + ' Topics • ' + level.difficulty}">12 Topics • Easy</p>
+                    </div>
+                    <span class="bg-[var(--light-brown)] text-white text-xs px-3 py-1 rounded-full border-2 border-[var(--espresso)]" th:text="${level.completionStatus}">IN PROGRESS</span>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-100 border-2 border-[var(--espresso)] h-4 rounded-full overflow-hidden mb-6">
+                    <div class="bg-[var(--yellow)] h-full border-r-2 border-[var(--espresso)]" th:style="'width:' + ${level.progress} + '%'"></div>
+                </div>
 
-      <!-- Average Score -->
-      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--light-brown)] shadow-lg hover:-translate-y-1 transition-all">
-        <div class="flex items-center justify-center mb-4">
-          <div class="w-16 h-16 bg-gradient-to-r from-[var(--light-brown)] to-[var(--espresso)] rounded-full flex items-center justify-center">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-            </svg>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold text-[var(--espresso)] text-center mb-2">0%</h3>
-        <p class="text-gray-600 text-center font-bold">Average Score</p>
-      </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-[var(--light-text)]" th:text="${level.progress + '% Complete'}">45% Complete</span>
+                    <a th:href="@{/quiz/{id}(id=${level.id})}" class="font-bold text-[var(--espresso)] hover:underline flex items-center">
+                        CONTINUE QUEST 
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </div>
 
-      <!-- Best Score -->
-      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg hover:-translate-y-1 transition-all">
-        <div class="flex items-center justify-center mb-4">
-          <div class="w-16 h-16 bg-gradient-to-r from-[var(--espresso)] to-[var(--light-brown)] rounded-full flex items-center justify-center">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-            </svg>
-          </div>
+            <!-- Static Placeholder for 'Upcoming' -->
+            <div class="bg-gray-50 p-6 rounded-xl border-4 border-dashed border-gray-300 flex items-center justify-center opacity-60">
+                <p class="text-xl font-bold text-gray-400">Advanced Multithreading (Locked)</p>
+            </div>
         </div>
-        <h3 class="text-2xl font-bold text-[var(--espresso)] text-center mb-2">0</h3>
-        <p class="text-gray-600 text-center font-bold">Best Score</p>
-      </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="grid md:grid-cols-2 gap-8 mb-12" data-aos="fade-up" data-aos-delay="200">
-      <!-- Start Quiz -->
-      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg hover:-translate-y-1 transition-all">
-        <div class="text-center">
-          <div class="w-20 h-20 bg-gradient-to-r from-[var(--espresso)] to-[var(--light-brown)] rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-[var(--espresso)] mb-4">Start a Quiz</h3>
-          <p class="text-gray-600 mb-6">Challenge yourself with our exciting questions across different topics and difficulty levels.</p>
-          <button class="bg-[var(--espresso)] text-white font-bold py-3 px-8 rounded-xl border-b-4 border-[#352521] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all">
-            Begin Quiz
-          </button>
+    <!-- Recent Activity Table (Serious/Clean Layout) -->
+    <div class="bg-white rounded-2xl border-4 border-[var(--espresso)] shadow-[8px_8px_0px_var(--light-brown)] overflow-hidden" data-aos="fade-up">
+        <div class="bg-[var(--espresso)] p-4 border-b-4 border-[var(--espresso)]">
+            <h3 class="kavoon text-xl text-white">RECENT ACTIVITY</h3>
         </div>
-      </div>
-
-      <!-- View History -->
-      <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--light-brown)] shadow-lg hover:-translate-y-1 transition-all">
-        <div class="text-center">
-          <div class="w-20 h-20 bg-gradient-to-r from-[var(--light-brown)] to-[var(--espresso)] rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-[var(--espresso)] mb-4">Quiz History</h3>
-          <p class="text-gray-600 mb-6">Review your past performances and track your improvement over time.</p>
-          <button class="bg-[var(--light-brown)] text-white font-bold py-3 px-8 rounded-xl border-b-4 border-[#8B4513] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all">
-            View History
-          </button>
+        <div class="p-6">
+            <div th:if="${#lists.isEmpty(activities)}" class="text-center py-10">
+                <div class="text-5xl mb-4">💤</div>
+                <p class="text-gray-500 font-bold uppercase tracking-widest">No recent quests completed</p>
+                <p class="text-sm text-gray-400">Your results will appear here once you finish a level.</p>
+            </div>
+            
+            <table th:unless="${#lists.isEmpty(activities)}" class="w-full text-left">
+                <!-- Standard table structure would go here -->
+            </table>
         </div>
-      </div>
     </div>
 
-    <!-- Recent Activity -->
-    <div class="bg-white rounded-2xl p-8 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-lg" data-aos="fade-up" data-aos-delay="400">
-      <h3 class="text-2xl font-bold text-[var(--espresso)] mb-6">Recent Activity</h3>
-      <div class="text-center py-12">
-        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-        <p class="text-gray-500 font-bold">No recent activity yet</p>
-        <p class="text-gray-400 text-sm mt-2">Complete your first quiz to see your activity here!</p>
-      </div>
-    </div>
-  </div>
 </main>
 
-<div th:replace="fragments/footer :: footer"></div>
+
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init({ once: true, duration: 600 });
 </script>
-</body>
-<script>AOS.init({ once: true, duration: 600 });</script>
 </body>
 </html>

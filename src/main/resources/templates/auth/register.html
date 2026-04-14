@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head"></head>
-<body class="min-h-screen flex flex-col">
-  
+
+<body class="min-h-screen relative">
+<!-- Background image -->
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+     th:style="'background-image: url(' + @{/images/signupbg.jpeg} + ')'"></div>
+<!-- Gradient overlay -->
+<div class="absolute inset-0 bg-gradient-to-br from-black/40 to-[var(--espresso)]/40"></div>
+
+<div th:replace="~{fragments/backButton :: backButton}"></div>
 
   <main class="flex-grow flex items-center justify-center px-6 pt-6 pb-12">
     <div class="max-w-md w-full">
@@ -95,7 +102,6 @@
     </div>
   </main>
 
- <div th:replace="fragments/footer :: footer"></div>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@3/dist/js.cookie.min.js"></script>
