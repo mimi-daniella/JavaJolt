@@ -30,7 +30,7 @@ public class CustomOAuth2UserService extends OidcUserService {
 
         String email = oidcUser.getEmail();
         
-        // 1. Find or Register User
+        // Find user
         User user = userRepository.findByEmail(email).orElseGet(() -> {
             User newUser = new User();
             newUser.setEmail(email);
@@ -43,7 +43,7 @@ public class CustomOAuth2UserService extends OidcUserService {
             return userRepository.save(newUser);
         });
 
-        // 2. Return OidcUser with authorities and email as principal name
+        //  Return OidcUser with authorities and email as principal name
         return new DefaultOidcUser(
             Collections.singleton(new SimpleGrantedAuthority(user.getRole().name())),
             oidcUser.getIdToken(),

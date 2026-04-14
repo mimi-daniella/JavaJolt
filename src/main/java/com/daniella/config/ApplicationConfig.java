@@ -41,7 +41,7 @@ public class ApplicationConfig {
 	        .oauth2Login(oauth2 -> oauth2
 	            .loginPage("/auth/login")
 	            .userInfoEndpoint(userInfo -> userInfo
-	                // IMPORTANT: Use oidcUserService for Google
+	     
 	                .oidcUserService(oauth2UserService)
 	            )
 	            .successHandler(successHandler)
