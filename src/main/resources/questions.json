@@ -1,0 +1,3301 @@
+[
+  {
+    "questionText": "What is JVM?",
+    "optionA": "Java Virtual Machine",
+    "optionB": "Java Variable Method",
+    "optionC": "Java Visual Model",
+    "optionD": "Java Verified Machine",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "JVM"
+  },
+  
+  {
+    "questionText": "Which keyword is used to define a class in Java?",
+    "optionA": "define",
+    "optionB": "class",
+    "optionC": "object",
+    "optionD": "struct",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Java Basics & Syntax"
+  },
+  
+  {
+    "questionText": "Which data type is used to store whole numbers?",
+    "optionA": "float",
+    "optionB": "double",
+    "optionC": "int",
+    "optionD": "char",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Data Types & Variables"
+  },
+  
+  {
+    "questionText": "Which operator is used for addition?",
+    "optionA": "*",
+    "optionB": "+",
+    "optionC": "-",
+    "optionD": "/",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Operators"
+  },
+  
+  {
+    "questionText": "What is the default value of boolean in Java?",
+    "optionA": "true",
+    "optionB": "false",
+    "optionC": "null",
+    "optionD": "0",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Data Types & Variables"
+  },
+  
+  {
+    "questionText": "Which statement is used for decision making?",
+    "optionA": "for",
+    "optionB": "while",
+    "optionC": "if",
+    "optionD": "do",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Control Statements"
+  },
+  
+  {
+    "questionText": "Which method is entry point of Java program?",
+    "optionA": "start()",
+    "optionB": "main()",
+    "optionC": "run()",
+    "optionD": "init()",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Core Java"
+  },
+  
+  {
+    "questionText": "Which keyword is used to inherit a class?",
+    "optionA": "implement",
+    "optionB": "extends",
+    "optionC": "inherit",
+    "optionD": "super",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Inheritance"
+  },
+  
+  {
+    "questionText": "Which class is used to take input from user?",
+    "optionA": "Input",
+    "optionB": "Scanner",
+    "optionC": "Reader",
+    "optionD": "Console",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Input & Output"
+  },
+  
+  {
+    "questionText": "Which of these is not a primitive type?",
+    "optionA": "int",
+    "optionB": "float",
+    "optionC": "String",
+    "optionD": "boolean",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Data Types & Variables"
+  },
+  
+  {
+    "questionText": "Which symbol is used to end a statement in Java?",
+    "optionA": ".",
+    "optionB": ";",
+    "optionC": ":",
+    "optionD": ",",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Java Basics & Syntax"
+  },
+  
+  {
+    "questionText": "Which loop executes at least once?",
+    "optionA": "for",
+    "optionB": "while",
+    "optionC": "do-while",
+    "optionD": "foreach",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Control Statements"
+  },
+  
+  {
+    "questionText": "Which keyword is used to define a constant?",
+    "optionA": "static",
+    "optionB": "final",
+    "optionC": "const",
+    "optionD": "constant",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Java Basics & Syntax"
+  },
+  
+  {
+    "questionText": "What is the default value of int?",
+    "optionA": "1",
+    "optionB": "0",
+    "optionC": "null",
+    "optionD": "undefined",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Data Types & Variables"
+  },
+  
+  {
+    "questionText": "Which class belongs to java.lang package?",
+    "optionA": "Scanner",
+    "optionB": "String",
+    "optionC": "File",
+    "optionD": "List",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Core Java"
+  },
+  
+  {
+    "questionText": "Which keyword is used to create an object?",
+    "optionA": "create",
+    "optionB": "new",
+    "optionC": "object",
+    "optionD": "make",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Classes & Objects"
+  },
+  
+  {
+    "questionText": "Which method prints output to console?",
+    "optionA": "print()",
+    "optionB": "println()",
+    "optionC": "System.out.println()",
+    "optionD": "display()",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Input & Output"
+  },
+  
+  {
+    "questionText": "Which type of variable is declared inside a method?",
+    "optionA": "Instance",
+    "optionB": "Static",
+    "optionC": "Local",
+    "optionD": "Global",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Variables"
+  },
+  
+  {
+    "questionText": "Which keyword is used to exit a loop?",
+    "optionA": "stop",
+    "optionB": "break",
+    "optionC": "exit",
+    "optionD": "continue",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Control Statements"
+  },
+  
+  {
+    "questionText": "Which operator compares two values?",
+    "optionA": "=",
+    "optionB": "==",
+    "optionC": "!=",
+    "optionD": "Both B and C",
+    "correctOption": "D",
+    "difficulty": "EASY",
+    "category": "Operators"
+  },
+  
+  {
+    "questionText": "Which keyword is used to handle exceptions?",
+    "optionA": "try",
+    "optionB": "catch",
+    "optionC": "finally",
+    "optionD": "All of the above",
+    "correctOption": "D",
+    "difficulty": "EASY",
+    "category": "Exception Handling"
+  },
+  
+  {
+    "questionText": "Which class is parent of all exceptions?",
+    "optionA": "Throwable",
+    "optionB": "Exception",
+    "optionC": "Error",
+    "optionD": "Object",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Exception Handling"
+  },
+  
+  {
+    "questionText": "Which package is used for file handling?",
+    "optionA": "java.io",
+    "optionB": "java.file",
+    "optionC": "java.util",
+    "optionD": "java.stream",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "File Handling (I/O)"
+  },
+  
+  {
+    "questionText": "Which class writes data to file?",
+    "optionA": "FileReader",
+    "optionB": "FileWriter",
+    "optionC": "Scanner",
+    "optionD": "InputStream",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "File Handling (I/O)"
+  },
+  
+  {
+    "questionText": "Which interface is used for serialization?",
+    "optionA": "Serializable",
+    "optionB": "Cloneable",
+    "optionC": "Comparable",
+    "optionD": "Runnable",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Serialization & Deserialization"
+  },
+  
+  {
+    "questionText": "Which keyword is used to create generic class?",
+    "optionA": "T",
+    "optionB": "<T>",
+    "optionC": "generic",
+    "optionD": "type",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Generics"
+  },
+  
+  {
+    "questionText": "Which class is used to read file?",
+    "optionA": "FileReader",
+    "optionB": "FileWriter",
+    "optionC": "FileInput",
+    "optionD": "FileOutput",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "File Handling (I/O)"
+  },
+  
+  {
+    "questionText": "Which annotation is used to override method?",
+    "optionA": "@Override",
+    "optionB": "@Overload",
+    "optionC": "@Method",
+    "optionD": "@Super",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Annotations"
+  },
+  
+  {
+    "questionText": "Which keyword throws exception manually?",
+    "optionA": "throw",
+    "optionB": "throws",
+    "optionC": "try",
+    "optionD": "catch",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Exception Handling"
+  },
+  
+  {
+    "questionText": "Which block always executes?",
+    "optionA": "try",
+    "optionB": "catch",
+    "optionC": "finally",
+    "optionD": "throw",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Exception Handling"
+  },
+  
+  {
+    "questionText": "Which package contains Stream API?",
+    "optionA": "java.util.stream",
+    "optionB": "java.stream",
+    "optionC": "java.io.stream",
+    "optionD": "java.lang.stream",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Streams API"
+  },
+  
+  {
+    "questionText": "Which keyword is used to define an interface?",
+    "optionA": "interface",
+    "optionB": "implements",
+    "optionC": "extends",
+    "optionD": "abstract",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Interfaces"
+  },
+  
+  {
+    "questionText": "Which class is used to connect to database in JDBC?",
+    "optionA": "DriverManager",
+    "optionB": "ConnectionManager",
+    "optionC": "DBConnector",
+    "optionD": "Database",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "JDBC"
+  },
+  
+  {
+    "questionText": "Which annotation marks a Spring component?",
+    "optionA": "@Bean",
+    "optionB": "@Component",
+    "optionC": "@Autowired",
+    "optionD": "@Service",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Frameworks (Spring)"
+  },
+  
+  {
+    "questionText": "Which method is used to convert stream to list?",
+    "optionA": "collect()",
+    "optionB": "map()",
+    "optionC": "filter()",
+    "optionD": "reduce()",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Streams API"
+  },
+  
+  {
+    "questionText": "Which functional interface has one abstract method?",
+    "optionA": "Runnable",
+    "optionB": "Functional Interface",
+    "optionC": "Comparable",
+    "optionD": "All of the above",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Functional Interfaces"
+  },
+  
+  {
+    "questionText": "Which keyword is used for lambda expression?",
+    "optionA": "->",
+    "optionB": "=>",
+    "optionC": "::",
+    "optionD": "lambda",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Lambda Expressions"
+  },
+  
+  {
+    "questionText": "Which class is used to execute SQL query?",
+    "optionA": "Statement",
+    "optionB": "Query",
+    "optionC": "Executor",
+    "optionD": "Command",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "JDBC"
+  },
+  
+  {
+    "questionText": "Which annotation is used for dependency injection?",
+    "optionA": "@Inject",
+    "optionB": "@Autowired",
+    "optionC": "@Service",
+    "optionD": "@Controller",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Frameworks (Spring)"
+  },
+  
+  {
+    "questionText": "Which method filters elements in Stream?",
+    "optionA": "map()",
+    "optionB": "filter()",
+    "optionC": "reduce()",
+    "optionD": "collect()",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Streams API"
+  },
+  
+  {
+    "questionText": "Which class is used to create a thread?",
+    "optionA": "Thread",
+    "optionB": "Runnable",
+    "optionC": "Executor",
+    "optionD": "Process",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Multithreading"
+  },
+  
+  {
+    "questionText": "Which method starts a thread?",
+    "optionA": "run()",
+    "optionB": "start()",
+    "optionC": "execute()",
+    "optionD": "begin()",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Multithreading"
+  },
+  
+  {
+    "questionText": "Which collection allows duplicate elements?",
+    "optionA": "Set",
+    "optionB": "Map",
+    "optionC": "List",
+    "optionD": "Queue",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "List"
+  },
+  
+  {
+    "questionText": "Which design pattern ensures only one instance?",
+    "optionA": "Factory",
+    "optionB": "Singleton",
+    "optionC": "Builder",
+    "optionD": "Observer",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Design Patterns"
+  },
+  
+  {
+    "questionText": "Which class implements Runnable?",
+    "optionA": "Thread",
+    "optionB": "Object",
+    "optionC": "Executor",
+    "optionD": "Future",
+    "correctOption": "A",
+    "difficulty": "EASY",
+    "category": "Runnable & Callable"
+  },
+  
+  {
+    "questionText": "Which keyword is used for synchronization?",
+    "optionA": "lock",
+    "optionB": "sync",
+    "optionC": "synchronized",
+    "optionD": "thread",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Synchronization"
+  },
+  
+  {
+    "questionText": "Which interface represents a task returning result?",
+    "optionA": "Runnable",
+    "optionB": "Callable",
+    "optionC": "Thread",
+    "optionD": "Future",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Runnable & Callable"
+  },
+  
+  {
+    "questionText": "Which class provides thread pool?",
+    "optionA": "Thread",
+    "optionB": "ExecutorService",
+    "optionC": "Runnable",
+    "optionD": "Callable",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Concurrency Utilities"
+  },
+  
+  {
+    "questionText": "Which collection is key-value based?",
+    "optionA": "List",
+    "optionB": "Set",
+    "optionC": "Map",
+    "optionD": "Queue",
+    "correctOption": "C",
+    "difficulty": "EASY",
+    "category": "Map"
+  },
+  
+  {
+    "questionText": "Which class is used for locking mechanism?",
+    "optionA": "Lock",
+    "optionB": "ReentrantLock",
+    "optionC": "ThreadLock",
+    "optionD": "SyncLock",
+    "correctOption": "B",
+    "difficulty": "EASY",
+    "category": "Concurrency Utilities"
+  },
+  
+    {
+      "questionText": "Which package is used for networking in Java?",
+      "optionA": "java.net",
+      "optionB": "java.io",
+      "optionC": "java.stream",
+      "optionD": "java.network",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Networking"
+    },
+
+    {
+      "questionText": "Which class represents IP address?",
+      "optionA": "InetAddress",
+      "optionB": "Socket",
+      "optionC": "URL",
+      "optionD": "Server",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Networking"
+    },
+
+    {
+      "questionText": "Which class is used to create server socket?",
+      "optionA": "Socket",
+      "optionB": "ServerSocket",
+      "optionC": "DatagramSocket",
+      "optionD": "URL",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Networking"
+    },
+
+    {
+      "questionText": "Which protocol is used for web communication?",
+      "optionA": "FTP",
+      "optionB": "HTTP",
+      "optionC": "TCP",
+      "optionD": "UDP",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Networking"
+    },
+
+    {
+      "questionText": "Which technology runs on server side?",
+      "optionA": "Servlet",
+      "optionB": "HTML",
+      "optionC": "CSS",
+      "optionD": "JavaScript",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Servlets"
+    },
+
+    {
+      "questionText": "Which file is used in Maven?",
+      "optionA": "build.gradle",
+      "optionB": "pom.xml",
+      "optionC": "config.xml",
+      "optionD": "settings.xml",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Build Tools (Maven)"
+    },
+
+    {
+      "questionText": "Which tool is used for logging?",
+      "optionA": "JUnit",
+      "optionB": "Log4j",
+      "optionC": "Maven",
+      "optionD": "Hibernate",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Logging"
+    },
+
+    {
+      "questionText": "Which framework is used for testing?",
+      "optionA": "Spring",
+      "optionB": "Hibernate",
+      "optionC": "JUnit",
+      "optionD": "Log4j",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Testing"
+    },
+
+    {
+      "questionText": "Which method handles GET request in servlet?",
+      "optionA": "doPost()",
+      "optionB": "doGet()",
+      "optionC": "service()",
+      "optionD": "request()",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Servlets"
+    },
+
+    {
+      "questionText": "Which architecture is used in microservices?",
+      "optionA": "Monolithic",
+      "optionB": "Layered",
+      "optionC": "Distributed",
+      "optionD": "Centralized",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Microservices"
+    },
+
+    {
+      "questionText": "Which JVM area stores method metadata?",
+      "optionA": "Heap",
+      "optionB": "Stack",
+      "optionC": "Method Area",
+      "optionD": "Cache",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "JVM & Memory Management"
+    },
+
+    {
+      "questionText": "Which class provides async programming support in Java 8+?",
+      "optionA": "Thread",
+      "optionB": "Future",
+      "optionC": "CompletableFuture",
+      "optionD": "Runnable",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Concurrency Utilities"
+    },
+
+    {
+      "questionText": "Which design pattern allows interchangeable behavior?",
+      "optionA": "Singleton",
+      "optionB": "Strategy",
+      "optionC": "Builder",
+      "optionD": "Factory",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Design Patterns"
+    },
+
+    {
+      "questionText": "Which pattern is used for event handling?",
+      "optionA": "Factory",
+      "optionB": "Observer",
+      "optionC": "Singleton",
+      "optionD": "Adapter",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Design Patterns"
+    },
+
+    {
+      "questionText": "Which method creates CompletableFuture?",
+      "optionA": "runAsync()",
+      "optionB": "startAsync()",
+      "optionC": "async()",
+      "optionD": "executeAsync()",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Concurrency Utilities"
+    },
+
+    {
+      "questionText": "Which GC is designed for low-latency compared to older collectors?",
+      "optionA": "Serial GC",
+      "optionB": "Parallel GC",
+      "optionC": "G1 GC",
+      "optionD": "Mark-Sweep",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Garbage Collection"
+    },
+
+    {
+      "questionText": "Which method is used to combine streams?",
+      "optionA": "concat()",
+      "optionB": "merge()",
+      "optionC": "combine()",
+      "optionD": "join()",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Streams API"
+    },
+
+    {
+      "questionText": "Which class is used for thread-safe list?",
+      "optionA": "ArrayList",
+      "optionB": "LinkedList",
+      "optionC": "CopyOnWriteArrayList",
+      "optionD": "Vector",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Concurrency Utilities"
+    },
+
+    {
+      "questionText": "Which pattern builds complex objects?",
+      "optionA": "Factory",
+      "optionB": "Builder",
+      "optionC": "Singleton",
+      "optionD": "Observer",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Design Patterns"
+    },
+
+    {
+      "questionText": "Which keyword ensures visibility between threads?",
+      "optionA": "synchronized",
+      "optionB": "volatile",
+      "optionC": "static",
+      "optionD": "final",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Multithreading"
+    },
+
+    {
+      "questionText": "Which class is immutable?",
+      "optionA": "String",
+      "optionB": "StringBuilder",
+      "optionC": "StringBuffer",
+      "optionD": "ArrayList",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Strings"
+    },
+
+    {
+      "questionText": "Which method converts String to int?",
+      "optionA": "Integer.valueOf()",
+      "optionB": "Integer.parseInt()",
+      "optionC": "Both A and B",
+      "optionD": "parse()",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Wrapper Classes"
+    },
+
+    {
+      "questionText": "Which collection is sorted?",
+      "optionA": "HashSet",
+      "optionB": "TreeSet",
+      "optionC": "ArrayList",
+      "optionD": "LinkedList",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Set"
+    },
+
+    {
+      "questionText": "Which keyword defines abstract class?",
+      "optionA": "abstract",
+      "optionB": "interface",
+      "optionC": "class",
+      "optionD": "final",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Abstraction"
+    },
+
+    {
+      "questionText": "Which operator checks instance?",
+      "optionA": "instanceof",
+      "optionB": "is",
+      "optionC": "check",
+      "optionD": "type",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Core Java"
+    },
+
+    {
+      "questionText": "Which method returns string length?",
+      "optionA": "size()",
+      "optionB": "length()",
+      "optionC": "count()",
+      "optionD": "getLength()",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Strings"
+    },
+
+    {
+      "questionText": "Which class handles dates (Java 8)?",
+      "optionA": "Date",
+      "optionB": "Calendar",
+      "optionC": "LocalDate",
+      "optionD": "Time",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Date & Time API"
+    },
+
+    {
+      "questionText": "Which class is resizable array?",
+      "optionA": "Array",
+      "optionB": "ArrayList",
+      "optionC": "LinkedList",
+      "optionD": "Vector",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "List"
+    },
+
+    {
+      "questionText": "Which keyword creates enum?",
+      "optionA": "enum",
+      "optionB": "constant",
+      "optionC": "static",
+      "optionD": "final",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Enums"
+    },
+
+    {
+      "questionText": "Which method sorts list?",
+      "optionA": "sort()",
+      "optionB": "arrange()",
+      "optionC": "order()",
+      "optionD": "filter()",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Collections Framework"
+    },
+
+    {
+      "questionText": "Which keyword is used to define a package in Java?",
+      "optionA": "package",
+      "optionB": "import",
+      "optionC": "include",
+      "optionD": "namespace",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Packages"
+    },
+
+    {
+      "questionText": "Which keyword is used to import a package?",
+      "optionA": "package",
+      "optionB": "import",
+      "optionC": "include",
+      "optionD": "using",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Packages"
+    },
+
+    {
+      "questionText": "Which method is used to get current time in milliseconds?",
+      "optionA": "System.currentTimeMillis()",
+      "optionB": "Time.now()",
+      "optionC": "Date.time()",
+      "optionD": "Clock.now()",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Core Java"
+    },
+
+    {
+      "questionText": "Which wrapper class is used for int?",
+      "optionA": "Double",
+      "optionB": "Integer",
+      "optionC": "Float",
+      "optionD": "Long",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Wrapper Classes"
+    },
+
+    {
+      "questionText": "Which keyword is used to stop execution of method?",
+      "optionA": "break",
+      "optionB": "stop",
+      "optionC": "return",
+      "optionD": "exit",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "Methods"
+    },
+
+    {
+      "questionText": "Which method is used to compare strings?",
+      "optionA": "compare()",
+      "optionB": "equals()",
+      "optionC": "==",
+      "optionD": "match()",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Strings"
+    },
+
+    {
+      "questionText": "Which class is used for mutable strings?",
+      "optionA": "String",
+      "optionB": "StringBuilder",
+      "optionC": "Character",
+      "optionD": "Object",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "StringBuilder & StringBuffer"
+    },
+
+    {
+      "questionText": "Which class is thread-safe for strings?",
+      "optionA": "String",
+      "optionB": "StringBuilder",
+      "optionC": "StringBuffer",
+      "optionD": "CharBuffer",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "StringBuilder & StringBuffer"
+    },
+
+    {
+      "questionText": "Which keyword is used to define static variable?",
+      "optionA": "static",
+      "optionB": "final",
+      "optionC": "const",
+      "optionD": "global",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Static Keyword"
+    },
+
+    {
+      "questionText": "Which method is used to get size of list?",
+      "optionA": "length()",
+      "optionB": "size()",
+      "optionC": "count()",
+      "optionD": "getSize()",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Collections Framework"
+    },
+
+    {
+      "questionText": "Which interface represents list structure?",
+      "optionA": "Set",
+      "optionB": "Map",
+      "optionC": "List",
+      "optionD": "Queue",
+      "correctOption": "C",
+      "difficulty": "EASY",
+      "category": "List"
+    },
+
+    {
+      "questionText": "Which collection does not allow null?",
+      "optionA": "HashMap",
+      "optionB": "TreeMap",
+      "optionC": "HashSet",
+      "optionD": "ArrayList",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Map"
+    },
+
+    {
+      "questionText": "Which class is used to handle exceptions manually?",
+      "optionA": "Exception",
+      "optionB": "Error",
+      "optionC": "Throwable",
+      "optionD": "RuntimeException",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Exception Handling"
+    },
+
+    {
+      "questionText": "Which method pauses thread execution?",
+      "optionA": "sleep()",
+      "optionB": "wait()",
+      "optionC": "pause()",
+      "optionD": "stop()",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Multithreading"
+    },
+
+    {
+      "questionText": "Which keyword is used to inherit interface?",
+      "optionA": "extends",
+      "optionB": "implements",
+      "optionC": "inherit",
+      "optionD": "use",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Interfaces"
+    },
+
+    {
+      "questionText": "Which method removes element from list?",
+      "optionA": "delete()",
+      "optionB": "remove()",
+      "optionC": "pop()",
+      "optionD": "clearOne()",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "List"
+    },
+
+    {
+      "questionText": "Which keyword defines abstract method?",
+      "optionA": "abstract",
+      "optionB": "interface",
+      "optionC": "static",
+      "optionD": "final",
+      "correctOption": "A",
+      "difficulty": "EASY",
+      "category": "Abstraction"
+    },
+
+    {
+      "questionText": "Which class is used for key-value iteration?",
+      "optionA": "Iterator",
+      "optionB": "Map.Entry",
+      "optionC": "Enumeration",
+      "optionD": "Scanner",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Map"
+    },
+
+    {
+      "questionText": "Which method checks if string is empty?",
+      "optionA": "isNull()",
+      "optionB": "isEmpty()",
+      "optionC": "empty()",
+      "optionD": "checkEmpty()",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Strings"
+    },
+
+    {
+      "questionText": "Which keyword is used to define constant variable?",
+      "optionA": "static",
+      "optionB": "final",
+      "optionC": "const",
+      "optionD": "fixed",
+      "correctOption": "B",
+      "difficulty": "EASY",
+      "category": "Java Basics & Syntax"
+    },
+
+	  {
+	    "questionText": "What is method overloading?",
+	    "optionA": "Same method name with different parameters",
+	    "optionB": "Same method name with same return type but different class",
+	    "optionC": "Different method names",
+	    "optionD": "Method inside method",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "Polymorphism"
+	  },
+	  
+	  {
+	    "questionText": "Which access modifier provides widest access?",
+	    "optionA": "private",
+	    "optionB": "protected",
+	    "optionC": "public",
+	    "optionD": "default",
+	    "correctOption": "C",
+	    "difficulty": "MEDIUM",
+	    "category": "Access Modifiers"
+	  },
+	  
+	  {
+	    "questionText": "What does 'this' keyword refer to?",
+	    "optionA": "Parent class",
+	    "optionB": "Current object",
+	    "optionC": "Static variable",
+	    "optionD": "Method",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "this & super Keywords"
+	  },
+	  
+	  {
+	    "questionText": "Which collection does not allow duplicates?",
+	    "optionA": "List",
+	    "optionB": "Set",
+	    "optionC": "Map",
+	    "optionD": "Queue",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Set"
+	  },
+	  
+	  {
+	    "questionText": "Which collection class is synchronized in Java?",
+	    "optionA": "ArrayList",
+	    "optionB": "LinkedList",
+	    "optionC": "Vector",
+	    "optionD": "HashSet",
+	    "correctOption": "C",
+	    "difficulty": "MEDIUM",
+	    "category": "Collections Framework"
+	  },
+	  
+	  {
+	    "questionText": "What is encapsulation?",
+	    "optionA": "Binding data and methods",
+	    "optionB": "Inheritance",
+	    "optionC": "Abstraction",
+	    "optionD": "Polymorphism",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "Encapsulation"
+	  },
+	  
+	  {
+	    "questionText": "Which interface is used for lambda expressions?",
+	    "optionA": "Marker",
+	    "optionB": "Functional Interface",
+	    "optionC": "Serializable",
+	    "optionD": "Cloneable",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Functional Interfaces"
+	  },
+	  
+	  {
+	    "questionText": "Which exception is checked?",
+	    "optionA": "NullPointerException",
+	    "optionB": "ArithmeticException",
+	    "optionC": "ArrayIndexOutOfBoundsException",
+	    "optionD": "IOException",
+	    "correctOption": "D",
+	    "difficulty": "MEDIUM",
+	    "category": "Exception Handling"
+	  },
+	  
+	  {
+	    "questionText": "What is the size of int in Java?",
+	    "optionA": "2 bytes",
+	    "optionB": "4 bytes",
+	    "optionC": "8 bytes",
+	    "optionD": "Depends on system",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Data Types & Variables"
+	  },
+	  
+	  {
+	    "questionText": "Which API is used for database connection?",
+	    "optionA": "JDBC",
+	    "optionB": "JDK",
+	    "optionC": "JVM",
+	    "optionD": "JRE",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "JDBC"
+	  },
+	  
+	  {
+	    "questionText": "What will be the output? int x = 10; System.out.println(x++);",
+	    "optionA": "Compilation error",
+	    "optionB": "11",
+	    "optionC": "9",
+	    "optionD": "10",
+	    "correctOption": "D",
+	    "difficulty": "MEDIUM",
+	    "category": "Operators"
+	  },
+	  
+	  {
+	    "questionText": "What is constructor?",
+	    "optionA": "Method with return type",
+	    "optionB": "Method used to initialize object",
+	    "optionC": "Static method",
+	    "optionD": "Abstract method",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Constructors"
+	  },
+	  
+	  {
+	    "questionText": "Which keyword prevents method overriding?",
+	    "optionA": "static",
+	    "optionB": "final",
+	    "optionC": "private",
+	    "optionD": "abstract",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Polymorphism"
+	  },
+	  
+	  {
+	    "questionText": "What is the output? String s = \"Java\"; System.out.println(s.length());",
+	    "optionA": "3",
+	    "optionB": "4",
+	    "optionC": "5",
+	    "optionD": "Error",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Strings"
+	  },
+	  
+	  {
+	    "questionText": "Which collection maintains insertion order?",
+	    "optionA": "HashSet",
+	    "optionB": "TreeSet",
+	    "optionC": "LinkedHashSet",
+	    "optionD": "HashMap",
+	    "correctOption": "C",
+	    "difficulty": "MEDIUM",
+	    "category": "Set"
+	  },
+	  
+	  {
+	    "questionText": "What is method overriding?",
+	    "optionA": "Same method in same class",
+	    "optionB": "Same method in subclass",
+	    "optionC": "Different method names",
+	    "optionD": "Static method",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Polymorphism"
+	  },
+	  
+	  {
+	    "questionText": "Which keyword is used for exception handling?",
+	    "optionA": "try",
+	    "optionB": "catch",
+	    "optionC": "finally",
+	    "optionD": "All of the above",
+	    "correctOption": "D",
+	    "difficulty": "MEDIUM",
+	    "category": "Exception Handling"
+	  },
+	  
+	  {
+	    "questionText": "“Which keyword is used for exception handling?",
+	    "optionA": "Compile error",
+	    "optionB": "Runtime termination",
+	    "optionC": "No effect",
+	    "optionD": "Warning",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Exception Handling"
+	  },
+	  
+	  {
+	    "questionText": "Which method is commonly used in InputStream to read data?",
+	    "optionA": "read()",
+	    "optionB": "open()",
+	    "optionC": "get()",
+	    "optionD": "scan()",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "File Handling (I/O)"
+	  },
+	  
+	  {
+	    "questionText": "Which class is used for dynamic arrays?",
+	    "optionA": "Array",
+	    "optionB": "ArrayList",
+	    "optionC": "LinkedList",
+	    "optionD": "Vector",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "List"
+	  },
+	  
+	  {
+	    "questionText": "What is the output? List<Integer> list = Arrays.asList(1,2,3,4); list.stream().filter(x -> x % 2 == 0).forEach(System.out::print);",
+	    "optionA": "1234",
+	    "optionB": "24",
+	    "optionC": "13",
+	    "optionD": "Error",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Streams API"
+	  },
+	  
+	  {
+	    "questionText": "What does map() do in Stream?",
+	    "optionA": "Filters elements",
+	    "optionB": "Transforms elements",
+	    "optionC": "Sorts elements",
+	    "optionD": "Collects elements",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Streams API"
+	  },
+	  
+	  {
+	    "questionText": "Which method reduces stream to single value?",
+	    "optionA": "collect()",
+	    "optionB": "reduce()",
+	    "optionC": "map()",
+	    "optionD": "filter()",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Streams API"
+	  },
+	  
+	  {
+	    "questionText": "What is Optional used for?",
+	    "optionA": "Threading",
+	    "optionB": "Null safety",
+	    "optionC": "Exception handling",
+	    "optionD": "Serialization",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Optional Class"
+	  },
+	  
+	  {
+	    "questionText": "What is the output? Optional.ofNullable(null).orElse(\"Default\");",
+	    "optionA": "null",
+	    "optionB": "Default",
+	    "optionC": "Error",
+	    "optionD": "Exception",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Optional Class"
+	  },
+	  
+	  {
+	    "questionText": "Which JDBC interface represents connection?",
+	    "optionA": "Driver",
+	    "optionB": "Connection",
+	    "optionC": "Statement",
+	    "optionD": "ResultSet",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "JDBC"
+	  },
+	  
+	  {
+	    "questionText": "What is @RestController in Spring?",
+	    "optionA": "UI controller",
+	    "optionB": "Database controller",
+	    "optionC": "Combination of @Controller + @ResponseBody",
+	    "optionD": "Service class",
+	    "correctOption": "C",
+	    "difficulty": "MEDIUM",
+	    "category": "Frameworks (Spring)"
+	  },
+	  
+	  {
+	    "questionText": "Which method executes SELECT query?",
+	    "optionA": "executeUpdate()",
+	    "optionB": "execute()",
+	    "optionC": "executeQuery()",
+	    "optionD": "runQuery()",
+	    "correctOption": "C",
+	    "difficulty": "MEDIUM",
+	    "category": "JDBC"
+	  },
+	  
+	  {
+	    "questionText": "What is lazy loading?",
+	    "optionA": "Load everything at once",
+	    "optionB": "Load when needed",
+	    "optionC": "Load after execution",
+	    "optionD": "Load in background",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Hibernate"
+	  },
+	  
+	  {
+	    "questionText": "What is the output? List<String> list = Arrays.asList(\"a\",\"b\",\"c\"); list.stream().map(String::toUpperCase).forEach(System.out::print);",
+	    "optionA": "abc",
+	    "optionB": "ABC",
+	    "optionC": "Error",
+	    "optionD": "aBc",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Streams API"
+	  },
+	  
+	  {
+	    "questionText": "What is checked exception?",
+	    "optionA": "Compile-time exception",
+	    "optionB": "Runtime exception",
+	    "optionC": "Logical error",
+	    "optionD": "Memory error",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "Exception Handling"
+	  },
+	  
+	  {
+	    "questionText": "What is the output? try { int x = 10 / 0; } catch (Exception e) { System.out.println(\"Error\"); }",
+	    "optionA": "Error",
+	    "optionB": "Exception",
+	    "optionC": "Crash",
+	    "optionD": "Nothing",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "Exception Handling"
+	  },
+	  
+	  {
+	    "questionText": "What is serialization?",
+	    "optionA": "Object to byte stream",
+	    "optionB": "Byte to object",
+	    "optionC": "File read",
+	    "optionD": "Thread conversion",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "Serialization & Deserialization"
+	  },
+	  
+	  {
+	    "questionText": "What is deserialization?",
+	    "optionA": "Object to byte",
+	    "optionB": "Byte to object",
+	    "optionC": "File writing",
+	    "optionD": "Thread creation",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Serialization & Deserialization"
+	  },
+	  
+	  {
+	    "questionText": "What is type erasure?",
+	    "optionA": "Remove variables",
+	    "optionB": "Remove generic type at runtime",
+	    "optionC": "Delete object",
+	    "optionD": "Remove method",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Generics"
+	  },
+	  
+	  {
+	    "questionText": "What is the output? List<String> list = new ArrayList<>(); list.add(\"Java\"); System.out.println(list.get(0));",
+	    "optionA": "Java",
+	    "optionB": "null",
+	    "optionC": "Error",
+	    "optionD": "0",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "Generics"
+	  },
+	  
+	  {
+	    "questionText": "Which class is used for reflection?",
+	    "optionA": "Class",
+	    "optionB": "Method",
+	    "optionC": "Field",
+	    "optionD": "All of the above",
+	    "correctOption": "D",
+	    "difficulty": "MEDIUM",
+	    "category": "Reflection API"
+	  },
+	  
+	  {
+	    "questionText": "What is @Deprecated?",
+	    "optionA": "Removes method",
+	    "optionB": "Marks old method",
+	    "optionC": "Deletes code",
+	    "optionD": "Compile error",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Annotations"
+	  },
+	  
+	  {
+	    "questionText": "Which method loads class dynamically?",
+	    "optionA": "loadClass()",
+	    "optionB": "Class.forName()",
+	    "optionC": "getClass()",
+	    "optionD": "findClass()",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Reflection API"
+	  },
+	  
+	  {
+	    "questionText": "What is custom exception?",
+	    "optionA": "Predefined",
+	    "optionB": "User-defined exception",
+	    "optionC": "Runtime error",
+	    "optionD": "Syntax error",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Custom Exceptions"
+	  },
+	  
+	  {
+	    "questionText": "What is thread safety?",
+	    "optionA": "Fast execution",
+	    "optionB": "Safe access by multiple threads",
+	    "optionC": "Thread termination",
+	    "optionD": "Exception handling",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Synchronization"
+	  },
+	  
+	  {
+	    "questionText": "Which of the following collection is not synchronized by default?",
+	    "optionA": "Vector",
+	    "optionB": "Hashtable",
+	    "optionC": "Stack",
+	    "optionD": "ArrayList",
+	    "correctOption": "D",
+	    "difficulty": "MEDIUM",
+	    "category": "Collections Framework"
+	  },
+	  
+	  {
+	    "questionText": "What is ExecutorService?",
+	    "optionA": "Thread",
+	    "optionB": "Thread pool manager",
+	    "optionC": "Collection",
+	    "optionD": "Interface for DB",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Concurrency Utilities"
+	  },
+	  
+	  {
+	    "questionText": "What is Future?",
+	    "optionA": "Thread",
+	    "optionB": "Result of async task",
+	    "optionC": "Exception",
+	    "optionD": "Collection",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Concurrency Utilities"
+	  },
+	  
+	  {
+	    "questionText": "What is fail-fast iterator?",
+	    "optionA": "Ignores changes",
+	    "optionB": "Throws exception on modification",
+	    "optionC": "Allows changes",
+	    "optionD": "Stops thread",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Iterators"
+	  },
+	  
+	  {
+	    "questionText": "Which design pattern creates objects?",
+	    "optionA": "Singleton",
+	    "optionB": "Factory",
+	    "optionC": "Observer",
+	    "optionD": "Adapter",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Design Patterns"
+	  },
+	  
+	  {
+	    "questionText": "Which queue is FIFO?",
+	    "optionA": "Stack",
+	    "optionB": "Queue",
+	    "optionC": "Deque",
+	    "optionD": "Set",
+	    "correctOption": "B",
+	    "difficulty": "MEDIUM",
+	    "category": "Queue & Deque"
+	  },
+	  
+	  {
+	    "questionText": "What is time complexity of accessing element in ArrayList?",
+	    "optionA": "O(1)",
+	    "optionB": "O(n)",
+	    "optionC": "O(log n)",
+	    "optionD": "O(n log n)",
+	    "correctOption": "A",
+	    "difficulty": "MEDIUM",
+	    "category": "Collections Framework"
+	  },
+	  
+	  {
+	    "questionText": "Which Map implementation maintains sorted order?",
+	    "optionA": "HashMap",
+	    "optionB": "LinkedHashMap",
+	    "optionC": "TreeMap",
+	    "optionD": "Hashtable",
+	    "correctOption": "C",
+	    "difficulty": "MEDIUM",
+	    "category": "Map"
+	  },
+	  
+	  {
+	    "questionText": "What is the default capacity of ArrayList?",
+	    "optionA": "5",
+	    "optionB": "20",
+	    "optionC": "16",
+	    "optionD": "10",
+	    "correctOption": "D",
+	    "difficulty": "MEDIUM",
+	    "category": "List"
+	  },
+	  
+	    {
+	      "questionText": "What is difference between == and equals()?",
+	      "optionA": "== compares references, equals compares values",
+	      "optionB": "Both compare values",
+	      "optionC": "Both compare references",
+	      "optionD": "No difference",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Core Java"
+	    },
+
+	    {
+	      "questionText": "Which exception is unchecked?",
+	      "optionA": "IOException",
+	      "optionB": "SQLException",
+	      "optionC": "NullPointerException",
+	      "optionD": "ClassNotFoundException",
+	      "correctOption": "C",
+	      "difficulty": "MEDIUM",
+	      "category": "Exception Handling"
+	    },
+
+	    {
+	      "questionText": "What is purpose of finally block?",
+	      "optionA": "Handle exception",
+	      "optionB": "Always executes",
+	      "optionC": "Throw exception",
+	      "optionD": "Skip exception",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Exception Handling"
+	    },
+
+	    {
+	      "questionText": "What is difference between throw and throws?",
+	      "optionA": "Same",
+	      "optionB": "throw used to declare, throws to throw",
+	      "optionC": "throw used to throw, throws to declare",
+	      "optionD": "Both compile error",
+	      "correctOption": "C",
+	      "difficulty": "MEDIUM",
+	      "category": "Exception Handling"
+	    },
+
+	    {
+	      "questionText": "What is purpose of synchronized block?",
+	      "optionA": "Improve speed",
+	      "optionB": "Prevent concurrent access",
+	      "optionC": "Handle exception",
+	      "optionD": "Memory allocation",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Synchronization"
+	    },
+
+	    {
+	      "questionText": "What is difference between Runnable and Callable?",
+	      "optionA": "Callable returns result",
+	      "optionB": "Runnable returns result",
+	      "optionC": "Both return result",
+	      "optionD": "None return result",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Multithreading"
+	    },
+
+	    {
+	      "questionText": "What is purpose of Executor framework?",
+	      "optionA": "Manage threads",
+	      "optionB": "Manage memory",
+	      "optionC": "Manage files",
+	      "optionD": "Manage DB",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Concurrency Utilities"
+	    },
+
+	    {
+	      "questionText": "What is Stream API used for?",
+	      "optionA": "File handling",
+	      "optionB": "Data processing",
+	      "optionC": "Threading",
+	      "optionD": "Networking",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Streams API"
+	    },
+
+	    {
+	      "questionText": "What is difference between map() and flatMap()?",
+	      "optionA": "map transforms, flatMap flattens",
+	      "optionB": "Same",
+	      "optionC": "map filters",
+	      "optionD": "flatMap sorts",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Streams API"
+	    },
+
+	    {
+	      "questionText": "What is purpose of filter()?",
+	      "optionA": "Transform",
+	      "optionB": "Select elements",
+	      "optionC": "Reduce",
+	      "optionD": "Sort",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Streams API"
+	    },
+
+	    {
+	      "questionText": "What is Optional.of() used for?",
+	      "optionA": "Null-safe object creation",
+	      "optionB": "Create list",
+	      "optionC": "Create map",
+	      "optionD": "Create thread",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Optional Class"
+	    },
+
+	    {
+	      "questionText": "What is Optional.empty()?",
+	      "optionA": "Null value",
+	      "optionB": "Empty container",
+	      "optionC": "Exception",
+	      "optionD": "String",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Optional Class"
+	    },
+
+	    {
+	      "questionText": "What is difference between HashMap and Hashtable?",
+	      "optionA": "Hashtable synchronized",
+	      "optionB": "HashMap synchronized",
+	      "optionC": "Both synchronized",
+	      "optionD": "None",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Map"
+	    },
+
+	    {
+	      "questionText": "What is purpose of @Override?",
+	      "optionA": "Create method",
+	      "optionB": "Override method",
+	      "optionC": "Delete method",
+	      "optionD": "Run method",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Annotations"
+	    },
+
+	    {
+	      "questionText": "What is reflection used for?",
+	      "optionA": "Runtime inspection",
+	      "optionB": "Compile-time",
+	      "optionC": "File reading",
+	      "optionD": "Threading",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Reflection API"
+	    },
+
+	    {
+	      "questionText": "What is Class.forName()?",
+	      "optionA": "Create class",
+	      "optionB": "Load class",
+	      "optionC": "Delete class",
+	      "optionD": "Modify class",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Reflection API"
+	    },
+
+	    {
+	      "questionText": "What is difference between stack and heap?",
+	      "optionA": "Stack for methods, heap for objects",
+	      "optionB": "Both same",
+	      "optionC": "Heap faster",
+	      "optionD": "Stack stores objects",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "JVM & Memory Management"
+	    },
+
+	    {
+	      "questionText": "What is garbage collection?",
+	      "optionA": "Memory allocation",
+	      "optionB": "Memory cleanup",
+	      "optionC": "Threading",
+	      "optionD": "File handling",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Garbage Collection"
+	    },
+
+	    {
+	      "questionText": "What is difference between abstract class and interface?",
+	      "optionA": "Abstract class has implementation",
+	      "optionB": "Interface has implementation",
+	      "optionC": "Both same",
+	      "optionD": "None",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "OOP Concepts"
+	    },
+
+	    {
+	      "questionText": "What is dependency injection?",
+	      "optionA": "Object creation",
+	      "optionB": "Inject dependencies",
+	      "optionC": "Delete object",
+	      "optionD": "Thread control",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is the purpose of @Autowired?",
+	      "optionA": "Create object",
+	      "optionB": "Inject dependency",
+	      "optionC": "Delete object",
+	      "optionD": "Run method",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is difference between @Component and @Service?",
+	      "optionA": "No difference, semantic only",
+	      "optionB": "@Service is faster",
+	      "optionC": "@Component is faster",
+	      "optionD": "@Service is deprecated",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is the purpose of @Repository?",
+	      "optionA": "UI layer",
+	      "optionB": "Data access layer",
+	      "optionC": "Business logic",
+	      "optionD": "Thread control",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is the purpose of @Controller?",
+	      "optionA": "Handle HTTP requests",
+	      "optionB": "Handle DB",
+	      "optionC": "Handle threads",
+	      "optionD": "Handle logs",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is difference between @Controller and @RestController?",
+	      "optionA": "RestController returns JSON",
+	      "optionB": "Controller returns JSON",
+	      "optionC": "Both same",
+	      "optionD": "None",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is dependency inversion principle?",
+	      "optionA": "High-level depends on low-level",
+	      "optionB": "Low-level depends on high-level",
+	      "optionC": "Both depend on abstraction",
+	      "optionD": "None",
+	      "correctOption": "C",
+	      "difficulty": "MEDIUM",
+	      "category": "Design Patterns"
+	    },
+
+	    {
+	      "questionText": "What is SOLID principle?",
+	      "optionA": "Design principles",
+	      "optionB": "Thread model",
+	      "optionC": "DB concept",
+	      "optionD": "Logging concept",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Design Patterns"
+	    },
+
+	    {
+	      "questionText": "What is Open-Closed Principle?",
+	      "optionA": "Open for modification",
+	      "optionB": "Closed for extension",
+	      "optionC": "Open for extension, closed for modification",
+	      "optionD": "None",
+	      "correctOption": "C",
+	      "difficulty": "MEDIUM",
+	      "category": "Design Patterns"
+	    },
+
+	    {
+	      "questionText": "What is Liskov Substitution Principle?",
+	      "optionA": "Replace subclass with parent",
+	      "optionB": "Replace parent with subclass",
+	      "optionC": "Both interchangeable",
+	      "optionD": "None",
+	      "correctOption": "C",
+	      "difficulty": "MEDIUM",
+	      "category": "Design Patterns"
+	    },
+
+	    {
+	      "questionText": "What is Interface Segregation Principle?",
+	      "optionA": "Large interface",
+	      "optionB": "Small specific interfaces",
+	      "optionC": "No interface",
+	      "optionD": "One interface",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Design Patterns"
+	    },
+
+	    {
+	      "questionText": "What is Dependency Injection type?",
+	      "optionA": "Constructor",
+	      "optionB": "Setter",
+	      "optionC": "Field",
+	      "optionD": "All of the above",
+	      "correctOption": "D",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is Bean lifecycle?",
+	      "optionA": "Creation → Initialization → Destruction",
+	      "optionB": "Init → Destroy",
+	      "optionC": "Only creation",
+	      "optionD": "Only destruction",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is prototype scope?",
+	      "optionA": "Single instance",
+	      "optionB": "Multiple instances",
+	      "optionC": "Thread safe",
+	      "optionD": "Static",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is singleton scope?",
+	      "optionA": "Multiple instances",
+	      "optionB": "Single instance",
+	      "optionC": "Thread unsafe",
+	      "optionD": "Static",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Spring)"
+	    },
+
+	    {
+	      "questionText": "What is Hibernate?",
+	      "optionA": "ORM framework",
+	      "optionB": "Logging tool",
+	      "optionC": "Testing tool",
+	      "optionD": "Thread tool",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Frameworks (Hibernate)"
+	    },
+
+	    {
+	      "questionText": "What is entity in Hibernate?",
+	      "optionA": "Table representation",
+	      "optionB": "Thread",
+	      "optionC": "File",
+	      "optionD": "Class loader",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is @Entity?",
+	      "optionA": "Marks table",
+	      "optionB": "Marks class as DB entity",
+	      "optionC": "Marks thread",
+	      "optionD": "Marks interface",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is @Table?",
+	      "optionA": "Defines DB table",
+	      "optionB": "Defines thread",
+	      "optionC": "Defines class",
+	      "optionD": "Defines method",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is @Column?",
+	      "optionA": "Maps column",
+	      "optionB": "Maps table",
+	      "optionC": "Maps class",
+	      "optionD": "Maps thread",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is @Id?",
+	      "optionA": "Marks column",
+	      "optionB": "Marks primary key",
+	      "optionC": "Marks thread",
+	      "optionD": "Marks class",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is @GeneratedValue?",
+	      "optionA": "Generate thread",
+	      "optionB": "Generate key",
+	      "optionC": "Generate class",
+	      "optionD": "Generate file",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is lazy fetching?",
+	      "optionA": "Load immediately",
+	      "optionB": "Load when needed",
+	      "optionC": "Load never",
+	      "optionD": "Load twice",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is eager fetching?",
+	      "optionA": "Load immediately",
+	      "optionB": "Load later",
+	      "optionC": "Load never",
+	      "optionD": "Load thread",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "Hibernate"
+	    },
+
+	    {
+	      "questionText": "What is JDBC Driver?",
+	      "optionA": "Interface",
+	      "optionB": "DB connector",
+	      "optionC": "Thread",
+	      "optionD": "File",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "JDBC"
+	    },
+
+	    {
+	      "questionText": "What is ResultSet?",
+	      "optionA": "Query result",
+	      "optionB": "Thread result",
+	      "optionC": "File result",
+	      "optionD": "Class result",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "JDBC"
+	    },
+
+	    {
+	      "questionText": "What is PreparedStatement?",
+	      "optionA": "Precompiled SQL",
+	      "optionB": "Runtime SQL",
+	      "optionC": "Thread SQL",
+	      "optionD": "Static SQL",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "JDBC"
+	    },
+
+	    {
+	      "questionText": "What is SQL injection?",
+	      "optionA": "Secure query",
+	      "optionB": "Malicious query",
+	      "optionC": "Thread injection",
+	      "optionD": "File injection",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "JDBC"
+	    },
+
+	    {
+	      "questionText": "What is connection pooling?",
+	      "optionA": "Reuse connections",
+	      "optionB": "Create new connections",
+	      "optionC": "Delete connections",
+	      "optionD": "Thread pooling",
+	      "correctOption": "A",
+	      "difficulty": "MEDIUM",
+	      "category": "JDBC"
+	    },
+
+	    {
+	      "questionText": "What is ACID property?",
+	      "optionA": "Thread model",
+	      "optionB": "Transaction rules",
+	      "optionC": "Logging rules",
+	      "optionD": "Memory rules",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Transactions"
+	    },
+
+	    {
+	      "questionText": "What is REST API?",
+	      "optionA": "Protocol",
+	      "optionB": "Architecture style",
+	      "optionC": "Language",
+	      "optionD": "Framework",
+	      "correctOption": "B",
+	      "difficulty": "MEDIUM",
+	      "category": "Microservices"
+	    },
+		
+		  {
+		    "questionText": "Which memory area stores objects?",
+		    "optionA": "Stack",
+		    "optionB": "Heap",
+		    "optionC": "Cache",
+		    "optionD": "Method Area",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "JVM & Memory Management"
+		  },
+
+		  {
+		    "questionText": "What is the output of hashCode() contract violation?",
+		    "optionA": "Compile error",
+		    "optionB": "Runtime error",
+		    "optionC": "Logical inconsistency",
+		    "optionD": "No effect",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Collections Framework"
+		  },
+
+		  {
+		    "questionText": "Which interface supports multiple inheritance?",
+		    "optionA": "Class",
+		    "optionB": "Interface",
+		    "optionC": "Abstract class",
+		    "optionD": "Enum",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Interfaces"
+		  },
+
+		  {
+		    "questionText": "What does volatile keyword ensure?",
+		    "optionA": "Atomicity",
+		    "optionB": "Visibility",
+		    "optionC": "Synchronization",
+		    "optionD": "Serialization",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Multithreading"
+		  },
+
+		  {
+		    "questionText": "Which class loader loads core Java classes?",
+		    "optionA": "Extension",
+		    "optionB": "Application",
+		    "optionC": "Bootstrap",
+		    "optionD": "Custom",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Class Loading"
+		  },
+
+		  {
+		    "questionText": "What is the purpose of Comparable?",
+		    "optionA": "Sorting custom objects",
+		    "optionB": "Serialization",
+		    "optionC": "Thread control",
+		    "optionD": "Exception handling",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Comparable & Comparator"
+		  },
+
+		  {
+		    "questionText": "Which method is used to start a thread?",
+		    "optionA": "run()",
+		    "optionB": "execute()",
+		    "optionC": "start()",
+		    "optionD": "init()",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Multithreading"
+		  },
+
+		  {
+		    "questionText": "What is deadlock?",
+		    "optionA": "Thread termination",
+		    "optionB": "Infinite loop",
+		    "optionC": "Threads waiting indefinitely",
+		    "optionD": "Exception",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Concurrency"
+		  },
+
+		  {
+		    "questionText": "Which annotation is used for dependency injection in Spring?",
+		    "optionA": "@Bean",
+		    "optionB": "@Autowired",
+		    "optionC": "@Service",
+		    "optionD": "@Component",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Frameworks (Spring)"
+		  },
+
+		  {
+		    "questionText": "What is reflection used for?",
+		    "optionA": "Compile-time execution",
+		    "optionB": "Runtime inspection",
+		    "optionC": "Memory allocation",
+		    "optionD": "Thread control",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Reflection API"
+		  },
+
+		  {
+		    "questionText": "What is the output? Integer a = 127; Integer b = 127; System.out.println(a == b);",
+		    "optionA": "true",
+		    "optionB": "false",
+		    "optionC": "Compilation error",
+		    "optionD": "Runtime error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Wrapper Classes"
+		  },
+
+		  {
+		    "questionText": "What is the output? String s1 = new String(\"Java\"); String s2 = new String(\"Java\"); System.out.println(s1 == s2);",
+		    "optionA": "true",
+		    "optionB": "false",
+		    "optionC": "Compilation error",
+		    "optionD": "Runtime error",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Strings"
+		  },
+
+		  {
+		    "questionText": "What is the output? int[] arr = {1,2,3}; System.out.println(arr.length);",
+		    "optionA": "2",
+		    "optionB": "3",
+		    "optionC": "4",
+		    "optionD": "Error",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Arrays"
+		  },
+
+		  {
+		    "questionText": "Which thread state is after start()?",
+		    "optionA": "NEW",
+		    "optionB": "TERMINATED",
+		    "optionC": "BLOCKED",
+		    "optionD": "RUNNABLE",
+		    "correctOption": "D",
+		    "difficulty": "HARD",
+		    "category": "Thread Lifecycle"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(10 + 20 + \"Java\");",
+		    "optionA": "30Java",
+		    "optionB": "Java30",
+		    "optionC": "1020Java",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Strings"
+		  },
+
+		  {
+		    "questionText": "What is the purpose of synchronized keyword?",
+		    "optionA": "Improve speed",
+		    "optionB": "Prevent race condition",
+		    "optionC": "Handle exceptions",
+		    "optionD": "Manage memory",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Synchronization"
+		  },
+
+		  {
+		    "questionText": "Which class is immutable?",
+		    "optionA": "String",
+		    "optionB": "StringBuilder",
+		    "optionC": "StringBuffer",
+		    "optionD": "ArrayList",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Strings"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(\"Java\".substring(1,3));",
+		    "optionA": "av",
+		    "optionB": "ava",
+		    "optionC": "ja",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Strings"
+		  },
+
+		  {
+		    "questionText": "Which interface allows sorting with custom logic?",
+		    "optionA": "Comparable",
+		    "optionB": "Comparator",
+		    "optionC": "Iterable",
+		    "optionD": "Cloneable",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Comparable & Comparator"
+		  },
+
+		  {
+		    "questionText": "Which GC algorithm is used in modern JVM?",
+		    "optionA": "Mark-Sweep",
+		    "optionB": "G1",
+		    "optionC": "Serial",
+		    "optionD": "Both A and B",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Garbage Collection"
+		  },
+
+		  {
+		    "questionText": "What is the output? List<Integer> list = Arrays.asList(1,2,3,4); int sum = list.stream().reduce(0, Integer::sum); System.out.println(sum);",
+		    "optionA": "10",
+		    "optionB": "9",
+		    "optionC": "8",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Streams API"
+		  },
+
+		  {
+		    "questionText": "What is the output? Stream.of(\"Java\",\"Python\",\"C\").filter(s -> s.length() > 3).count();",
+		    "optionA": "1",
+		    "optionB": "2",
+		    "optionC": "3",
+		    "optionD": "0",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Streams API"
+		  },
+
+		  {
+		    "questionText": "What is the output? List<Integer> list = Arrays.asList(1,2,3); list.stream().map(x -> x * x).forEach(System.out::print);",
+		    "optionA": "123",
+		    "optionB": "149",
+		    "optionC": "146",
+		    "optionD": "Error",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Streams API"
+		  },
+
+		  {
+		    "questionText": "What is the difference between execute() and executeUpdate()?",
+		    "optionA": "No difference",
+		    "optionB": "executeUpdate returns number of affected rows",
+		    "optionC": "executeUpdate returns ResultSet",
+		    "optionD": "execute returns int",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "JDBC"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(Stream.of(1,2,3).findFirst().get());",
+		    "optionA": "1",
+		    "optionB": "2",
+		    "optionC": "3",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Streams API"
+		  },
+
+		  {
+		    "questionText": "What does @Transactional do?",
+		    "optionA": "Handles exceptions",
+		    "optionB": "Manages transactions",
+		    "optionC": "Creates beans",
+		    "optionD": "Injects dependencies",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Frameworks (Spring)"
+		  },
+
+		  {
+		    "questionText": "What is parallelStream() used for?",
+		    "optionA": "Sequential processing",
+		    "optionB": "Parallel processing",
+		    "optionC": "Sorting",
+		    "optionD": "Filtering",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Streams API"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(Stream.of(1,2,3,4).anyMatch(x -> x > 3));",
+		    "optionA": "true",
+		    "optionB": "false",
+		    "optionC": "Error",
+		    "optionD": "Exception",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Streams API"
+		  },
+
+		  {
+		    "questionText": "Which isolation level prevents dirty reads?",
+		    "optionA": "READ_UNCOMMITTED",
+		    "optionB": "READ_COMMITTED",
+		    "optionC": "REPEATABLE_READ",
+		    "optionD": "SERIALIZABLE",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "JDBC"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(Stream.of(\"a\",\"b\",\"c\").reduce(\"\", String::concat));",
+		    "optionA": "abc",
+		    "optionB": "a b c",
+		    "optionC": "Error",
+		    "optionD": "null",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Streams API"
+		  },
+
+		  {
+		    "questionText": "What is the output? List<Integer> list = Arrays.asList(1,2,3); list.forEach(x -> { if(x == 2) return; System.out.print(x); });",
+		    "optionA": "13",
+		    "optionB": "123",
+		    "optionC": "1",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Lambda Expressions"
+		  },
+
+		  {
+		    "questionText": "What is double-checked locking?",
+		    "optionA": "Two threads locking",
+		    "optionB": "Optimized singleton creation",
+		    "optionC": "Deadlock",
+		    "optionD": "Thread stop",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Design Patterns"
+		  },
+
+		  {
+		    "questionText": "Which collection is thread-safe?",
+		    "optionA": "ArrayList",
+		    "optionB": "HashMap",
+		    "optionC": "ConcurrentHashMap",
+		    "optionD": "LinkedList",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Concurrency Utilities"
+		  },
+
+		  {
+		    "questionText": "What is the output? Map<String,Integer> map = new HashMap<>(); map.put(\"A\",1); map.put(\"A\",2); System.out.println(map.size());",
+		    "optionA": "1",
+		    "optionB": "2",
+		    "optionC": "0",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Map"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(10 + 20 + \"Java\" + 10 + 20);",
+		    "optionA": "30Java1020",
+		    "optionB": "Java301020",
+		    "optionC": "1020Java1020",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Strings"
+		  },
+
+		  {
+		    "questionText": "What happens if two threads access synchronized method?",
+		    "optionA": "Both run together",
+		    "optionB": "One waits",
+		    "optionC": "Error",
+		    "optionD": "Deadlock",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Synchronization"
+		  },
+
+		  {
+		    "questionText": "What is race condition?",
+		    "optionA": "Thread crash",
+		    "optionB": "Concurrent modification issue",
+		    "optionC": "Fast execution",
+		    "optionD": "Exception",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Concurrency"
+		  },
+
+		  {
+		    "questionText": "What is the output? Set<Integer> set = new HashSet<>(); set.add(1); set.add(1); System.out.println(set.size());",
+		    "optionA": "1",
+		    "optionB": "2",
+		    "optionC": "0",
+		    "optionD": "Error",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Set"
+		  },
+
+		  {
+		    "questionText": "Which method shuts down ExecutorService?",
+		    "optionA": "stop()",
+		    "optionB": "close()",
+		    "optionC": "shutdown()",
+		    "optionD": "end()",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Concurrency Utilities"
+		  },
+
+		  {
+		    "questionText": "What is memory leak in Java?",
+		    "optionA": "No GC",
+		    "optionB": "Unused objects not released",
+		    "optionC": "Compile error",
+		    "optionD": "Thread error",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "JVM & Memory Management"
+		  },
+
+		  {
+		    "questionText": "What is the output? public static int test() { try { return 1; } finally { System.out.println(\"Finally\"); } }",
+		    "optionA": "Finally",
+		    "optionB": "Nothing",
+		    "optionC": "Error",
+		    "optionD": "Exception",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Exception Handling"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(\"Java\".equals(null));",
+		    "optionA": "true",
+		    "optionB": "false",
+		    "optionC": "Exception",
+		    "optionD": "Error",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Strings"
+		  },
+
+		  {
+		    "questionText": "What is the output? List<?> list = new ArrayList<String>(); list.add(null); System.out.println(list.size());",
+		    "optionA": "0",
+		    "optionB": "1",
+		    "optionC": "Error",
+		    "optionD": "Exception",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Generics"
+		  },
+
+		  {
+		    "questionText": "What is the output? try { throw new Exception(\"Test\"); } catch (Exception e) { throw e; } finally { System.out.println(\"Finally\"); }",
+		    "optionA": "Finally is printed, then exception is thrown",
+		    "optionB": "Exception only",
+		    "optionC": "Finally only",
+		    "optionD": "Nothing",
+		    "correctOption": "A",
+		    "difficulty": "HARD",
+		    "category": "Exception Handling"
+		  },
+
+		  {
+		    "questionText": "Which keyword avoids serialization of field?",
+		    "optionA": "static",
+		    "optionB": "final",
+		    "optionC": "transient",
+		    "optionD": "volatile",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Serialization & Deserialization"
+		  },
+
+		  {
+		    "questionText": "What is the output? Class<?> c = String.class; System.out.println(c.getName());",
+		    "optionA": "String",
+		    "optionB": "java.lang.String",
+		    "optionC": "class String",
+		    "optionD": "Error",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Reflection API"
+		  },
+
+		  {
+		    "questionText": "What happens if serialVersionUID changes?",
+		    "optionA": "No effect",
+		    "optionB": "Serialization fails",
+		    "optionC": "Deserialization fails",
+		    "optionD": "Compile error",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Serialization & Deserialization"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(new Integer(10) == new Integer(10));",
+		    "optionA": "true",
+		    "optionB": "false",
+		    "optionC": "Error",
+		    "optionD": "Exception",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Wrapper Classes"
+		  },
+
+		  {
+		    "questionText": "What is the output? System.out.println(Math.round(2.5));",
+		    "optionA": "2",
+		    "optionB": "3",
+		    "optionC": "2.5",
+		    "optionD": "Error",
+		    "correctOption": "B",
+		    "difficulty": "HARD",
+		    "category": "Core Java"
+		  },
+
+		  {
+		    "questionText": "Which annotation is retained at runtime?",
+		    "optionA": "SOURCE",
+		    "optionB": "CLASS",
+		    "optionC": "RUNTIME",
+		    "optionD": "COMPILE",
+		    "correctOption": "C",
+		    "difficulty": "HARD",
+		    "category": "Annotations"
+		  },
+		  
+		    {
+		      "questionText": "What is the output? URL url = new URL(\"http://example.com\"); System.out.println(url.getProtocol());",
+		      "optionA": "http",
+		      "optionB": "example.com",
+		      "optionC": "URL",
+		      "optionD": "Error",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Networking"
+		    },
+
+		    {
+		      "questionText": "What is the output? ServerSocket server = new ServerSocket(8080); System.out.println(server.getLocalPort());",
+		      "optionA": "8080",
+		      "optionB": "80",
+		      "optionC": "null",
+		      "optionD": "Error",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Networking"
+		    },
+
+		    {
+		      "questionText": "What happens if doGet() is not overridden?",
+		      "optionA": "Compile error",
+		      "optionB": "Runtime error",
+		      "optionC": "Default implementation used",
+		      "optionD": "Server crash",
+		      "correctOption": "C",
+		      "difficulty": "HARD",
+		      "category": "Servlets"
+		    },
+
+		    {
+		      "questionText": "What is the purpose of web.xml?",
+		      "optionA": "Compile code",
+		      "optionB": "Deployment descriptor",
+		      "optionC": "Database config",
+		      "optionD": "Logging config",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Servlets"
+		    },
+
+		    {
+		      "questionText": "What is transitive dependency in Maven?",
+		      "optionA": "Direct dependency",
+		      "optionB": "Indirect dependency",
+		      "optionC": "Runtime dependency",
+		      "optionD": "Optional dependency",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Build Tools (Maven)"
+		    },
+
+		    {
+		      "questionText": "What is the output? Logger log = LoggerFactory.getLogger(\"Test\"); log.info(\"Hello\");",
+		      "optionA": "Compile error",
+		      "optionB": "Logs message",
+		      "optionC": "Runtime error",
+		      "optionD": "Nothing",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Logging"
+		    },
+
+		    {
+		      "questionText": "What is @BeforeEach?",
+		      "optionA": "Runs before class",
+		      "optionB": "Runs before each test",
+		      "optionC": "Runs after test",
+		      "optionD": "Injects dependency",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Testing"
+		    },
+
+		    {
+		      "questionText": "What is circuit breaker?",
+		      "optionA": "Stops thread",
+		      "optionB": "Prevents cascading failures",
+		      "optionC": "Handles logging",
+		      "optionD": "Handles database",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Microservices"
+		    },
+
+		    {
+		      "questionText": "What is stateless service?",
+		      "optionA": "Stores session",
+		      "optionB": "No stored state",
+		      "optionC": "Database dependent",
+		      "optionD": "Thread dependent",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Microservices"
+		    },
+
+		    {
+		      "questionText": "What is the output? HttpURLConnection conn = (HttpURLConnection) new URL(\"http://example.com\").openConnection(); System.out.println(conn.getRequestMethod());",
+		      "optionA": "GET",
+		      "optionB": "POST",
+		      "optionC": "null",
+		      "optionD": "Error",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Networking"
+		    },
+
+		    {
+		      "questionText": "What is the output? CompletableFuture.supplyAsync(() -> 10).thenApply(x -> x * 2).thenAccept(System.out::print);",
+		      "optionA": "10",
+		      "optionB": "20",
+		      "optionC": "Nothing guaranteed",
+		      "optionD": "Error",
+		      "correctOption": "C",
+		      "difficulty": "HARD",
+		      "category": "Concurrency Utilities"
+		    },
+
+		    {
+		      "questionText": "What is the output? Stream.of(1,2,3).reduce(1, (a,b) -> a * b);",
+		      "optionA": "6",
+		      "optionB": "3",
+		      "optionC": "1",
+		      "optionD": "0",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? List<String> list = Arrays.asList(\"a\",\"bb\",\"ccc\"); list.stream().max(Comparator.comparing(String::length)).get();",
+		      "optionA": "a",
+		      "optionB": "bb",
+		      "optionC": "ccc",
+		      "optionD": "Error",
+		      "correctOption": "C",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is memory fragmentation?",
+		      "optionA": "Memory full",
+		      "optionB": "Memory scattered",
+		      "optionC": "Memory leak",
+		      "optionD": "Thread issue",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "JVM & Memory Management"
+		    },
+
+		    {
+		      "questionText": "Which GC compacts memory?",
+		      "optionA": "Mark-Sweep",
+		      "optionB": "G1",
+		      "optionC": "Serial",
+		      "optionD": "Reference",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Garbage Collection"
+		    },
+
+		    {
+		      "questionText": "What is the output? List<Integer> list = Arrays.asList(1,2,3,4); list.parallelStream().forEachOrdered(System.out::print);",
+		      "optionA": "Random",
+		      "optionB": "1234",
+		      "optionC": "Error",
+		      "optionD": "4321",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is happens-before relationship?",
+		      "optionA": "Execution order guarantee",
+		      "optionB": "Thread stop",
+		      "optionC": "Memory leak",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Concurrency"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.generate(() -> 1).limit(3).count());",
+		      "optionA": "1",
+		      "optionB": "2",
+		      "optionC": "3",
+		      "optionD": "Infinite",
+		      "correctOption": "C",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "Which pattern decouples sender and receiver?",
+		      "optionA": "Observer",
+		      "optionB": "Factory",
+		      "optionC": "Singleton",
+		      "optionD": "Builder",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Design Patterns"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.of(1,2,3).anyMatch(x -> x > 5));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".intern() == \"Java\");",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(new String(\"Java\").intern() == \"Java\");",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".replaceAll(\"a\",\"o\"));",
+		      "optionA": "Jovo",
+		      "optionB": "Jova",
+		      "optionC": "Java",
+		      "optionD": "Error",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".matches(\"J.*\"));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.of(1,2,3).allMatch(x -> x > 0));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.of(1,2,3).noneMatch(x -> x < 0));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.of(\"a\",\"b\",\"c\").findAny().get());",
+		      "optionA": "a",
+		      "optionB": "b",
+		      "optionC": "c",
+		      "optionD": "Any of the above",
+		      "correctOption": "D",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.of(1,2,3).limit(2).count());",
+		      "optionA": "1",
+		      "optionB": "2",
+		      "optionC": "3",
+		      "optionD": "Error",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.of(1,2,3).skip(1).count());",
+		      "optionA": "1",
+		      "optionB": "2",
+		      "optionC": "3",
+		      "optionD": "Error",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Stream.of(1,2,3).distinct().count());",
+		      "optionA": "1",
+		      "optionB": "2",
+		      "optionC": "3",
+		      "optionD": "Error",
+		      "correctOption": "C",
+		      "difficulty": "HARD",
+		      "category": "Streams API"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".compareTo(\"Java\"));",
+		      "optionA": "0",
+		      "optionB": "1",
+		      "optionC": "-1",
+		      "optionD": "Error",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".compareTo(\"java\"));",
+		      "optionA": "0",
+		      "optionB": "Error",
+		      "optionC": "Positive",
+		      "optionD": "Negative",
+		      "correctOption": "D",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".equalsIgnoreCase(\"java\"));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".substring(0,0));",
+		      "optionA": "\"\"",
+		      "optionB": "Java",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".charAt(0));",
+		      "optionA": "J",
+		      "optionB": "a",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".indexOf(\"a\"));",
+		      "optionA": "0",
+		      "optionB": "1",
+		      "optionC": "2",
+		      "optionD": "3",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".lastIndexOf(\"a\"));",
+		      "optionA": "1",
+		      "optionB": "2",
+		      "optionC": "3",
+		      "optionD": "Error",
+		      "correctOption": "C",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".toUpperCase());",
+		      "optionA": "java",
+		      "optionB": "JAVA",
+		      "optionC": "Java",
+		      "optionD": "Error",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".toLowerCase());",
+		      "optionA": "JAVA",
+		      "optionB": "java",
+		      "optionC": "Java",
+		      "optionD": "Error",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".contains(\"av\"));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".startsWith(\"Ja\"));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".endsWith(\"va\"));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".isEmpty());",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"\".isEmpty());",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\" \".isBlank());",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".repeat(2));",
+		      "optionA": "JavaJava",
+		      "optionB": "Java",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Arrays.asList(1,2,3).contains(2));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Collections Framework"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(Arrays.asList(1,2,3).contains(\"2\"));",
+		      "optionA": "true",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "Exception",
+		      "correctOption": "B",
+		      "difficulty": "HARD",
+		      "category": "Collections Framework"
+		    },
+
+		    {
+		      "questionText": "What is the output? List list = new ArrayList(); list.add(\"Java\"); System.out.println(list.get(0));",
+		      "optionA": "Java",
+		      "optionB": "Error",
+		      "optionC": "null",
+		      "optionD": "Exception",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Generics"
+		    },
+
+		    {
+		      "questionText": "What is the output? System.out.println(\"Java\".equals(new String(\"Java\")));",
+		      "optionA": "Exception",
+		      "optionB": "false",
+		      "optionC": "Error",
+		      "optionD": "true",
+		      "correctOption": "A",
+		      "difficulty": "HARD",
+		      "category": "Strings"
+		    }
+		  ]
