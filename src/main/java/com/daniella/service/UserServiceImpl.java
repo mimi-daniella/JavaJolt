@@ -98,5 +98,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+	@Override
+	public long getTotalUsers() {	
+		return userRepository.count();
+	}
+
 	
 }

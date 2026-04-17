@@ -14,9 +14,14 @@ public interface UserService {
 	
 	void createUser (UserRequest userRequest) ;
 	UserResponseDTO getUserById(Long id);
+	
 	List<UserResponseDTO> getAllUser();
+	
 	UserResponseDTO getByEmail (String email);
+	
 	void updateUserDetails(String email, UserUpdateDTO updateDTO);
 	void updatePassword(String email, PasswordChangeDTO passswordDTO);
+	
+	long getTotalUsers();
 
 }
