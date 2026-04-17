@@ -1,6 +1,5 @@
 package com.daniella.controller;
 
-import java.security.Principal;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.Random;

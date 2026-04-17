@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name="questions")
@@ -19,12 +20,15 @@ public class Question {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false)
 	private String questionText;
 	private String optionA;
 	private String optionB;
 	private String optionC;
 	private String optionD;
-	private String correctAnswer;
+	private String correctOption;
+	private String category;
+	
 	
 	@Enumerated(EnumType.STRING)
 	private Difficulty difficulty;
@@ -80,12 +84,12 @@ public class Question {
 		this.optionD = optionD;
 	}
 
-	public String getCorrectAnswer() {
-		return correctAnswer;
+	public String getCorrectOption() {
+		return correctOption;
 	}
 
-	public void setCorrectAnswer(String correctAnswer) {
-		this.correctAnswer = correctAnswer;
+	public void setCorrectOption(String correctOption) {
+		this.correctOption = correctOption;
 	}
 
 	public Difficulty getDifficulty() {
@@ -94,6 +98,14 @@ public class Question {
 
 	public void setDifficulty(Difficulty difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 
