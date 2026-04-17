@@ -1,0 +1,58 @@
+<logos th:fragment="logos">
+    <div class="h-[150px] w-full flex items-center justify-center overflow-hidden">
+        <!-- Main animated track -->
+        <div class="flex animate-marquee-smooth whitespace-nowrap py-4">
+            
+            <!-- Group 1 -->
+            <div class="flex items-center">
+              
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/wthreeschools.svg}" alt="W3Schools" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/geeks.svg}" alt="GeeksForGeeks" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/hacker_rank.svg}" alt="HackerRank" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/tut.svg}" alt="TutorialsPoint" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+            </div>
+
+          
+            <div class="flex items-center" aria-hidden="true">
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/wthreeschools.svg}" alt="W3Schools" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/geeks.svg}" alt="GeeksForGeeks" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/hacker_rank.svg}" alt="HackerRank" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+                <div class="w-64 flex justify-center px-4">
+                    <img th:src="@{/images/tut.svg}" alt="TutorialsPoint" class="h-10 hover:scale-125 transition-transform duration-300 cursor-pointer" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <style>
+        @keyframes marquee-smooth {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee-smooth {
+            animation: marquee-smooth 12s linear infinite;
+            display: flex;
+            width: max-content;
+        }
+
+        .animate-marquee-smooth:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</logos>

@@ -1,0 +1,126 @@
+
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen flex bg-gray-100">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" 
+         class="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-gray-700 via-gray-900 to-amber-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-50">
+    <div class="p-6">
+		<a class="block" th:href="@{/}">
+		   <img th:src="@{/images/fullLogo.png}" class="w-40 h-35" alt="Game Logo">
+		 </a>
+      <nav class="flex flex-col space-y-3 mt-6">
+        <a th:href="@{/admin/messaging}" class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Messaging</a>
+        <a th:href="@{/admin/users}" class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Manage Users</a>
+        <a th:href="@{/admin/questions}" class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Question Bank</a>
+        <a th:href="@{/admin/quizzes}" class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Quizzes</a>
+        <a th:href="@{/admin/settings}" class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">System Settings</a>
+      </nav>
+    </div>
+  </aside>
+
+  
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden md:hidden z-40"></div>
+
+  <!-- Main -->
+  <div class="flex-1 flex flex-col md:ml-64">
+    
+    <header class="flex items-center justify-between bg-white shadow px-6 py-4">
+      <!-- Hamburger -->
+      <div class="flex items-center space-x-4">
+        <button id="menuBtn" class="md:hidden text-[var(--espresso)] focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="text-xl font-bold text-black">Control Center</h1>
+      </div>
+
+      <!-- Profile -->
+      <div class="relative group">
+        <button class="flex items-center space-x-3 focus:outline-none">
+          <!-- Avatar (initials or image) -->
+          <div class="w-10 h-10 rounded-full bg-[var(--yellow)] flex items-center justify-center font-bold">
+            <span th:text="${firstName.substring(0,1)} + ${lastName.substring(0,1)}">AD</span>
+          </div>
+          <!-- Name -->
+          <span class="text-gray-700 font-semibold" th:text="${firstName} + ' ' + ${lastName}">Admin Name</span>
+          <!-- Dropdown -->
+          <svg class="w-4 h-4 text-gray-500 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg hidden group-hover:block">
+          <a th:href="@{/admin/profile}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a>
+          <a th:href="@{/admin/settings}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
+          <a th:href="@{/logout}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+        </div>
+      </div>
+    </header>
+
+    <!--Actual Content -->
+    <main class="p-6">
+     
+      <div class="grid md:grid-cols-4 gap-6 mb-12">
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <h3 class="text-sm font-bold text-gray-500">Total Users</h3>
+          <p class="text-3xl font-bold " th:text="${totalUsers} ?: '--'">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <h3 class="text-sm font-bold text-gray-500">Total Questions</h3>
+          <p class="text-3xl font-bold" th:text="${totalQuestions} ?: '--'"></p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <h3 class="text-sm font-bold text-gray-500">Quizzes Taken</h3>
+          <p class="text-3xl font-bold" th:text="${totalQuizzes} ?: '--'"></p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <h3 class="text-sm font-bold text-gray-500">Average Score</h3>
+          <p class="text-3xl font-bold " th:text="${averageScore} ?: '--'"></p>
+        </div>
+      </div>
+
+      <!-- Management... -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div class="bg-white rounded-xl p-8 shadow border">
+          <h3 class="text-2xl font-bold text-black mb-4">User Management</h3>
+          <p class="text-gray-600 mb-6">View and manage all registered users, their roles, and activity.</p>
+          <div class="space-y-3">
+            <a th:href="@{/admin/users}" class="block w-full bg-[var(--espresso)] text-white font-bold py-3 px-6 rounded-lg">View All Users</a>
+            <a th:href="@{/admin/users/new}" class="block w-full bg-[var(--light-brown)] text-white font-bold py-3 px-6 rounded-lg">Add New User</a>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow border">
+          <h3 class="text-2xl font-bold text-black mb-4">Question Bank</h3>
+          <p class="text-gray-600 mb-6">Create, edit, and organize quiz questions across categories.</p>
+          <div class="space-y-3">
+            <a th:href="@{/admin/questions}" class="block w-full bg-[var(--light-brown)] text-white font-bold py-3 px-6 rounded-lg">Manage Questions</a>
+            <a th:href="@{/admin/questions/new}" class="block w-full bg-[var(--espresso)] text-white font-bold py-3 px-6 rounded-lg">Add New Question</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden'); 
+    });
+  </script>
+</body>
+</html> 

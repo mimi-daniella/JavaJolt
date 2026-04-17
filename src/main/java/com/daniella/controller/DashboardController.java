@@ -19,22 +19,17 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard")
-    public String userDashboard(Model model, Principal principal) {
+    public String dashboard(Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/auth/login";
         }
         UserResponseDTO user = userService.getByEmail(principal.getName());
         model.addAttribute("user", user);
-        return "auth/user-dashboard";
-    }
 
-    @GetMapping("/admin/dashboard")
-    public String adminDashboard(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/auth/login";
+        if (user.hasRole("ADMIN")) {
+            return "admin/dashboard";
+        } else {
+            return "user/dashboard";
         }
-        UserResponseDTO user = userService.getByEmail(principal.getName());
-        model.addAttribute("user", user);
-        return "auth/admin-dashboard";
     }
 }

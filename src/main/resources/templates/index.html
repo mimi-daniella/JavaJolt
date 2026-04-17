@@ -1,8 +1,7 @@
-<html>
-<div th:replace="fragments/head :: head"></div>
+<div th:replace="~{fragments/head :: head}"></div>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
-<div th:replace="fragments/backToTop :: backToTop"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
 <!--hero section-->
 <div class="w-full h-[300px] bg-[var(--yellow)] flex flex-col items-center justify-center pt-6 mt-4 relative"  data-aos="fade-in" >
@@ -13,6 +12,7 @@
 	<p class="text-md text-center mt-6" data-aos="fade-in" data-aos-delay="400"> Test your Java skills with gamified quizzes, <br>
 		earn epic badges, and level up from noob to legend.</p>
 
+		<a th:href="@{/auth/register}">
 	<button class="kavoon bg-[var(--espresso)] text-white      
      py-3 px-5 md:py-4 md:px-8     
      text-lg md:text-2xl
@@ -22,20 +22,25 @@
      transition-all duration-300 
      hover:scale-105 hover:-translate-y-1
      hover:bg-[var(--light-brown)] shadow-xl whitespace-nowrap
-     ">
+     "
+	 >
 		Get Started
 	</button>
+	</a>
 
 </div>
 
 <!-- Cards -->
-<div th:replace="fragments/cards :: cards"></div>
+<div th:replace="~{fragments/cards :: cards}"></div>
 
-<h2 class="kavoon text-center text-[var(--light-brown)] mt-14 text-2xl md:text-4xl">Curated from  trusted study platforms...</h2>
-<p class="text-green-500 mt-20 mb-20 text-center">⚠️⚠️Design is still in progress, i'm waiting for hannah to get names of site, would continue from there later on⚠️⚠️</p>
+<h2 class="kavoon text-center text-black mt-14 text-2xl md:text-4xl mb-4	">Curated from  trusted study platforms...</h2>
+
+<div th:replace="~{fragments/logos :: logos}"></div>
+
+
 
 <!-- footer -->
- <div th:replace="fragments/footer :: footer"></div> 
+ <div th:replace="~{fragments/footer :: footer}"></div> 
  
 
  <script>
@@ -51,4 +56,3 @@
 
  </script>
  </body>
- </html>

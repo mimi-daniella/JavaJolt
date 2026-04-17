@@ -8,7 +8,7 @@
 body {             
 	font-family: "Jua", sans-serif;
 	color:black;
-	background-color: #F5F5DC;
+	background-color: #FFFFFF;
 }
 
 .kavoon{
@@ -22,3 +22,4 @@ body {
   padding: 1rem;
   background-color: var(--cream); /* optional accent */
 } 
+

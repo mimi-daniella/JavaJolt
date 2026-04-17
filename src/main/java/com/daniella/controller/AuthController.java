@@ -4,9 +4,12 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.Random;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,8 @@ import com.daniella.service.UserService;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private static final String OtpKey = "PASSWORD_RESET_OTP";
     private static final String OtpEmailKey = "PASSWORD_RESET_EMAIL";
@@ -67,30 +72,28 @@ public class AuthController {
 
         try {
             userService.createUser(userRequest);
-            
-            // Generate OTP and store in session for email verification
+
+            // Generate OTP and store in session
             String otp = String.format("%06d", new Random().nextInt(1_000_000));
             session.setAttribute(OtpKey, otp);
             session.setAttribute(OtpEmailKey, userRequest.getEmail());
             session.setAttribute(OtpVerifiedKey, false);
             session.setAttribute("OTP_SENT_AT", Instant.now());
             session.setAttribute("IS_REGISTRATION", true);
-            
+
             // Send OTP email
             try {
                 emailService.sendOtpEmail(userRequest.getEmail(), otp);
-            } catch (MailException ex) {
-                session.removeAttribute(OtpKey);
-                session.removeAttribute(OtpEmailKey);
-                session.removeAttribute(OtpVerifiedKey);
-                session.removeAttribute("OTP_SENT_AT");
-                session.removeAttribute("IS_REGISTRATION");
+            } catch (MailException | MessagingException ex) {
+                logger.error("Failed to send OTP email to {}", userRequest.getEmail(), ex);
+                clearOtpSession(session);
                 model.addAttribute("error", "Unable to send verification email. Please check your email settings and try again.");
                 return "auth/register";
             }
-            
+
             redirectAttributes.addFlashAttribute("info", "A verification code has been sent to your email.");
             return "redirect:/auth/verify-otp?mode=register";
+
         } catch (BusinessException ex) {
             model.addAttribute("error", ex.getMessage());
             return "auth/register";
@@ -139,14 +142,11 @@ public class AuthController {
         session.setAttribute(OtpVerifiedKey, false);
         session.setAttribute("OTP_SENT_AT", Instant.now());
 
-        // Send OTP email
         try {
             emailService.sendOtpEmail(email, otp);
-        } catch (MailException ex) {
-            session.removeAttribute(OtpKey);
-            session.removeAttribute(OtpEmailKey);
-            session.removeAttribute(OtpVerifiedKey);
-            session.removeAttribute("OTP_SENT_AT");
+        } catch (MailException | MessagingException ex) {
+            logger.error("Failed to send reset OTP email to {}", email, ex);
+            clearOtpSession(session);
             model.addAttribute("error", "Unable to send verification email. Please check your email settings and try again.");
             return "auth/forgot-password";
         }
@@ -156,7 +156,7 @@ public class AuthController {
     }
 
     @GetMapping("/verify-otp")
-    public String verifyOtpPage(HttpSession session, Model model) {
+    public String verifyOtpPage(HttpSession session) {
         if (session.getAttribute(OtpKey) == null) {
             return "redirect:/auth/forgot-password";
         }
@@ -173,22 +173,18 @@ public class AuthController {
             return "auth/verify-otp";
         }
         session.setAttribute(OtpVerifiedKey, true);
-        
-        // If this is registration flow, go to login; otherwise go to reset password
+
         boolean isRegistration = Boolean.TRUE.equals(session.getAttribute("IS_REGISTRATION"));
         if (isRegistration) {
-            session.removeAttribute("IS_REGISTRATION");
-            session.removeAttribute(OtpKey);
-            session.removeAttribute(OtpEmailKey);
-            session.removeAttribute(OtpVerifiedKey);
+            clearOtpSession(session);
             return "redirect:/auth/login?registered=true";
         }
-        
+
         return "redirect:/auth/reset-password";
     }
 
     @GetMapping("/reset-password")
-    public String resetPassword(HttpSession session, Model model) {
+    public String resetPassword(HttpSession session) {
         if (!Boolean.TRUE.equals(session.getAttribute(OtpVerifiedKey))) {
             return "redirect:/auth/forgot-password";
         }
@@ -219,11 +215,16 @@ public class AuthController {
         User user = userOptional.get();
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
+        clearOtpSession(session);
+
+        return "redirect:/auth/login?reset=true";
+    }
+
+    private void clearOtpSession(HttpSession session) {
         session.removeAttribute(OtpKey);
         session.removeAttribute(OtpEmailKey);
         session.removeAttribute(OtpVerifiedKey);
         session.removeAttribute("OTP_SENT_AT");
-
-        return "redirect:/auth/login?reset=true";
+        session.removeAttribute("IS_REGISTRATION");
     }
 }
