@@ -1,11 +1,11 @@
 <html>
-<head th:replace="fragments/head :: head"></head>
+<head th:replace="~{fragments/head :: head}"></head>
 <body>
 
   <!-- Navbar -->
-  <div th:replace="fragments/navbar :: navbar"></div>
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
   <!-- Back to Top -->
-  <div th:replace="fragments/backToTop :: backToTop"></div>
+  <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
   <!-- Hero -->
   <section class="flex flex-col items-center justify-center min-h-[40vh] px-6 text-center"
@@ -39,7 +39,7 @@
         <div class="absolute -bottom-6 left-6 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[20px] border-l-transparent border-r-transparent border-t-[var(--espresso)]"></div>
       </div>
 
-      <!-- Feedback Form Speech Balloon -->
+      <!-- Feedback Form Speech tail-->
       <div class="p-2 px-6 border-2 border-black border-dashed rounded-xl shadow-lg relative "
            data-aos="fade-left">
         <h2 class="text-3xl font-bold mb-6">Send Feedback</h2>
@@ -59,7 +59,7 @@
             </button>
           </div>
         </form>
-        <!-- Speech balloon tail -->
+        <!-- Speech tail -->
         <div class="absolute -bottom-6 right-10 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[20px] border-l-transparent border-r-transparent border-t-[var(--espresso)]"></div>
       </div>
 
@@ -67,7 +67,7 @@
   </section>
 
   <!-- Footer -->
-  <div th:replace="fragments/footer :: footer"></div>
+  <div th:replace="~{fragments/footer :: footer}"></div>
 
   <!-- AOS Script -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
