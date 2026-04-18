@@ -7,28 +7,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.daniella.entity.User;
-import com.daniella.repository.UserRepository;
-import com.daniella.service.QuestionService;
+import com.daniella.repository.UserRepository; 
 import com.daniella.service.UserService;
 
 
 @Controller
-public class AdminDashboardController {
+public class UserManagement{
 	
 	private final UserRepository userRepository;
 	private final UserService userService;
-	private final QuestionService questionService;
-	
-	public AdminDashboardController(UserRepository userRepository, UserService userService, 
-			 QuestionService questionService ) {
+	public UserManagement(UserRepository userRepository, UserService userService ) {
 		this.userRepository = userRepository;
 		this.userService = userService;
-		this.questionService = questionService;
 	}
 
-	@GetMapping("/admin/dashboard")
-	public String dashboard(Model model) {
-		model.addAttribute("activePage", "dashboard");
+	@GetMapping("/admin/users")
+	public String users(Model model) {
+		model.addAttribute("activePage", "users");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName(); 
 		
@@ -39,8 +34,8 @@ public class AdminDashboardController {
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("email", user.getEmail());		
 		model.addAttribute("totalUsers", userService.getTotalUsers());		
-		model.addAttribute("totalQuestions", questionService.getTotalQuestions());
-		return "admin/dashboard";
+		
+		return "admin/users";
 		
 	}
 
