@@ -29,4 +29,8 @@ public List<Question> getHardQuestions(){
 	return questionRepository.findByDifficulty(Difficulty.HARD);
 }
 
+public long getTotalQuestions() {
+	return questionRepository.count();
+}
+
 }

@@ -1,0 +1,46 @@
+<!-- fragments/sidebar.html -->
+
+<aside th:fragment="sidebar" id="sidebar"
+       class="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-gray-700 via-gray-900 to-amber-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-50">
+  <div class="p-6">
+    <a class="block" th:href="@{/}">
+      <img th:src="@{/images/fullLogo.png}" class="w-40 h-35" alt="Game Logo">
+    </a>
+    <nav class="flex flex-col space-y-3 mt-6">
+      <a th:href="@{/admin/dashboard}" th:classappend="${activePage == 'dashboard'} ? ' bg-gray-700' : ''"
+         class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Home</a>
+      <a th:href="@{/admin/messaging}" th:classappend="${activePage == 'messaging'} ? ' bg-gray-700' : ''"
+         class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Messaging</a>
+      <a th:href="@{/admin/users}" th:classappend="${activePage == 'users'} ? ' bg-gray-700' : ''"
+         class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Manage Users</a>
+      <a th:href="@{/admin/questions}" th:classappend="${activePage == 'questions'} ? ' bg-gray-700' : ''"
+         class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Question Bank</a>
+      <a th:href="@{/admin/quizzes}" th:classappend="${activePage == 'quizzes'} ? ' bg-gray-700' : ''"
+         class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Quizzes</a>
+      <a th:href="@{/admin/settings}" th:classappend="${activePage == 'settings'} ? ' bg-gray-700' : ''"
+         class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">System Settings</a>
+    </nav>
+  </div>
+</aside>
+
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden md:hidden z-40"></div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+
+  if(menuBtn){
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    });
+  }
+
+  if(overlay){
+    overlay.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden'); 
+    });
+  }
+</script>
