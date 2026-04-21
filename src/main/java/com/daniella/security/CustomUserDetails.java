@@ -11,7 +11,8 @@ import com.daniella.entity.User;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+	private static final long serialVersionUID = 1L;
+	private final User user;
 
     public CustomUserDetails(User user) {
         this.user = user;
@@ -58,4 +59,8 @@ public class CustomUserDetails implements UserDetails {
     public String getDisplayName() {
         return String.format("%s %s", user.getFirstName(), user.getLastName()).trim();
     }
+
+	public String getStatus() {
+	    return (user != null && user.getStatus() != null) ? user.getStatus().name() : "ACTIVE";
+	}
 }

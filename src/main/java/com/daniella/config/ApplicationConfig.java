@@ -25,7 +25,7 @@ public class ApplicationConfig {
 	    http
 	        .csrf(csrf -> csrf.disable())
 	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**").permitAll()
+	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**", "/suspended").permitAll()
 	            .requestMatchers("/admin/**").hasRole("ADMIN")
 	            // User-facing dashboard and quiz pages must stay protected while public pages remain visible.
 	            .requestMatchers("/dashboard", "/dashboard/**", "/quiz/**", "/quizzes").authenticated()

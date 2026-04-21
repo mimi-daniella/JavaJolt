@@ -1,49 +1,39 @@
 package com.daniella.entity;
 
 import com.daniella.enums.Role;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import com.daniella.enums.UserStatus;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-
-
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="users")
-
+@Table(name = "users")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	private String firstName;
-	
+
 	@NotBlank
 	private String lastName;
-	
+
 	@NotBlank
 	@Email
 	private String email;
-	
+
 	@NotBlank
-	private String password; 
-	
+	private String password;
+
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	
-	
-	
-	
-//	Getters & setters
+	@Enumerated(EnumType.STRING)
+	private UserStatus status = UserStatus.ACTIVE;
+
+	// --- Getters & Setters ---
 	public Long getId() {
 		return id;
 	}
@@ -91,12 +81,12 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
 }

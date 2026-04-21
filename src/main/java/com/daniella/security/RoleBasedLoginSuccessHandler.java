@@ -1,6 +1,7 @@
 package com.daniella.security;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,22 +29,40 @@ public class RoleBasedLoginSuccessHandler implements AuthenticationSuccessHandle
             throws IOException, ServletException {
 
         String contextPath = request.getContextPath();
-        String redirectUrl = contextPath + "/dashboard"; // default
+        String redirectUrl = contextPath + "/dashboard"; // Default fallback
+        
+        Object principal = authentication.getPrincipal();
+        String status = "";
 
-        if (authentication.getPrincipal() instanceof OAuth2User oauth2User) {
-            // OAuth2 login
+        // Identify status based on login type
+        if (principal instanceof CustomUserDetails userDetails) {
+            status = userDetails.getStatus();
+        } else if (principal instanceof OAuth2User oauth2User) {
             String email = oauth2User.getAttribute("email");
-            User user = userRepository.findByEmail(email).orElse(null);
-            if (user != null && user.getRole() != null) {
-                redirectUrl = contextPath + (user.getRole().name().equals("ADMIN") ? "/admin/dashboard" : "/dashboard");
+            Optional<User> userOpt = userRepository.findByEmail(email);
+            if (userOpt.isPresent()) {
+                status = userOpt.get().getStatus() != null ? userOpt.get().getStatus().name() : "ACTIVE";
             }
+        }
+
+        // Suspension Check
+        if ("SUSPENDED".equalsIgnoreCase(status)) {
+            redirectUrl = contextPath + "/auth/suspended";
         } else {
-            // Regular form login
-            redirectUrl = contextPath + (authentication.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .anyMatch("ROLE_ADMIN"::equals)
-                    ? "/admin/dashboard"
-                    : "/dashboard");
+            //Role-Based Redirection for Active Users
+            if (principal instanceof OAuth2User oauth2User) {
+                String email = oauth2User.getAttribute("email");
+                User user = userRepository.findByEmail(email).orElse(null);
+                if (user != null && user.getRole() != null) {
+                    redirectUrl = contextPath + (user.getRole().name().equalsIgnoreCase("ADMIN") ? "/admin/users" : "/dashboard");
+                }
+            } else {
+                redirectUrl = contextPath + (authentication.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .anyMatch(a -> a.equals("ROLE_ADMIN") || a.equals("ADMIN"))
+                        ? "/admin/users"
+                        : "/dashboard");
+            }
         }
 
         response.sendRedirect(redirectUrl);
