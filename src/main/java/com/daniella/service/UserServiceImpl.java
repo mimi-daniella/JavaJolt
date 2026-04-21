@@ -12,6 +12,7 @@ import com.daniella.dto.UserResponseDTO;
 import com.daniella.dto.UserUpdateDTO;
 import com.daniella.entity.User;
 import com.daniella.enums.Role;
+import com.daniella.enums.UserStatus;
 import com.daniella.exception.BusinessException;
 import com.daniella.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -102,6 +103,27 @@ public class UserServiceImpl implements UserService {
 	public long getTotalUsers() {	
 		return userRepository.count();
 	}
+
+	@Override
+	public void deleteUser(Long id) {
+		userRepository.deleteById(id);
+	}
+
+	   @Override
+	    public void suspendUser(Long id) {
+	        User user = userRepository.findById(id)
+	                .orElseThrow(() -> new BusinessException("User not found"));
+	        user.setStatus(UserStatus.SUSPENDED);
+	        userRepository.save(user);
+	    }
+
+	    @Override
+	    public void reactivateUser(Long id) {
+	        User user = userRepository.findById(id)
+	                .orElseThrow(() -> new BusinessException("User not found"));
+	        user.setStatus(UserStatus.ACTIVE);
+	        userRepository.save(user);
+	    }
 
 	
 }

@@ -25,7 +25,7 @@ public class ApplicationConfig {
 	    http
 	        .csrf(csrf -> csrf.disable())
 	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**").permitAll()
+	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**", "/suspended").permitAll()
 	            .requestMatchers("/admin/**").hasRole("ADMIN")
 	            .requestMatchers("/dashboard").authenticated()
 	            .anyRequest().permitAll()
@@ -46,7 +46,7 @@ public class ApplicationConfig {
 	            )
 	            .successHandler(successHandler)
 	            .failureUrl("/auth/login?error=true")
-	        );
+	        );	
 	    return http.build();
 	}
 

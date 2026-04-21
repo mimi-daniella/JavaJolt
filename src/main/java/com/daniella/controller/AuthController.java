@@ -219,6 +219,12 @@ public class AuthController {
 
         return "redirect:/auth/login?reset=true";
     }
+    
+    @GetMapping("/suspended")
+    public String suspendedPage() {
+        return "auth/suspended"; 
+    }
+
 
     private void clearOtpSession(HttpSession session) {
         session.removeAttribute(OtpKey);

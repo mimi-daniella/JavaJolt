@@ -23,5 +23,8 @@ public interface UserService {
 	void updatePassword(String email, PasswordChangeDTO passswordDTO);
 	
 	long getTotalUsers();
-
+	 
+	void deleteUser(Long id);
+	void suspendUser(Long id);
+	void reactivateUser(Long id);
 }
