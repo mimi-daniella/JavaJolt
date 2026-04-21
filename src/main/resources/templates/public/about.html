@@ -59,6 +59,10 @@
               hover:bg-[var(--yellow)] hover:text-[var(--espresso)] transition-all transform hover:-translate-y-1">
 		Start a Quiz
 	</a>
+	<a th:if="${loggedIn}" th:href="@{/dashboard}" class="inline-block ml-3 bg-white text-[var(--espresso)] font-bold px-8 py-4 rounded-full border-4 border-[var(--espresso)] shadow-lg 
+              hover:bg-[var(--yellow)] transition-all transform hover:-translate-y-1">
+		Open Dashboard
+	</a>
 </section>
 
 <div th:replace="~{fragments/footer :: footer}"></div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/backToTop :: backToTop}"></div>
+
+<main class="max-w-4xl mx-auto pt-10 pb-12 px-6">
+    <!-- Quiz result page added for the real /quiz/submit flow. -->
+    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 text-center shadow-[8px_8px_0px_var(--yellow)]" data-aos="zoom-in">
+        <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Result</p>
+        <h1 class="kavoon mt-4 text-5xl text-[var(--espresso)]">Nice run!</h1>
+        <p class="mt-4 text-lg">Your latest JavaJolt score has been calculated and saved to your activity history.</p>
+
+        <div class="mt-10 inline-flex flex-col items-center justify-center rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-12 py-10 shadow-[6px_6px_0px_var(--espresso)]">
+            <span class="text-sm uppercase font-bold text-[var(--espresso)]">Your Score</span>
+            <span class="kavoon mt-2 text-6xl text-[var(--espresso)]" th:text="${score + ' / ' + total}">0 / 0</span>
+        </div>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <a th:href="@{/quiz/start}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                Try Another Quiz
+            </a>
+            <a th:href="@{/dashboard}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+                Back to Dashboard
+            </a>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+</script>
+</body>
+</html>

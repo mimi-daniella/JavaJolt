@@ -3,56 +3,92 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
-<!--hero section-->
-<div class="w-full h-[300px] bg-[var(--yellow)] flex flex-col items-center justify-center pt-6 mt-4 relative"  data-aos="fade-in" >
-	<h1 class="text-3xl text-center sm:text-5xl md:text-7xl text-white font-bold kavoon [-webkit-text-stroke:0.5px_black]">
+<!-- Home page polished so both guests and signed-in users have a clear path through the frontend. -->
+<div class="w-full min-h-[360px] bg-[var(--yellow)] flex flex-col items-center justify-center pt-6 mt-4 relative px-6 text-center" data-aos="fade-in">
+	<h1 class="text-3xl sm:text-5xl md:text-7xl text-white font-bold kavoon [-webkit-text-stroke:0.5px_black]">
 		Power Up Your Syntax
 	</h1>
- 
-	<p class="text-md text-center mt-6" data-aos="fade-in" data-aos-delay="400"> Test your Java skills with gamified quizzes, <br>
-		earn epic badges, and level up from noob to legend.</p>
 
-		<a th:href="@{/auth/register}">
-	<button class="kavoon bg-[var(--espresso)] text-white      
-     py-3 px-5 md:py-4 md:px-8     
-     text-lg md:text-2xl
-     rounded-sm absolute   
-     bottom-[-22px] md:bottom-[-30px] 
-     left-1/2 -translate-x-1/2
-     transition-all duration-300 
-     hover:scale-105 hover:-translate-y-1
-     hover:bg-[var(--light-brown)] shadow-xl whitespace-nowrap
-     "
-	 >
-		Get Started
-	</button>
-	</a>
+	<p class="text-md md:text-lg mt-6 max-w-2xl" data-aos="fade-in" data-aos-delay="400">
+		Test your Java skills with gamified quizzes, earn epic badges, and level up from noob to legend.
+	</p>
 
+	<div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+		<a th:if="${loggedIn}" th:href="@{/dashboard}">
+			<button class="kavoon bg-[var(--espresso)] text-white py-3 px-5 md:py-4 md:px-8 text-lg md:text-2xl rounded-sm transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:bg-[var(--light-brown)] shadow-xl whitespace-nowrap">
+				Open Dashboard
+			</button>
+		</a>
+		<a th:if="${loggedIn}" th:href="@{/quizzes}">
+			<button class="kavoon bg-white text-[var(--espresso)] py-3 px-5 md:py-4 md:px-8 text-lg md:text-2xl rounded-sm border-4 border-[var(--espresso)] transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-xl whitespace-nowrap">
+				Browse Quizzes
+			</button>
+		</a>
+		<a th:unless="${loggedIn}" th:href="@{/auth/register}">
+			<button class="kavoon bg-[var(--espresso)] text-white py-3 px-5 md:py-4 md:px-8 text-lg md:text-2xl rounded-sm transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:bg-[var(--light-brown)] shadow-xl whitespace-nowrap">
+				Get Started
+			</button>
+		</a>
+		<a th:unless="${loggedIn}" th:href="@{/auth/login}">
+			<button class="kavoon bg-white text-[var(--espresso)] py-3 px-5 md:py-4 md:px-8 text-lg md:text-2xl rounded-sm border-4 border-[var(--espresso)] transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-xl whitespace-nowrap">
+				Login
+			</button>
+		</a>
+	</div>
 </div>
 
-<!-- Cards -->
 <div th:replace="~{fragments/cards :: cards}"></div>
 
-<h2 class="kavoon text-center text-black mt-14 text-2xl md:text-4xl mb-4	">Curated from  trusted study platforms...</h2>
+<section class="max-w-6xl mx-auto mt-14 px-6" data-aos="fade-up">
+	<div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+			<div>
+				<h2 class="kavoon text-3xl md:text-4xl text-[var(--espresso)]">A cleaner route through JavaJolt</h2>
+				<p class="mt-4 text-lg text-[var(--light-text)]">
+					Public pages, user dashboard, quizzes page, settings, and quiz play now connect more clearly so users can actually move around the website.
+				</p>
+				<div class="mt-6 flex flex-wrap gap-4">
+					<a th:href="@{/public/about}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">About JavaJolt</a>
+					<a th:href="@{/public/contact}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">Contact Support</a>
+				</div>
+			</div>
+			<div class="grid grid-cols-2 gap-4">
+				<div class="rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-5 text-center shadow-[4px_4px_0px_var(--light-brown)]">
+					<p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Dashboard</p>
+					<p class="mt-2 text-2xl kavoon text-[var(--espresso)]">Live</p>
+				</div>
+				<div class="rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-5 text-center shadow-[4px_4px_0px_var(--light-brown)]">
+					<p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Quizzes Page</p>
+					<p class="mt-2 text-2xl kavoon text-[var(--espresso)]">Live</p>
+				</div>
+				<div class="rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-5 text-center shadow-[4px_4px_0px_var(--light-brown)]">
+					<p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Settings</p>
+					<p class="mt-2 text-2xl kavoon text-[var(--espresso)]">Live</p>
+				</div>
+				<div class="rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-5 text-center shadow-[4px_4px_0px_var(--light-brown)]">
+					<p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Quiz Result</p>
+					<p class="mt-2 text-2xl kavoon text-[var(--espresso)]">Live</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<h2 class="kavoon text-center text-black mt-14 text-2xl md:text-4xl mb-4">Curated from trusted study platforms...</h2>
 
 <div th:replace="~{fragments/logos :: logos}"></div>
 
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-
-<!-- footer -->
- <div th:replace="~{fragments/footer :: footer}"></div> 
- 
-
- <script>
+<script>
 	document.addEventListener("DOMContentLoaded", () => {
 	  AOS.init({
 	    once: true,
 	    duration:1500,
 	    easing: 'ease-out',
-	    startEvent: 'DOMContentLoaded' 
+	    startEvent: 'DOMContentLoaded'
 	  });
-	  AOS.refreshHard(); 
+	  AOS.refreshHard();
 	});
-
- </script>
- </body>
+</script>
+</body>

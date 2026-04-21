@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/backToTop :: backToTop}"></div>
+
+<main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
+    <!-- User quiz-taking page added for the real /quiz/start route. -->
+    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]" data-aos="fade-down">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+                <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Arena</p>
+                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]">JavaJolt Challenge</h1>
+                <p class="mt-4 text-lg max-w-2xl">Answer each question once, submit at the end, and your score will be saved to your account activity.</p>
+            </div>
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-4 text-center shadow-[4px_4px_0px_var(--espresso)]">
+                <p class="text-sm uppercase font-bold text-[var(--espresso)]">Questions Loaded</p>
+                <p class="kavoon text-4xl text-[var(--espresso)]" th:text="${#lists.size(questions)}">10</p>
+            </div>
+        </div>
+    </section>
+
+    <form th:action="@{/quiz/submit}" method="post" class="space-y-6">
+        <section th:each="question, stat : ${questions}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[6px_6px_0px_var(--light-brown)]" data-aos="fade-up">
+            <div class="flex items-center justify-between gap-4">
+                <span class="rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 font-bold text-[var(--espresso)]" th:text="'Question ' + ${stat.count}">Question 1</span>
+                <span class="rounded-full border-2 border-[var(--espresso)] bg-white px-4 py-2 text-sm font-bold text-[var(--espresso)]" th:text="${question.category}">Syntax</span>
+            </div>
+
+            <h2 class="mt-5 text-2xl font-bold text-[var(--espresso)] leading-relaxed" th:text="${question.questionText}">Question text</h2>
+
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="A" required>
+                    <span th:text="${question.optionA}">Option A</span>
+                </label>
+                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="B">
+                    <span th:text="${question.optionB}">Option B</span>
+                </label>
+                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="C">
+                    <span th:text="${question.optionC}">Option C</span>
+                </label>
+                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="D">
+                    <span th:text="${question.optionD}">Option D</span>
+                </label>
+            </div>
+        </section>
+
+        <div class="sticky bottom-5 flex justify-center">
+            <button type="submit" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-10 py-4 text-xl font-bold text-white shadow-[6px_6px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+                Submit Quiz
+            </button>
+        </div>
+    </form>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+</script>
+</body>
+</html>
