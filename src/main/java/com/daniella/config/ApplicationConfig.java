@@ -27,7 +27,8 @@ public class ApplicationConfig {
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**", "/suspended").permitAll()
 	            .requestMatchers("/admin/**").hasRole("ADMIN")
-	            .requestMatchers("/dashboard").authenticated()
+	            // User-facing dashboard and quiz pages must stay protected while public pages remain visible.
+	            .requestMatchers("/dashboard", "/dashboard/**", "/quiz/**", "/quizzes").authenticated()
 	            .anyRequest().permitAll()
 	        )
 	        .authenticationProvider(authenticationProvider(userDetailsService))
@@ -46,7 +47,12 @@ public class ApplicationConfig {
 	            )
 	            .successHandler(successHandler)
 	            .failureUrl("/auth/login?error=true")
-	        );	
+	        )
+	        .logout(logout -> logout
+	            .logoutUrl("/logout")
+	            .logoutSuccessUrl("/auth/login?logout=true")
+	            .permitAll()
+	        );
 	    return http.build();
 	}
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/backToTop :: backToTop}"></div>
+
+<main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
+    <!-- Dedicated Quizzes page added for the navbar flow. -->
+    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-gradient-to-r from-[var(--yellow)] to-[#ffe7a6] p-8 shadow-[8px_8px_0px_var(--espresso)]" data-aos="fade-down">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div class="max-w-2xl">
+                <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quizzes Page</p>
+                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]">Choose how you want to play.</h1>
+                <p class="mt-4 text-lg leading-relaxed">
+                    This is the real quizzes hub for JavaJolt. Start a random battle, jump back to your dashboard,
+                    or explore Java topics before you play.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-4">
+                    <a th:href="@{/quiz/start}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">Start Random Quiz</a>
+                    <a th:href="@{/dashboard}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">Go to Dashboard</a>
+                </div>
+            </div>
+            <div class="w-full max-w-sm rounded-2xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--light-brown)]">
+                <h2 class="text-2xl font-bold text-[var(--espresso)]">Question Bank Snapshot</h2>
+                <div class="mt-5 grid grid-cols-2 gap-4">
+                    <div th:each="stat : ${quizStats}" class="rounded-xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 text-center">
+                        <p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold" th:text="${stat.label}">Easy</p>
+                        <p class="kavoon mt-2 text-3xl text-[var(--espresso)]" th:text="${stat.value}">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" data-aos="fade-up">
+        <a th:each="lane : ${quizLanes}" th:href="${lane.href}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+            <h2 class="text-3xl font-bold text-[var(--espresso)]" th:text="${lane.title}">Quick Battle</h2>
+            <p class="mt-4 min-h-[90px]" th:text="${lane.copy}">Jump into a random Java challenge.</p>
+            <span class="mt-3 inline-flex rounded-full border-2 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 font-bold text-[var(--espresso)]" th:text="${lane.cta}">Start Challenge</span>
+        </a>
+    </section>
+
+    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]" data-aos="fade-up">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div class="lg:max-w-xl">
+                <h2 class="kavoon text-3xl text-[var(--espresso)]">Popular Java Topics</h2>
+                <p class="mt-3 text-lg">
+                    Your question bank already contains multiple categories. These are some of the topics currently available in the app.
+                </p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full lg:max-w-2xl">
+                <div th:each="category : ${categories}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-5 text-center font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)]" th:text="${category}">
+                    OOP
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+</script>
+</body>
+</html>

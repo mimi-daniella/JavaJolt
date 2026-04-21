@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/backToTop :: backToTop}"></div>
+
+<main class="max-w-5xl mx-auto pt-10 pb-12 px-6">
+    <!-- Settings page added on the real /dashboard/settings route. -->
+    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]" data-aos="fade-down">
+        <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Dashboard Settings</p>
+        <h1 class="kavoon mt-3 text-4xl text-[var(--espresso)]">Manage your profile</h1>
+        <p class="mt-4 text-lg">Update your account details and password from one place without leaving the dashboard flow.</p>
+    </section>
+
+    <div th:if="${success}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)]" th:text="${success}"></div>
+    <div th:if="${error}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#ffd4cb] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)]" th:text="${error}"></div>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]" data-aos="fade-right">
+            <h2 class="kavoon text-3xl text-[var(--espresso)]">Profile Details</h2>
+            <form th:action="@{/dashboard/profile}" th:object="${profileForm}" method="post" class="mt-6 space-y-5">
+                <div>
+                    <label class="block mb-2 font-bold text-[var(--espresso)]">First Name</label>
+                    <input type="text" th:field="*{firstName}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-[var(--espresso)]">Last Name</label>
+                    <input type="text" th:field="*{lastName}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-[var(--espresso)]">Email</label>
+                    <input type="email" th:field="*{email}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                </div>
+                <button type="submit" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+                    Save Profile
+                </button>
+            </form>
+        </div>
+
+        <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]" data-aos="fade-left">
+            <h2 class="kavoon text-3xl text-[var(--espresso)]">Password</h2>
+            <form th:action="@{/dashboard/password}" th:object="${passwordForm}" method="post" class="mt-6 space-y-5">
+                <div>
+                    <label class="block mb-2 font-bold text-[var(--espresso)]">Current Password</label>
+                    <input type="password" th:field="*{oldPassword}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-[var(--espresso)]">New Password</label>
+                    <input type="password" th:field="*{newPassword}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-[var(--espresso)]">Confirm Password</label>
+                    <input type="password" th:field="*{confirmPassword}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                </div>
+                <button type="submit" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+                    Update Password
+                </button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+</script>
+</body>
+</html>
