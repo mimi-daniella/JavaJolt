@@ -1,117 +1,130 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head">
-    
-</head>
+<head th:replace="fragments/head :: head"></head>
 <body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
-	
-	<nav>
-		<img th:src="@{/images/fullLogo.png}" alt="Logo" class="w-32 brightness-110 drop-shadow-lg ml-4 mt-2"/>
-	</nav>
-	
-<main class="max-w-6xl mx-auto pt-24 pb-12 px-6">
-    <!-- Hero / Start Section (Reference: CodeChef Practice Header) -->
-    <section class="mb-16 text-center md:text-left flex flex-col md:flex-row items-center justify-between p-10 rounded-2xl border-4 border-[var(--espresso)] shadow-[8px_8px_0px_var(--yellow)] bg-white" data-aos="fade-down">
-        <div class="md:max-w-2xl">
-            <h1 class="kavoon text-5xl text-[var(--espresso)] mb-4 tracking-wide">JAVA QUEST</h1>
-            <p class="text-xl mb-8 opacity-90 leading-relaxed">
-                Master Java from Syntax to Collections. Solve bite-sized challenges and level up your coding skills in a comic-style adventure.
-            </p>
-            <div class="flex flex-wrap gap-4">
-                <a href="#levels" class="bg-[var(--yellow)] text-[var(--espresso)] font-bold py-4 px-10 rounded-xl border-4 border-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase tracking-wider">
-                    Start Learning
-                </a>
-                <button class="bg-white text-[var(--espresso)] font-bold py-4 px-10 rounded-xl border-4 border-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase tracking-wider">
-                    View Leaderboard
-                </button>
-            </div>
-        </div>
-        <!-- Decorative Icon/Mascot Placeholder -->
-        <div class="hidden md:block w-48 h-48 bg-[var(--yellow)] border-4 border-[var(--espresso)] rounded-full flex items-center justify-center shadow-[8px_8px_0px_var(--light-brown)]">
-            <span class="text-6xl">☕</span>
-        </div>
-    </section>
 
-    <!-- Stats Grid (Serious but Stylized) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16" data-aos="fade-up">
-        <div class="bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--light-brown)]">
-            <p class="text-sm uppercase font-bold text-[var(--light-brown)] mb-1">Rank</p>
-            <h3 class="text-3xl font-bold text-[var(--espresso)]">Beginner</h3>
-        </div>
-        <div class="bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--light-brown)]">
-            <p class="text-sm uppercase font-bold text-[var(--light-brown)] mb-1">Accuracy</p>
-            <h3 class="text-3xl font-bold text-[var(--espresso)]">85%</h3>
-        </div>
-        <div class="bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--light-brown)]">
-            <p class="text-sm uppercase font-bold text-[var(--light-brown)] mb-1">Points</p>
-            <h3 class="text-3xl font-bold text-[var(--espresso)]">1,240</h3>
-        </div>
-    </div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
-    <!-- Levels Section (CodeChef Practice Style) -->
-    <div id="levels" class="mb-12" data-aos="fade-up">
-        <h2 class="kavoon text-3xl text-[var(--espresso)] mb-8 flex items-center">
-            <span class="bg-[var(--yellow)] px-4 py-1 border-4 border-[var(--espresso)] mr-4 shadow-[4px_4px_0px_var(--espresso)]">LEVELS</span>
-            CHOOSE YOUR CHALLENGE
-        </h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Level Card Item -->
-            <div th:each="level : ${levels}" class="group bg-white p-6 rounded-xl border-4 border-[var(--espresso)] shadow-[6px_6px_0px_var(--espresso)] hover:shadow-[10px_10px_0px_var(--yellow)] transition-all">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h4 class="text-2xl font-bold text-[var(--espresso)] mb-1" th:text="${level.title}">Basic Syntax</h4>
-                        <p class="text-sm text-gray-500" th:text="${level.topicCount + ' Topics • ' + level.difficulty}">12 Topics • Easy</p>
-                    </div>
-                    <span class="bg-[var(--light-brown)] text-white text-xs px-3 py-1 rounded-full border-2 border-[var(--espresso)]" th:text="${level.completionStatus}">IN PROGRESS</span>
-                </div>
-                
-                <!-- Progress Bar -->
-                <div class="w-full bg-gray-100 border-2 border-[var(--espresso)] h-4 rounded-full overflow-hidden mb-6">
-                    <div class="bg-[var(--yellow)] h-full border-r-2 border-[var(--espresso)]" th:style="'width:' + ${level.progress} + '%'"></div>
-                </div>
-
-                <div class="flex justify-between items-center">
-                    <span class="font-bold text-[var(--light-text)]" th:text="${level.progress + '% Complete'}">45% Complete</span>
-                    <a th:href="@{/quiz/{id}(id=${level.id})}" class="font-bold text-[var(--espresso)] hover:underline flex items-center">
-                        CONTINUE QUEST 
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+<main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
+    <!-- Real /dashboard frontend rebuild placed on the correct user route. -->
+    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-gradient-to-r from-[var(--yellow)] to-[#ffe38a] p-8 shadow-[8px_8px_0px_var(--espresso)]" data-aos="fade-down">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div class="max-w-2xl">
+                <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">User Dashboard</p>
+                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]">Welcome back, <span th:text="${user.firstName}">Player</span>!</h1>
+                <p class="mt-4 text-lg leading-relaxed">
+                    Your JavaJolt home base now gives you a working jump-off point for quizzes, account settings,
+                    public pages, and recent quiz activity.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-4">
+                    <a th:href="@{/quizzes}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+                        Browse Quizzes
+                    </a>
+                    <a th:href="@{/dashboard/settings}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+                        Settings
+                    </a>
+                    <a th:href="@{/public/about}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                        Visit Public Pages
                     </a>
                 </div>
             </div>
 
-            <!-- Static Placeholder for 'Upcoming' -->
-            <div class="bg-gray-50 p-6 rounded-xl border-4 border-dashed border-gray-300 flex items-center justify-center opacity-60">
-                <p class="text-xl font-bold text-gray-400">Advanced Multithreading (Locked)</p>
+            <div class="w-full max-w-sm rounded-2xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--light-brown)]">
+                <div class="text-sm uppercase text-[var(--light-brown)] font-bold">Profile Snapshot</div>
+                <div class="mt-4 space-y-3">
+                    <div>
+                        <p class="text-xs uppercase text-gray-500">Name</p>
+                        <p class="text-xl font-bold text-[var(--espresso)]" th:text="${user.firstName + ' ' + user.lastName}">Java Jolt</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase text-gray-500">Email</p>
+                        <p class="font-semibold break-all" th:text="${user.email}">student@example.com</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase text-gray-500">Role</p>
+                        <p class="inline-block rounded-full border-2 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-1 font-bold text-[var(--espresso)]" th:text="${user.role}">ROLE_CLIENT</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Recent Activity Table (Serious/Clean Layout) -->
-    <div class="bg-white rounded-2xl border-4 border-[var(--espresso)] shadow-[8px_8px_0px_var(--light-brown)] overflow-hidden" data-aos="fade-up">
-        <div class="bg-[var(--espresso)] p-4 border-b-4 border-[var(--espresso)]">
-            <h3 class="kavoon text-xl text-white">RECENT ACTIVITY</h3>
+    <div th:if="${success}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)]" th:text="${success}"></div>
+    <div th:if="${error}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#ffd4cb] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)]" th:text="${error}"></div>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12" data-aos="fade-up">
+        <div th:each="card : ${statCards}" class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--light-brown)]">
+            <p class="text-sm uppercase tracking-widest text-[var(--light-brown)] font-bold" th:text="${card.label}">Easy Questions</p>
+            <h2 class="mt-3 text-4xl kavoon text-[var(--espresso)]" th:text="${card.value}">0</h2>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2">
+            <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]" data-aos="fade-right">
+                <div class="flex items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="kavoon text-3xl text-[var(--espresso)]">Quiz Arena</h2>
+                        <p class="mt-2 text-base">Everything you need to keep playing and learning without dead links.</p>
+                    </div>
+                    <span class="hidden md:inline-flex rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 font-bold text-[var(--espresso)]">
+                        Live routes
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <a th:each="mode : ${quizModes}" th:href="${mode.href}" class="group rounded-2xl border-4 border-[var(--espresso)] bg-[var(--cream)] p-5 shadow-[5px_5px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+                        <h3 class="text-2xl font-bold text-[var(--espresso)]" th:text="${mode.title}">Java Sprint</h3>
+                        <p class="mt-3 min-h-[88px]" th:text="${mode.copy}">Start a full random challenge from the question bank.</p>
+                        <span class="mt-4 inline-flex font-bold uppercase tracking-wider text-[var(--light-brown)]" th:text="${mode.cta}">Play Now</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]" data-aos="fade-left">
+                <h2 class="kavoon text-3xl text-[var(--espresso)]">Quick Links</h2>
+                <div class="mt-6 space-y-4">
+                    <a th:each="link : ${quickLinks}" th:href="${link.href}" class="block rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-5 py-4 font-bold text-[var(--espresso)] transition hover:translate-y-1 hover:shadow-none shadow-[4px_4px_0px_var(--espresso)]" th:text="${link.title}">
+                        Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white shadow-[8px_8px_0px_var(--light-brown)] overflow-hidden" data-aos="fade-up">
+        <div class="border-b-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-4">
+            <h2 class="kavoon text-2xl text-white">Recent Activity</h2>
         </div>
         <div class="p-6">
-            <div th:if="${#lists.isEmpty(activities)}" class="text-center py-10">
-                <div class="text-5xl mb-4">💤</div>
-                <p class="text-gray-500 font-bold uppercase tracking-widest">No recent quests completed</p>
-                <p class="text-sm text-gray-400">Your results will appear here once you finish a level.</p>
+            <div th:if="${#lists.isEmpty(activities)}" class="rounded-2xl border-4 border-dashed border-[var(--espresso)] bg-[#fffaf0] p-8 text-center">
+                <p class="text-4xl mb-4">☕</p>
+                <p class="font-bold uppercase tracking-[0.2em] text-[var(--espresso)]">No quiz attempts yet</p>
+                <p class="mt-2">Start your first quiz and your results will appear here.</p>
             </div>
-            
-            <table th:unless="${#lists.isEmpty(activities)}" class="w-full text-left">
-                <!-- Standard table structure would go here -->
-            </table>
-        </div>
-    </div>
 
+            <div th:unless="${#lists.isEmpty(activities)}" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div th:each="activity : ${activities}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--cream)] p-5 shadow-[4px_4px_0px_var(--yellow)]">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-[var(--espresso)]" th:text="${activity.title}">Quiz completed</h3>
+                            <p class="mt-2 text-sm text-gray-600" th:text="${activity.meta}">01 Apr 2026 • 08:30 PM</p>
+                        </div>
+                        <span class="rounded-full border-2 border-[var(--espresso)] bg-white px-3 py-1 font-bold text-[var(--espresso)]" th:text="${activity.score}">8 pts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  AOS.init({ once: true, duration: 600 });
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
 </script>
 </body>
 </html>

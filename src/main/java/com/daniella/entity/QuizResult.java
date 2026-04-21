@@ -27,6 +27,14 @@ public class QuizResult {
     
     //getters & setters
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public int getScore() {
 		return score;
 	}
@@ -41,5 +49,13 @@ public class QuizResult {
 
 	public void setCompletedAt(LocalDateTime completedAt) {
 		this.completedAt = completedAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
