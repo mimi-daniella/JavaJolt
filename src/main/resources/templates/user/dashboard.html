@@ -7,12 +7,11 @@
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
 <main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
-    <!-- Real /dashboard frontend rebuild placed on the correct user route. -->
+  
     <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-gradient-to-r from-[var(--yellow)] to-[#ffe38a] p-8 shadow-[8px_8px_0px_var(--espresso)]" data-aos="fade-down">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div class="max-w-2xl">
                 <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">User Dashboard</p>
-                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]">Welcome back, <span th:text="${user.firstName}">Player</span>!</h1>
                 <p class="mt-4 text-lg leading-relaxed">
                     Your JavaJolt home base now gives you a working jump-off point for quizzes, account settings,
                     public pages, and recent quiz activity.
