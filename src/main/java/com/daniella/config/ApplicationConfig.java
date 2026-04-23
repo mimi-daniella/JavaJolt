@@ -18,57 +18,35 @@ import com.daniella.security.RoleBasedLoginSuccessHandler;
 public class ApplicationConfig {
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http,
-	                                       RoleBasedLoginSuccessHandler successHandler,
-	                                       UserDetailsService userDetailsService,
-	                                       CustomOAuth2UserService oauth2UserService) throws Exception {
-	    http
-	        .csrf(csrf -> csrf.disable())
-	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**", "/suspended").permitAll()
-	            .requestMatchers("/admin/**").hasRole("ADMIN")
-	            // User-facing dashboard and quiz pages must stay protected while public pages remain visible.
-	            .requestMatchers("/dashboard", "/dashboard/**", "/quiz/**", "/quizzes").authenticated()
-	            .anyRequest().permitAll()
-	        )
-	        .authenticationProvider(authenticationProvider(userDetailsService))
-	        .formLogin(login -> login
-	            .loginPage("/auth/login")
-	            .loginProcessingUrl("/auth/login")
-	            .successHandler(successHandler)
-	            .failureUrl("/auth/login?error=true")
-	            .permitAll()
-	        )
-	        .oauth2Login(oauth2 -> oauth2
-	            .loginPage("/auth/login")
-	            .userInfoEndpoint(userInfo -> userInfo
-	     
-	                .oidcUserService(oauth2UserService)
-	            )
-	            .successHandler(successHandler)
-	            .failureUrl("/auth/login?error=true")
-	        )
-	        .logout(logout -> logout
-	            .logoutUrl("/logout")
-	            .logoutSuccessUrl("/auth/login?logout=true")
-	            .permitAll()
-	        );
-	    return http.build();
+	SecurityFilterChain filterChain(HttpSecurity http, RoleBasedLoginSuccessHandler successHandler,
+			UserDetailsService userDetailsService, CustomOAuth2UserService oauth2UserService) throws Exception {
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/", "/public/", "/auth/", "/css/", "/js/", "/images/", "/error/",
+								"/suspended", "/api/subscribe")
+						.permitAll().requestMatchers("/admin/").hasRole("ADMIN")
+						.requestMatchers("/dashboard", "/dashboard/", "/quiz/**", "/quizzes").authenticated()
+						.anyRequest().permitAll())
+				.authenticationProvider(authenticationProvider(userDetailsService))
+				.formLogin(login -> login.loginPage("/auth/login").loginProcessingUrl("/auth/login")
+						.successHandler(successHandler).failureUrl("/auth/login?error=true").permitAll())
+				.oauth2Login(oauth2 -> oauth2.loginPage("/auth/login")
+						.userInfoEndpoint(userInfo -> userInfo.oidcUserService(oauth2UserService))
+						.successHandler(successHandler).failureUrl("/auth/login?error=true"))
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/auth/login?logout=true").permitAll());
+
+		return http.build();
 	}
 
+	@Bean
+	DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
 
-    
-    
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
