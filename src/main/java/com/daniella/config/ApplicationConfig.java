@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,10 +28,13 @@ public class ApplicationConfig {
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**", "/suspended").permitAll()
 	            .requestMatchers("/admin/**").hasRole("ADMIN")
-	            // User-facing dashboard and quiz pages must stay protected while public pages remain visible.
 	            .requestMatchers("/dashboard", "/dashboard/**", "/quiz/**", "/quizzes").authenticated()
 	            .anyRequest().permitAll()
 	        )
+	        .sessionManagement(session -> session
+	        		.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+	        	
+	        		)
 	        .authenticationProvider(authenticationProvider(userDetailsService))
 	        .formLogin(login -> login
 	            .loginPage("/auth/login")
