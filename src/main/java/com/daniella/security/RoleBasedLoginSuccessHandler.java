@@ -33,23 +33,34 @@ public class RoleBasedLoginSuccessHandler implements AuthenticationSuccessHandle
         
         Object principal = authentication.getPrincipal();
         String status = "";
+        boolean isVerified = true; //default
+        String userEmail = "";
 
         // Identify status based on login type
         if (principal instanceof CustomUserDetails userDetails) {
             status = userDetails.getStatus();
+            isVerified = userDetails.isVerified();
+            userEmail = userDetails.getUsername();
         } else if (principal instanceof OAuth2User oauth2User) {
             String email = oauth2User.getAttribute("email");
             Optional<User> userOpt = userRepository.findByEmail(email);
             if (userOpt.isPresent()) {
                 status = userOpt.get().getStatus() != null ? userOpt.get().getStatus().name() : "ACTIVE";
+                isVerified = userOpt.get().isVerified();
             }
         }
 
         // Suspension Check
         if ("SUSPENDED".equalsIgnoreCase(status)) {
             redirectUrl = contextPath + "/auth/suspended";
-        } else {
-            //Role-Based Redirection for Active Users
+        } 
+        // Email Verification Check 
+        else if (principal instanceof CustomUserDetails && !isVerified) {
+        	 
+            redirectUrl = contextPath + "/auth/login?unverified=true&email=" + userEmail;
+        } 
+        //Role-Based Redirection for Active & Verified Users
+        else {
             if (principal instanceof OAuth2User oauth2User) {
                 String email = oauth2User.getAttribute("email");
                 User user = userRepository.findByEmail(email).orElse(null);
@@ -67,4 +78,6 @@ public class RoleBasedLoginSuccessHandler implements AuthenticationSuccessHandle
 
         response.sendRedirect(redirectUrl);
     }
-}
+    }
+
+

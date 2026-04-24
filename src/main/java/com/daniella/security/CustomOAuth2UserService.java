@@ -25,25 +25,28 @@ public class CustomOAuth2UserService extends OidcUserService {
     @Override
     @Transactional
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-        // Fetch user from Google
         OidcUser oidcUser = super.loadUser(userRequest);
 
         String email = oidcUser.getEmail();
-        
-        // Find user
+
         User user = userRepository.findByEmail(email).orElseGet(() -> {
             User newUser = new User();
             newUser.setEmail(email);
-            // Get names from Google OIDC claims
-            newUser.setFirstName(oidcUser.getGivenName() != null ? oidcUser.getGivenName() : "Google");
-            newUser.setLastName(oidcUser.getFamilyName() != null ? oidcUser.getFamilyName() : "User");
+
+            // Pull names from OIDC attributes
+            String givenName = (String) oidcUser.getAttributes().get("given_name");
+            String familyName = (String) oidcUser.getAttributes().get("family_name");
+
+            newUser.setFirstName(givenName != null ? givenName : "Google");
+            newUser.setLastName(familyName != null ? familyName : "User");
+
             newUser.setRole(Role.ROLE_CLIENT);
-            // Set random password to satisfy @NotBlank constraint
             newUser.setPassword(UUID.randomUUID().toString());
+            newUser.setStatus(com.daniella.enums.UserStatus.ACTIVE);
+            newUser.setVerified(true); 
             return userRepository.save(newUser);
         });
 
-        //  Return OidcUser with authorities and email as principal name
         return new DefaultOidcUser(
             Collections.singleton(new SimpleGrantedAuthority(user.getRole().name())),
             oidcUser.getIdToken(),

@@ -1,13 +1,14 @@
 package com.daniella.controller;
 
-import java.time.Instant;
-import java.util.Optional;
-import java.util.Random;
-
+import com.daniella.dto.UserRequest;
+import com.daniella.entity.User;
+import com.daniella.exception.BusinessException;
+import com.daniella.repository.UserRepository;
+import com.daniella.service.EmailService;
+import com.daniella.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
@@ -15,19 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.daniella.dto.UserRequest;
-import com.daniella.entity.User;
-import com.daniella.exception.BusinessException;
-import com.daniella.repository.UserRepository;
-import com.daniella.service.EmailService;
-import com.daniella.service.UserService;
+import java.time.Instant;
+import java.util.Optional;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/auth")
@@ -73,7 +67,6 @@ public class AuthController {
         try {
             userService.createUser(userRequest);
 
-            // Generate OTP and store in session
             String otp = String.format("%06d", new Random().nextInt(1_000_000));
             session.setAttribute(OtpKey, otp);
             session.setAttribute(OtpEmailKey, userRequest.getEmail());
@@ -81,13 +74,12 @@ public class AuthController {
             session.setAttribute("OTP_SENT_AT", Instant.now());
             session.setAttribute("IS_REGISTRATION", true);
 
-            // Send OTP email
             try {
                 emailService.sendOtpEmail(userRequest.getEmail(), otp);
             } catch (MailException | MessagingException ex) {
                 logger.error("Failed to send OTP email to {}", userRequest.getEmail(), ex);
                 clearOtpSession(session);
-                model.addAttribute("error", "Unable to send verification email. Please check your email settings and try again.");
+                model.addAttribute("error", "Unable to send verification email. Please check your settings.");
                 return "auth/register";
             }
 
@@ -105,6 +97,8 @@ public class AuthController {
                         @RequestParam(required = false) String logout,
                         @RequestParam(required = false) String registered,
                         @RequestParam(required = false) String reset,
+                        @RequestParam(required = false) String unverified,
+                        @RequestParam(required = false) String email,
                         Model model) {
         if (error != null) {
             model.addAttribute("error", "Invalid email or password.");
@@ -113,12 +107,45 @@ public class AuthController {
             model.addAttribute("success", "You have been logged out.");
         }
         if (registered != null) {
-            model.addAttribute("success", "Account created successfully. Please log in.");
+            model.addAttribute("success", "Account verified successfully! Please log in.");
         }
         if (reset != null) {
             model.addAttribute("success", "Password updated. You may now log in.");
         }
+        
+        // Handle unverified popup logic
+        if (unverified != null) {
+            model.addAttribute("unverified", true);
+            model.addAttribute("unverifiedEmail", email);
+        }
+        
         return "auth/login";
+    }
+
+    @GetMapping("/verify-email")
+    public String sendVerificationEmail(@RequestParam String email, HttpSession session, RedirectAttributes ra) {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            ra.addFlashAttribute("error", "Email not found.");
+            return "redirect:/auth/login";
+        }
+
+        String otp = String.format("%06d", new Random().nextInt(1_000_000));
+        session.setAttribute(OtpKey, otp);
+        session.setAttribute(OtpEmailKey, email);
+        session.setAttribute(OtpVerifiedKey, false);
+        session.setAttribute("OTP_SENT_AT", Instant.now());
+        session.setAttribute("IS_REGISTRATION", true);
+
+        try {
+            emailService.sendOtpEmail(email, otp);
+            ra.addFlashAttribute("info", "A new verification code has been sent!");
+            return "redirect:/auth/verify-otp?mode=register";
+        } catch (Exception ex) {
+            logger.error("Failed to resend verification email", ex);
+            ra.addFlashAttribute("error", "Could not send email. Try again later.");
+            return "redirect:/auth/login";
+        }
     }
 
     @GetMapping("/forgot-password")
@@ -141,13 +168,14 @@ public class AuthController {
         session.setAttribute(OtpEmailKey, email);
         session.setAttribute(OtpVerifiedKey, false);
         session.setAttribute("OTP_SENT_AT", Instant.now());
+        session.setAttribute("IS_REGISTRATION", false);
 
         try {
             emailService.sendOtpEmail(email, otp);
         } catch (MailException | MessagingException ex) {
-            logger.error("Failed to send reset OTP email to {}", email, ex);
+            logger.error("Failed to reset OTP email", ex);
             clearOtpSession(session);
-            model.addAttribute("error", "Unable to send verification email. Please check your email settings and try again.");
+            model.addAttribute("error", "Unable to send reset email.");
             return "auth/forgot-password";
         }
 
@@ -168,14 +196,22 @@ public class AuthController {
                             HttpSession session,
                             Model model) {
         Object expected = session.getAttribute(OtpKey);
+        String email = (String) session.getAttribute(OtpEmailKey);
+
         if (expected == null || !expected.toString().equals(code.trim())) {
             model.addAttribute("error", "The code is invalid. Please try again.");
             return "auth/verify-otp";
         }
+
         session.setAttribute(OtpVerifiedKey, true);
 
         boolean isRegistration = Boolean.TRUE.equals(session.getAttribute("IS_REGISTRATION"));
         if (isRegistration) {
+            // Update the user's verification status in the database
+            userRepository.findByEmail(email).ifPresent(user -> {
+                user.setVerified(true);
+                userRepository.save(user);
+            });
             clearOtpSession(session);
             return "redirect:/auth/login?registered=true";
         }
@@ -208,7 +244,7 @@ public class AuthController {
 
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isEmpty()) {
-            model.addAttribute("error", "Unable to update password for this account.");
+            model.addAttribute("error", "Unable to update password.");
             return "auth/reset-password";
         }
 
@@ -219,12 +255,11 @@ public class AuthController {
 
         return "redirect:/auth/login?reset=true";
     }
-    
+
     @GetMapping("/suspended")
     public String suspendedPage() {
-        return "auth/suspended"; 
+        return "auth/suspended";
     }
-
 
     private void clearOtpSession(HttpSession session) {
         session.removeAttribute(OtpKey);

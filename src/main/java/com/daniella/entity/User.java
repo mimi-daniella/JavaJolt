@@ -22,6 +22,7 @@ public class User {
 
 	@NotBlank
 	@Email
+	@Column(unique = true, nullable = false)
 	private String email;
 
 	@NotBlank
@@ -33,6 +34,9 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private UserStatus status = UserStatus.ACTIVE;
 
+	@Column(nullable = false, columnDefinition = "boolean default false")
+	private boolean isVerified = false;
+	
 	// --- Getters & Setters ---
 	public Long getId() {
 		return id;
@@ -88,5 +92,13 @@ public class User {
 
 	public void setStatus(UserStatus status) {
 		this.status = status;
+	}
+	
+	public boolean isVerified() {
+		return isVerified;
+	}
+	
+	public void setVerified(boolean verified) {
+		isVerified = verified;
 	}
 }
