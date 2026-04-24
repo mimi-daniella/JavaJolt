@@ -65,13 +65,13 @@ public class RoleBasedLoginSuccessHandler implements AuthenticationSuccessHandle
                 String email = oauth2User.getAttribute("email");
                 User user = userRepository.findByEmail(email).orElse(null);
                 if (user != null && user.getRole() != null) {
-                    redirectUrl = contextPath + (user.getRole().name().equalsIgnoreCase("ADMIN") ? "/admin/users" : "/dashboard");
+                    redirectUrl = contextPath + (user.getRole().name().equalsIgnoreCase("ADMIN") ? "/admin/dashboard" : "/dashboard");
                 }
             } else {
                 redirectUrl = contextPath + (authentication.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .anyMatch(a -> a.equals("ROLE_ADMIN") || a.equals("ADMIN"))
-                        ? "/admin/users"
+                        ? "/admin/dashboard"
                         : "/dashboard");
             }
         }
