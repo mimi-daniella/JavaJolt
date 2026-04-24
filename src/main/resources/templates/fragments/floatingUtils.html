@@ -1,0 +1,32 @@
+<!-- Bottom Floating Nav -->
+<nav th:fragment="utils">
+<div class="fixed bottom-6 right-4 flex flex-col gap-4 z-50">
+    <!-- Sound Toggle -->
+    <button onclick="toggleSound()" id="soundBtn"
+        class="w-12 h-12 flex items-center justify-center ">
+        <!-- Speaker SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-black" fill="none" viewBox="0 0 24 24">
+            <path d="M9 9v6h4l5 5V4l-5 5H9z"/>
+        </svg>
+    </button>
+
+    <!-- Dark Mode Toggle -->
+    <button onclick="toggleDarkMode()" id="darkBtn"
+        class="w-12 h-12 flex items-center justify-center ">
+        <!-- Moon SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-black" fill="none" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+        </svg>
+    </button>
+
+    <!-- Settings -->
+    <a th:href="@{/dashboard/settings}"
+        class="w-12 h-12 flex items-center justify-center ">
+        <!-- Gear SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-black" fill="none" viewBox="0 0 24 24">
+            <path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"/>
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09c.7 0 1.31-.39 1.51-1a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06c.51.51 1.21.7 1.82.33.61-.36 1-1.01 1-1.71V3a2 2 0 014 0v.09c0 .7.39 1.35 1 1.71.61.36 1.31.18 1.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06c-.36.51-.18 1.21.33 1.82.36.61 1.01 1 1.71 1H21a2 2 0 010 4h-.09c-.7 0-1.35.39-1.71 1z"/>
+        </svg>
+    </a>
+</div>
+</nav>
