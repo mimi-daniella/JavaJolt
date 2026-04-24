@@ -31,23 +31,102 @@
       </ul>
     </div>
 
-    <!-- Social / Newsletter -->
-    <div class="flex flex-col items-center md:items-start">
-      <h3 class="text-lg font-bold mb-4 text-[var(--yellow)] tracking-wide">Stay Connected</h3>
-      <div class="flex gap-5 mb-6 text-sm">
-        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Facebook</a>
-        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Twitter</a>
-        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Instagram</a>
-      </div>
-      
-      <form class="flex flex-col sm:flex-row w-full gap-2">
-        <input type="email" placeholder="Your email"
-               class="flex-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--light-brown)] transition-all">
-        <button class="bg-[var(--light-brown)] px-6 py-2 rounded-xl font-bold hover:bg-[var(--yellow)] transition-all shadow-md">
-          Subscribe
-        </button>
-      </form>
-    </div>
+   
+	<!-- Social / Newsletter -->
+	<div class="flex flex-col items-center md:items-start">
+	  <h3 class="text-lg font-bold mb-4 text-[var(--yellow)] tracking-wide">Stay Connected</h3>
+	  <div class="flex gap-5 mb-6 text-sm">
+	    <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Facebook</a>
+	    <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Twitter</a>
+	    <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Instagram</a>
+	  </div>
+
+	  <form id="subscribeForm" class="flex flex-col sm:flex-row w-full gap-2">
+	    <input
+	      id="subscriberEmail"
+	      name="email"
+	      type="email"
+	      placeholder="Your email"
+	      required
+	      class="flex-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--light-brown)] transition-all"
+	    >
+	    <button
+	      type="submit"
+	      class="bg-[var(--light-brown)] px-6 py-2 rounded-xl font-bold hover:bg-[var(--yellow)] transition-all shadow-md"
+	    >
+	      Subscribe
+	    </button>
+	  </form>
+
+	  <p id="subscribeMessage" class="mt-3 text-sm text-white/80"></p>
+	</div>
+
+	<script th:inline="javascript">
+	  document.addEventListener("DOMContentLoaded", function () {
+	    const form = document.getElementById("subscribeForm");
+	    const emailInput = document.getElementById("subscriberEmail");
+	    const messageBox = document.getElementById("subscribeMessage");
+
+	    const subscribeUrl = /*[[@{/api/subscribe}]]*/ '/api/subscribe';
+
+	    let messageTimeout; // to control clearing messages
+
+	    function showMessage(message, isError = false) {
+	      // clear any previous timeout
+	      if (messageTimeout) {
+	        clearTimeout(messageTimeout);
+	      }
+
+	      messageBox.textContent = message;
+
+	      // optional: change color for error/success
+	      messageBox.style.color = isError ? "#ff6b6b" : "#a7f3d0";
+
+	      // clear after 4 seconds
+	      messageTimeout = setTimeout(() => {
+	        messageBox.textContent = "";
+	      }, 4000);
+	    }
+
+	    if (!form) return;
+
+	    form.addEventListener("submit", async function (e) {
+	      e.preventDefault();
+
+	      const email = emailInput.value.trim();
+
+	      if (!email) {
+	        showMessage("Please enter your email.", true);
+	        return;
+	      }
+
+	      try {
+	        const formData = new URLSearchParams();
+	        formData.append("email", email);
+
+	        const response = await fetch(subscribeUrl, {
+	          method: "POST",
+	          headers: {
+	            "Content-Type": "application/x-www-form-urlencoded"
+	          },
+	          body: formData.toString()
+	        });
+
+	        const result = await response.text();
+
+	        if (response.ok) {
+	          showMessage(result); // success
+	          emailInput.value = "";
+	        } else {
+	          showMessage(result || "Subscription failed.", true);
+	        }
+	      } catch (error) {
+	        showMessage("Unable to subscribe right now. Please try again.", true);
+	      }
+	    });
+	  });
+	</script>
+	
   </div>
 
 
