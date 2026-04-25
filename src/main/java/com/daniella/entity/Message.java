@@ -9,36 +9,38 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Feedback {
+public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private Long userId; // ✅ FIX: now admin can see who sent it
+
 	private String email;
 
 	@Column(length = 2000)
-	private String message;
+	private String content;
 
 	private LocalDateTime createdAt;
 
-	// Constructors
-	public Feedback() {
+	public Message() {
 	}
 
-	public Feedback(String email, String message) {
-		this.email = email;
-		this.message = message;
-		this.createdAt = LocalDateTime.now(); // ✅ add timestamp
-	}
-
-	// Getters and Setters
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) { // ✅ added
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getEmail() {
@@ -49,19 +51,19 @@ public class Feedback {
 		this.email = email;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getContent() {
+		return content;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public LocalDateTime getCreatedAt() { // ✅ added
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) { // ✅ added
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 }

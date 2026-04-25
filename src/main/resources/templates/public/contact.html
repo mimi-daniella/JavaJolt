@@ -88,22 +88,25 @@
 		document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
 		    e.preventDefault();
 
-		    const formData = new URLSearchParams();
+		    const formData = new FormData();
+
 		    formData.append("email", this.email.value);
 		    formData.append("message", this.message.value);
 
-		    const res = await fetch("/api/feedback/submit", {
+		    const res = await fetch("/quiz-app/api/feedback/submit", {
 		        method: "POST",
-		        headers: {
-		            "Content-Type": "application/x-www-form-urlencoded"
-		        },
 		        body: formData
 		    });
 
 		    const text = await res.text();
-		    document.getElementById("responseMsg").innerText = text;
 
-		    this.reset();
+		    const msgBox = document.getElementById("responseMsg");
+		    msgBox.innerText = text;
+
+		    setTimeout(() => {
+		        msgBox.innerText = "";
+		        this.reset();
+		    }, 1000);
 		});
 		</script>
 
