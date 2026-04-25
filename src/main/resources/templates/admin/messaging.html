@@ -1,6 +1,150 @@
-<div th:replace="~{fragments/head :: head}"></div>
-<body class="min-h-screen flex bg-gray-100">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 
-  <!-- Sidebar Fragment -->
-  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+<div th:replace="~{fragments/head :: head}"></div>
+
+<body class="min-h-screen flex bg-gray-100 overflow-x-hidden">
+
+<!-- Sidebar -->
+<div id="sidebar"
+     th:replace="~{fragments/sidebar :: sidebar}"
+     class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
+</div>
+
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col w-full md:ml-64">
+
+    <!-- TOP BAR -->
+    <div class="flex justify-between items-center bg-white px-4 md:px-6 py-4 shadow relative">
+
+        <!-- LEFT SIDE -->
+        <div class="flex items-center gap-4">
+
+            <!-- HAMBURGER -->
+            <button onclick="toggleSidebar()" class="text-red-700 focus:outline-none md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <!-- PAGE TITLE -->
+            <h1 class="text-2xl font-bold">Messaging</h1>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="toggleDropdown()">
+
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-yellow-400 font-bold">
+                EH
+            </div>
+
+            <span class="font-semibold hidden sm:block">Ekundayo Hannah</span>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-5 h-5"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"/>
+            </svg>
+        </div>
+
+        <!-- Dropdown -->
+        <div id="dropdownMenu"
+             class="hidden absolute right-6 top-16 bg-white shadow-lg rounded-lg w-52 z-50">
+
+            <a href="#" class="block px-4 py-3 hover:bg-gray-100">My Account</a>
+
+            <a th:href="@{/admin/settings}" class="block px-4 py-3 hover:bg-gray-100">
+                Settings
+            </a>
+
+            <a th:href="@{/logout}"
+               class="block px-4 py-3 hover:bg-gray-100 text-red-500">
+                Logout
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Page Content -->
+    <div class="w-full px-4 md:px-6 py-6">
+
+        <!-- CENTERED CONTAINER (FIX) -->
+        <div class="max-w-6xl mx-auto">
+
+            <!-- TABLE WRAPPER -->
+            <div class="bg-white rounded-xl shadow p-4 overflow-x-auto">
+
+                <table class="w-full">
+
+					<thead>
+					<tr class="text-gray-700 border-b bg-gray-50 text-left">
+					    <th class="py-3 px-2 w-16">ID</th>
+					    <th class="px-2 w-64">Email</th>
+					    <th class="px-2">Message</th>
+					    <th class="px-2 w-48">Date</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr th:each="msg : ${messages}" class="border-b">
+
+					    <td class="text-center font-bold py-2" th:text="${msg.id}"></td>
+
+					    <td class="break-words px-2 py-2" th:text="${msg.email}"></td>
+
+					    <td class="break-words px-2 py-2" th:text="${msg.message}"></td>
+
+						<td class="text-sm whitespace-nowrap px-2 py-2"
+						    th:text="${msg.createdAt != null ? #temporals.format(msg.createdAt, 'dd MMM yyyy HH:mm') : 'No date'}">
+						</td>
+
+					</tr>
+
+					<tr th:if="${#lists.isEmpty(messages)}">
+					    <td colspan="4" class="text-center py-6 text-gray-400">
+					        No messages yet
+					    </td>
+					</tr>
+					</tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SCRIPTS -->
+<script>
+
+    function toggleDropdown() {
+        const menu = document.getElementById("dropdownMenu");
+        menu.classList.toggle("hidden");
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+
+        // SLIDE instead of breaking layout
+        sidebar.classList.toggle("-translate-x-full");
+    }
+
+    // Close dropdown when clicking outside
+    window.addEventListener("click", function (e) {
+        const dropdown = document.getElementById("dropdownMenu");
+
+        if (!e.target.closest(".cursor-pointer")) {
+            dropdown.classList.add("hidden");
+        }
+    });
+
+</script>
+
 </body>
+</html>
