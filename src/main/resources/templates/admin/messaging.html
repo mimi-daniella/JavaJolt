@@ -58,7 +58,7 @@
 
             <a href="#" class="block px-4 py-3 hover:bg-gray-100">My Account</a>
 
-            <a th:href="@{/quiz-app/admin/settings}" class="block px-4 py-3 hover:bg-gray-100">
+            <a th:href="@{/admin/settings}" class="block px-4 py-3 hover:bg-gray-100">
                 Settings
             </a>
 
@@ -99,9 +99,9 @@
 
 					    <td class="break-words px-2 py-2" th:text="${msg.message}"></td>
 
-					    <td class="text-sm whitespace-nowrap px-2 py-2"
-					        th:text="${#temporals.format(msg.createdAt, 'dd MMM yyyy HH:mm')}">
-					    </td>
+						<td class="text-sm whitespace-nowrap px-2 py-2"
+						    th:text="${msg.createdAt != null ? #temporals.format(msg.createdAt, 'dd MMM yyyy HH:mm') : 'No date'}">
+						</td>
 
 					</tr>
 
