@@ -1,5 +1,6 @@
 package com.daniella.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -27,6 +28,8 @@ public class ApplicationConfig {
 	        .csrf(csrf -> csrf.disable())
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**", "/suspended").permitAll()
+	            .requestMatchers("/api/feedback/submit").permitAll()
+	            .requestMatchers("/api/feedback/all").hasRole("ADMIN")
 	            .requestMatchers("/admin/**").hasRole("ADMIN")
 	            .requestMatchers("/dashboard", "/dashboard/**", "/quiz/**", "/quizzes").authenticated()
 	            .anyRequest().permitAll()
@@ -74,5 +77,10 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }

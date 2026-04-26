@@ -23,6 +23,8 @@ import com.daniella.exception.BusinessException;
 import com.daniella.repository.QuestionRepository;
 import com.daniella.repository.QuizResultRepository;
 import com.daniella.repository.UserRepository;
+import com.daniella.service.GamificationService;
+import com.daniella.service.SystemSettingService;
 import com.daniella.service.UserService;
 
 @Controller
@@ -33,15 +35,21 @@ public class DashboardController {
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
     private final QuizResultRepository quizResultRepository;
+    private final GamificationService gamificationService;
+    private final SystemSettingService systemSettingService;
 
     public DashboardController(UserService userService,
                                UserRepository userRepository,
                                QuestionRepository questionRepository,
-                               QuizResultRepository quizResultRepository) {
+                               QuizResultRepository quizResultRepository,
+                               GamificationService gamificationService,
+                               SystemSettingService systemSettingService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
         this.quizResultRepository = quizResultRepository;
+        this.gamificationService = gamificationService;
+        this.systemSettingService = systemSettingService;
     }
 
     @GetMapping({"", "/"})
@@ -55,16 +63,25 @@ public class DashboardController {
         model.addAttribute("user", user);
 
         if (user.hasRole("ADMIN")) {
-            return "admin/dashboard";
+            return "redirect:/admin/dashboard";
         }
 
-        // Dashboard data added for the real /dashboard route frontend.
         model.addAttribute("profileForm", new UserUpdateDTO(user.firstName(), user.lastName(), user.email()));
         model.addAttribute("passwordForm", new PasswordChangeDTO("", "", ""));
         model.addAttribute("statCards", buildStatCards(userEntity));
         model.addAttribute("quizModes", buildQuizModes());
         model.addAttribute("activities", buildActivities(userEntity));
         model.addAttribute("quickLinks", buildQuickLinks());
+        model.addAttribute("xp", userEntity.getXp());
+        model.addAttribute("rankTitle", userEntity.getRankTitle());
+        model.addAttribute("streakCount", userEntity.getStreakCount());
+        model.addAttribute("progressPercent", gamificationService.progressToNextRank(userEntity.getXp()));
+        model.addAttribute("xpToNextRank", gamificationService.xpToNextRank(userEntity.getXp()));
+        model.addAttribute("announcement", systemSettingService.get(SystemSettingService.ANNOUNCEMENT, ""));
+        model.addAttribute("featuredChallengeTitle", systemSettingService.get(SystemSettingService.FEATURED_CHALLENGE_TITLE, "Barista Boss Battle"));
+        model.addAttribute("dailyChallengeEnabled", systemSettingService.getBoolean(SystemSettingService.DAILY_CHALLENGE_ENABLED, true));
+        model.addAttribute("dailyChallengeCategory", systemSettingService.get(SystemSettingService.DAILY_CHALLENGE_CATEGORY, "Java"));
+        model.addAttribute("leaderboard", gamificationService.leaderboardSlice());
         return "user/dashboard";
     }
 
@@ -74,10 +91,14 @@ public class DashboardController {
             return "redirect:/auth/login";
         }
 
-        UserResponseDTO user = userService.getByEmail(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("profileForm", new UserUpdateDTO(user.firstName(), user.lastName(), user.email()));
+        User user = getCurrentUser(principal);
+        UserResponseDTO userDto = userService.getByEmail(principal.getName());
+        model.addAttribute("user", userDto);
+        model.addAttribute("profileForm", new UserUpdateDTO(userDto.firstName(), userDto.lastName(), userDto.email()));
         model.addAttribute("passwordForm", new PasswordChangeDTO("", "", ""));
+        model.addAttribute("xp", user.getXp());
+        model.addAttribute("rankTitle", user.getRankTitle());
+        model.addAttribute("streakCount", user.getStreakCount());
         return "user/settings";
     }
 
@@ -134,10 +155,10 @@ public class DashboardController {
         return List.of(
                 Map.of("title", "Java Sprint", "copy", "Browse the quiz arena and launch a random challenge when ready.",
                         "href", "/quizzes", "cta", "Open Quizzes"),
+                Map.of("title", "Daily Challenge", "copy", "Lock in a category-based challenge and protect your streak.",
+                        "href", "/quiz/start?dailyChallenge=true", "cta", "Play Challenge"),
                 Map.of("title", "Profile & Settings", "copy", "Manage your personal info and password in one place.",
-                        "href", "/dashboard/settings", "cta", "Open Settings"),
-                Map.of("title", "Public Pages", "copy", "Visit About and Contact pages while staying signed in.",
-                        "href", "/public/about", "cta", "Explore"));
+                        "href", "/dashboard/settings", "cta", "Open Settings"));
     }
 
     private List<Map<String, String>> buildActivities(User user) {
@@ -153,7 +174,7 @@ public class DashboardController {
                 .map(result -> Map.of(
                         "title", "Quiz completed",
                         "meta", result.getCompletedAt() != null ? result.getCompletedAt().format(formatter) : "Recently",
-                        "score", result.getScore() + " pts"))
+                        "score", result.getScore() + "/" + result.getTotalQuestions() + " • +" + result.getXpEarned() + " XP"))
                 .toList();
     }
 

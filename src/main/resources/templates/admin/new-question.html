@@ -1,0 +1,74 @@
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen flex bg-gray-100">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="flex-1 flex flex-col md:ml-64">
+    <header class="flex items-center justify-between bg-white shadow px-6 py-4">
+      <div>
+        <h1 class="text-xl font-bold text-black" th:text="${pageTitle} ?: 'Add New Question'">Add New Question</h1>
+        <p class="text-gray-600">Create and tune questions before they go live in the quiz arena.</p>
+      </div>
+      <a th:href="@{/admin/questions}" class="text-[var(--espresso)] font-semibold hover:underline">Back to Question Bank</a>
+    </header>
+
+    <main class="p-6">
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow border p-8">
+        <form th:attr="action=${formAction}" th:object="${question}" method="post" class="space-y-5">
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Question Text</label>
+            <textarea th:field="*{questionText}" rows="4" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required></textarea>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Option A</label>
+              <input th:field="*{optionA}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Option B</label>
+              <input th:field="*{optionB}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Option C</label>
+              <input th:field="*{optionC}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Option D</label>
+              <input th:field="*{optionD}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-3">
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Correct Option</label>
+              <select th:field="*{correctOption}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required>
+                <option value="">Choose one</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Difficulty</label>
+              <select th:field="*{difficulty}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required>
+                <option value="">Choose difficulty</option>
+                <option value="EASY">Easy</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HARD">Hard</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Status</label>
+              <select th:field="*{status}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3">
+                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Category</label>
+            <input th:field="*{category}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" placeholder="Java, Spring, SQL" />
+          </div>
+          <button type="submit" class="w-full bg-[var(--espresso)] text-white font-bold py-4 rounded-xl border-b-4 border-[#352521] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all" th:text="${submitLabel} ?: 'Save Question'">Save Question</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>

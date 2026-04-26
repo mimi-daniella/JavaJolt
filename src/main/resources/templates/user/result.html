@@ -7,16 +7,33 @@
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
 <main class="max-w-4xl mx-auto pt-10 pb-12 px-6">
-    <!-- Quiz result page added for the real /quiz/submit flow. -->
-    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 text-center shadow-[8px_8px_0px_var(--yellow)]" data-aos="zoom-in">
+    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 text-center shadow-[8px_8px_0px_var(--yellow)]">
         <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Result</p>
-        <h1 class="kavoon mt-4 text-5xl text-[var(--espresso)]">Nice run!</h1>
-        <p class="mt-4 text-lg">Your latest JavaJolt score has been calculated and saved to your activity history.</p>
+        <h1 class="kavoon mt-4 text-5xl text-[var(--espresso)]" th:text="${passed} ? 'Victory Brew!' : 'Almost there!'">Nice run!</h1>
+        <p class="mt-4 text-lg" th:if="${error}" th:text="${error}">Retakes are currently disabled.</p>
+        <p class="mt-4 text-lg" th:unless="${error}">Your latest JavaJolt score has been calculated and saved to your activity history.</p>
 
         <div class="mt-10 inline-flex flex-col items-center justify-center rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-12 py-10 shadow-[6px_6px_0px_var(--espresso)]">
             <span class="text-sm uppercase font-bold text-[var(--espresso)]">Your Score</span>
             <span class="kavoon mt-2 text-6xl text-[var(--espresso)]" th:text="${score + ' / ' + total}">0 / 0</span>
         </div>
+
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
+                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Pass Mark</p>
+                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${passMark} + '%'">60%</p>
+            </div>
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
+                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Rank</p>
+                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${rankTitle ?: 'ROOKIE'}">ROOKIE</p>
+            </div>
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
+                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Current Streak</p>
+                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${streakCount ?: 0} + ' day(s)'">0 day(s)</p>
+            </div>
+        </div>
+
+        <p class="mt-6 text-lg font-bold text-[var(--espresso)]" th:if="${xp != null}" th:text="'Total XP: ' + ${xp}">Total XP: 0</p>
 
         <div class="mt-10 flex flex-wrap justify-center gap-4">
             <a th:href="@{/quiz/start}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">

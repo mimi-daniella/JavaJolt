@@ -1,6 +1,7 @@
 package com.daniella.security;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import jakarta.servlet.ServletException;
@@ -65,9 +66,17 @@ public class RoleBasedLoginSuccessHandler implements AuthenticationSuccessHandle
                 String email = oauth2User.getAttribute("email");
                 User user = userRepository.findByEmail(email).orElse(null);
                 if (user != null && user.getRole() != null) {
-                    redirectUrl = contextPath + (user.getRole().name().equalsIgnoreCase("ADMIN") ? "/admin/dashboard" : "/dashboard");
+                    user.setLastLoginAt(LocalDateTime.now());
+                    userRepository.save(user);
+                    redirectUrl = contextPath + ("ROLE_ADMIN".equalsIgnoreCase(user.getRole().name()) ? "/admin/dashboard" : "/dashboard");
                 }
             } else {
+                if (principal instanceof CustomUserDetails userDetails) {
+                    userRepository.findByEmail(userDetails.getUsername()).ifPresent(user -> {
+                        user.setLastLoginAt(LocalDateTime.now());
+                        userRepository.save(user);
+                    });
+                }
                 redirectUrl = contextPath + (authentication.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .anyMatch(a -> a.equals("ROLE_ADMIN") || a.equals("ADMIN"))

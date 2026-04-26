@@ -6,54 +6,34 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div th:replace="~{fragments/floatingUtils :: utils}"></div>
 
-
-<main class="max-w-6xl mx-auto pt-12 pb-12 px-6">
-
-    <!-- GREETING -->
-    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
-        <div class="flex items-center gap-5">
-            <!-- Avatar Section -->
-            <div class="relative group">
-                <div id="avatarDisplay" class="w-20 h-20 rounded-full flex items-center justify-center text-3xl">
-					<img id="avatarImg" th:src="@{/images/avatars/user.jpeg}" alt="User Avatar" class="w-20 h-20 rounded-full">
-                </div>
-                <button onclick="toggleAvatarModal()" class="absolute -bottom-1 -right-1 bg-white border-2 border-black rounded-full p-1 hover:bg-[var(--yellow)] transition">
-                    <svg class="w-4 h-4 stroke-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                </button>
-            </div>
+<main class="max-w-6xl mx-auto pt-12 pb-12 px-6 space-y-10">
+    <section class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[10px_10px_0px_var(--yellow)]">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div>
-                <h1 class="text-3xl kavoon text-[var(--espresso)]">
-                    <span id="timeGreeting">Hello</span>, <span th:text="${user.firstName}">Java Enthusiast</span>!
-                </h1>
-                <p class="text-sm ">Ready to level up your code today?</p>
+                <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Player Hub</p>
+                <h1 class="text-3xl kavoon text-[var(--espresso)] mt-3">Welcome back, <span th:text="${user.firstName}">Player</span></h1>
+                <p class="mt-3 text-lg">Your JavaJolt progress now tracks XP, streaks, rank, and leaderboard momentum.</p>
+                <p th:if="${announcement != null and !announcement.isBlank()}" class="mt-4 rounded-xl bg-[#fff5cd] px-4 py-3 font-bold text-[var(--espresso)]" th:text="${announcement}"></p>
+            </div>
+            <div class="grid sm:grid-cols-3 gap-4 w-full lg:max-w-2xl">
+                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] p-5 text-center shadow-[4px_4px_0px_var(--espresso)]">
+                    <p class="text-xs uppercase font-bold text-[var(--espresso)]">Rank</p>
+                    <p class="text-3xl kavoon text-[var(--espresso)]" th:text="${rankTitle}">ROOKIE</p>
+                </div>
+                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5 text-center shadow-[4px_4px_0px_var(--light-brown)]">
+                    <p class="text-xs uppercase font-bold text-[var(--espresso)]">XP</p>
+                    <p class="text-3xl kavoon text-[var(--espresso)]" th:text="${xp}">0</p>
+                </div>
+                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5 text-center shadow-[4px_4px_0px_var(--yellow)]">
+                    <p class="text-xs uppercase font-bold text-[var(--espresso)]">Streak</p>
+                    <p class="text-3xl kavoon text-[var(--espresso)]" th:text="${streakCount} + ' day(s)'">0 day(s)</p>
+                </div>
             </div>
         </div>
-
- 
-    </div>
-
-    <!-- 2. MAIN CALL TO ACTION (CodeChef Style) -->
-    <section class="mb-12 p-8 md:p-12 rounded-[2rem] border-4 border-[var(--espresso)] bg-white shadow-[10px_10px_0px_var(--espresso)] flex flex-col md:flex-row items-center justify-between gap-8" data-aos="zoom-in">
-        <div class="max-w-xl">
-            <h2 class="kavoon text-4xl text-[var(--espresso)] mb-3">THE PRACTICE ARENA</h2>
-            <p class="text-lg leading-relaxed opacity-80">Jump into randomized sprints or tackle specific Java topics. Your progress is tracked in real-time.</p>
-        </div>
-        <a th:href="@{/quizzes}" class="w-full md:w-auto px-12 py-5 bg-[var(--espresso)] text-white font-bold rounded-2xl border-b-[8px] border-black hover:bg-[#352521] active:translate-y-2 active:border-b-0 transition-all text-center uppercase tracking-widest text-xl">
-            Start A Quiz
-        </a>
     </section>
 
-    <!-- 3. FEEDBACK MESSAGES -->
-    <div th:if="${success}" class="mb-8 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] animate-fade-in" th:text="${success}"></div>
-    <div th:if="${error}" class="mb-8 rounded-xl border-4 border-[var(--espresso)] bg-[#ffd4cb] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)] animate-fade-in" th:text="${error}"></div>
-
-    <!-- 4. DASHBOARD CONTENT GRID -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        
-        <!-- Left Side: Stats & Activity -->
+    <section class="grid lg:grid-cols-4 gap-8">
         <div class="lg:col-span-3 space-y-8">
-            
-            <!-- Quick Stats -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div th:each="card : ${statCards}" class="bg-white p-5 rounded-2xl border-2 border-gray-100 shadow-sm text-center hover:border-[var(--yellow)] transition-colors">
                     <p class="text-[10px] uppercase font-bold text-gray-400 mb-1" th:text="${card.label}">Easy Sprints</p>
@@ -61,7 +41,21 @@
                 </div>
             </div>
 
-            <!-- Simplified Activity List -->
+            <div class="rounded-3xl border-4 border-[var(--espresso)] bg-[var(--yellow)] p-6 shadow-[6px_6px_0px_var(--espresso)]">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h2 class="kavoon text-2xl text-[var(--espresso)]" th:text="${featuredChallengeTitle}">Barista Boss Battle</h2>
+                        <p class="text-sm mt-2 text-[var(--espresso)]">Daily challenge category: <span class="font-bold" th:text="${dailyChallengeCategory}">Java</span></p>
+                        <p class="text-sm text-[var(--espresso)]" th:if="${dailyChallengeEnabled}">Keep your streak alive with the featured category challenge.</p>
+                    </div>
+                    <a th:if="${dailyChallengeEnabled}" th:href="@{/quiz/start(dailyChallenge=true)}" class="px-8 py-4 bg-[var(--espresso)] text-white font-bold rounded-2xl text-center">Play Daily Challenge</a>
+                </div>
+                <div class="mt-5 w-full bg-black/10 h-3 rounded-full border border-black/5">
+                    <div class="bg-[var(--espresso)] h-full rounded-full" th:style="'width:' + ${progressPercent} + '%'"></div>
+                </div>
+                <p class="text-[10px] mt-2 font-bold text-[var(--espresso)] uppercase opacity-70" th:text="${xpToNextRank} + ' XP to next rank'">150 XP to next rank</p>
+            </div>
+
             <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white overflow-hidden shadow-[6px_6px_0px_var(--light-brown)]">
                 <div class="border-b-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-4 flex justify-between items-center">
                     <h2 class="kavoon text-xl text-white">Recent Activity</h2>
@@ -71,166 +65,42 @@
                         <p class="text-4xl mb-3">☕</p>
                         <p class="font-bold text-gray-400 uppercase tracking-widest">No activity logged yet</p>
                     </div>
-
                     <div th:unless="${#lists.isEmpty(activities)}" class="space-y-3">
                         <div th:each="activity : ${activities}" class="flex items-center justify-between p-4 rounded-xl bg-gray-50 border-2 border-transparent hover:border-[var(--yellow)] transition-all">
                             <div>
-                                <h3 class="font-bold text-[var(--espresso)]" th:text="${activity.title}">Java Basics</h3>
-                                <p class="text-xs text-gray-500" th:text="${activity.meta}">Today • 12:45 PM</p>
+                                <h3 class="font-bold text-[var(--espresso)]" th:text="${activity.title}">Quiz completed</h3>
+                                <p class="text-xs text-gray-500" th:text="${activity.meta}">Today</p>
                             </div>
-                            <span class="rounded-lg border-2 border-[var(--espresso)] bg-white px-4 py-1 font-bold text-[var(--espresso)]" th:text="${activity.score}">8 pts</span>
+                            <span class="rounded-lg border-2 border-[var(--espresso)] bg-white px-4 py-1 font-bold text-[var(--espresso)]" th:text="${activity.score}">8/10 • +80 XP</span>
                         </div>
                     </div>
                 </div>
-            </section>  
+            </section>
         </div>
 
-        <!-- Right Side: Mini Profile/Rank -->
         <div class="space-y-6">
-            <div class="rounded-3xl border-4 border-[var(--espresso)] bg-[var(--yellow)] p-6 shadow-[6px_6px_0px_var(--espresso)]">
-                <h3 class="kavoon text-2xl text-[var(--espresso)] mb-1">ROOKIE</h3>
-                <div class="mt-4 w-full bg-black/10 h-3 rounded-full border border-black/5">
-                    <div class="bg-[var(--espresso)] h-full rounded-full" style="width: 35%"></div>
+            <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--yellow)]">
+                <h3 class="kavoon text-2xl text-[var(--espresso)] mb-4">Leaderboard</h3>
+                <div class="space-y-3">
+                    <div th:each="entry : ${leaderboard.entrySet()}" class="flex items-center justify-between rounded-xl border px-4 py-3">
+                        <span class="font-semibold text-sm text-[var(--espresso)]" th:text="${entry.key}">Player</span>
+                        <span class="font-bold text-[var(--espresso)]" th:text="${entry.value} + ' XP'">0 XP</span>
+                    </div>
                 </div>
-                <p class="text-[10px] mt-2 font-bold text-[var(--espresso)] uppercase opacity-70">150 XP to Next Level</p>
-            </div>
+            </section>
 
+            <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--espresso)]">
+                <h3 class="kavoon text-2xl text-[var(--espresso)] mb-4">Quick Links</h3>
+                <div class="grid gap-3">
+                    <a th:each="link : ${quickLinks}" th:href="${link.href}" class="rounded-xl border-2 border-[var(--espresso)] px-4 py-3 font-bold text-[var(--espresso)] text-center" th:text="${link.title}">Home</a>
+                </div>
+            </section>
         </div>
-    </div>
+    </section>
 </main>
 
-<!-- avatar modal -->
-<div id="avatarModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-[100] backdrop-blur-sm p-4">
-    <div class="bg-white border-4 border-[var(--espresso)] rounded-[2rem] p-8 w-[80vw] max-w-4xl relative overflow-hidden">
-        
-        <h2 class="kavoon text-2xl text-[var(--espresso)] mb-6 text-center">CHOOSE YOUR AVATAR</h2>
-
-        <!-- Navigation Buttons -->
-        <button onclick="slideAvatars(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-[var(--espresso)] rounded-full p-2 hover:bg-[var(--yellow)] transition shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-        </button>
-
-        <button onclick="slideAvatars(1)" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-[var(--espresso)] rounded-full p-2 hover:bg-[var(--yellow)] transition shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-        </button>
-
-        <!-- Slider-->
-        <div class="overflow-hidden px-10">
-            <div id="avatarTrack" class="flex transition-transform duration-500 ease-in-out">
-				<!-- Avatar 1 -->
-				<div class="min-w-[33.33%] p-4 flex justify-center">
-				    <button onclick="setAvatar('/images/avatars/orangehead.png')" class="group relative">
-				        <img th:src="@{/images/avatars/orangehead.png}" alt="Orangehead" class="w-48 h-48 object-contain rounded-2xl border-4 border-transparent group-hover:border-[var(--yellow)] transition-all">
-				    </button>
-				</div>
-                <!-- Avatar 2 -->
-                <div class="min-w-[33.33%] p-4 flex justify-center">
-                    <button onclick="setAvatar('/images/avatars/bobgirl.png')" class="group relative">
-                        <img th:src="@{/images/avatars/bobgirl.png}" alt="Bob Girl" class="w-48 h-48 object-contain rounded-2xl border-4 border-transparent group-hover:border-[var(--yellow)] transition-all">
-                    </button>
-                </div>
-				<!-- Avatar 3 -->
-				<div class="min-w-[33.33%] p-4 flex justify-center">
-				    <button onclick="setAvatar('/images/avatars/boy1.png')" class="group relative">
-				        <img th:src="@{/images/avatars/boy1.png}" alt="Boy" class="w-48 h-48 object-contain rounded-2xl border-4 border-transparent group-hover:border-[var(--yellow)] transition-all">
-				    </button>
-				</div>
-                <!-- Avatar  4-->
-                <div class="min-w-[33.33%] p-4 flex justify-center">
-                    <button onclick="setAvatar('/images/avatars/man2.png')" class="group relative">
-                        <img th:src="@{/images/avatars/man2.png}" alt="Man" class="w-48 h-48 object-contain rounded-2xl border-4 border-transparent group-hover:border-[var(--yellow)] transition-all">
-                    </button>
-                </div>
-                <!-- Avatar 5 -->
-                <div class="min-w-[33.33%] p-4 flex justify-center">
-                    <button onclick="setAvatar('/images/avatars/afrogirl.png')" class="group relative">
-                        <img th:src="@{/images/avatars/afrogirl.png}" alt="Afro Girl" class="w-48 h-48 object-contain rounded-2xl border-4 border-transparent group-hover:border-[var(--yellow)] transition-all">
-                    </button>
-                </div>
-                <!-- Avatar  6 -->
-                <div class="min-w-[33.33%] p-4 flex justify-center">
-                    <button onclick="setAvatar('/images/avatars/animal.png')" class="group relative">
-                        <img th:src="@{/images/avatars/animal.png}" alt="Animal" class="w-48 h-48 object-contain rounded-2xl border-4 border-transparent group-hover:border-[var(--yellow)] transition-all">
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Close Button -->
-        <button onclick="toggleAvatarModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[var(--espresso)] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-    </div>
-</div>
-
-
-
-<style>
-    .btn-util {
-        @apply w-12 h-12 flex items-center justify-center bg-white border-2 border-[var(--espresso)] rounded-xl shadow-[4px_4px_0px_var(--espresso)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xl;
-    }
-</style>
-
 <script>
-
-	AOS.init({ once: true, duration: 700, easing: 'ease-out' });	
-
-    // Time-based Greeting
-    const hour = new Date().getHours();
-    const greeting = hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening";
-    document.getElementById('timeGreeting').innerText = greeting;
-
-
-    // Avatar Logic
-    function toggleAvatarModal() {
-        const modal = document.getElementById('avatarModal');
-        modal.classList.toggle('hidden');
-        modal.classList.toggle('flex');
-    }
-	
-	
-	function setAvatar(imagePath) {
-	    const mainAvatar = document.getElementById('avatarImg');
-	    if (mainAvatar) {
-	        // Correct usage: .src property or .setAttribute('src', path)
-	        mainAvatar.src = imagePath; 
-	    }
-	    toggleAvatarModal();
-	}
-
-
-	
-	
-	    let currentSlide = 0;
-	    const totalAvatars = 6; 
-	    const avatarsPerPage = 3;
-
-	    function slideAvatars(direction) {
-	        const track = document.getElementById('avatarTrack');
-	        const maxSlide = totalAvatars - avatarsPerPage;
-	        
-	        currentSlide += direction;
-	        
-	   
-	        if (currentSlide < 0) currentSlide = 0;
-	        if (currentSlide > maxSlide) currentSlide = maxSlide;
-
-	        const offset = currentSlide * (100 / avatarsPerPage);
-	        track.style.transform = `translateX(-${offset}%)`;
-	    }
-	
-
-	
+  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
 </script>
-
-
-
-
 </body>
 </html>

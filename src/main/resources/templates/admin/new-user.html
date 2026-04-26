@@ -1,0 +1,68 @@
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen flex bg-gray-100">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="flex-1 flex flex-col md:ml-64">
+    <header class="flex items-center justify-between bg-white shadow px-6 py-4">
+      <div>
+        <h1 class="text-xl font-bold text-black">Create New User</h1>
+        <p class="text-gray-600">Add a student or admin account directly from command center.</p>
+      </div>
+      <a th:href="@{/admin/users}" class="text-[var(--espresso)] font-semibold hover:underline">Back to Users</a>
+    </header>
+
+    <main class="p-6">
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow border p-8">
+        <div th:if="${error}" class="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+          <p th:text="${error}"></p>
+        </div>
+        <form th:action="@{/admin/users/new}" th:object="${userRequest}" method="post" class="space-y-5">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">First Name</label>
+              <input th:field="*{firstName}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Last Name</label>
+              <input th:field="*{lastName}" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Email</label>
+            <input th:field="*{email}" type="email" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Password</label>
+              <input th:field="*{password}" type="password" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Confirm Password</label>
+              <input th:field="*{confirmPassword}" type="password" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3" required />
+            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-3">
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Role</label>
+              <select name="role" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3">
+                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Status</label>
+              <select name="status" class="w-full rounded-xl border-2 border-[var(--espresso)] px-4 py-3">
+                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <label class="flex items-center gap-3 font-semibold text-[var(--espresso)]">
+                <input type="checkbox" name="verified" value="true" class="w-5 h-5">
+                Mark as verified
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="w-full bg-[var(--espresso)] text-white font-bold py-4 rounded-xl border-b-4 border-[#352521] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all">Create User</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>

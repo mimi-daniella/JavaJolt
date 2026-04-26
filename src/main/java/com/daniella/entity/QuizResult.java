@@ -17,6 +17,12 @@ public class QuizResult {
     private Long id;
  
     private int score;
+    private int totalQuestions;
+    private double percentageScore;
+    private boolean passed;
+    private int xpEarned;
+    private String categoryFocus;
+    private String difficultyFocus;
     private LocalDateTime  completedAt;
     
     @ManyToOne
@@ -41,6 +47,54 @@ public class QuizResult {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	public int getTotalQuestions() {
+		return totalQuestions;
+	}
+
+	public void setTotalQuestions(int totalQuestions) {
+		this.totalQuestions = totalQuestions;
+	}
+
+	public double getPercentageScore() {
+		return percentageScore;
+	}
+
+	public void setPercentageScore(double percentageScore) {
+		this.percentageScore = percentageScore;
+	}
+
+	public boolean isPassed() {
+		return passed;
+	}
+
+	public void setPassed(boolean passed) {
+		this.passed = passed;
+	}
+
+	public int getXpEarned() {
+		return xpEarned;
+	}
+
+	public void setXpEarned(int xpEarned) {
+		this.xpEarned = xpEarned;
+	}
+
+	public String getCategoryFocus() {
+		return categoryFocus;
+	}
+
+	public void setCategoryFocus(String categoryFocus) {
+		this.categoryFocus = categoryFocus;
+	}
+
+	public String getDifficultyFocus() {
+		return difficultyFocus;
+	}
+
+	public void setDifficultyFocus(String difficultyFocus) {
+		this.difficultyFocus = difficultyFocus;
 	}
 
 	public LocalDateTime getCompletedAt() {

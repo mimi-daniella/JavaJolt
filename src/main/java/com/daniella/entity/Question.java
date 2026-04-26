@@ -1,15 +1,20 @@
 package com.daniella.entity;
 
-import com.daniella.enums.Difficulty;
+import java.time.LocalDateTime;
 
+import com.daniella.enums.Difficulty;
+import com.daniella.enums.QuestionStatus;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
 
 @Entity
 @Table(name="questions")
@@ -32,9 +37,29 @@ public class Question {
 	
 	@Enumerated(EnumType.STRING)
 	private Difficulty difficulty;
-	
-	
-	
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private QuestionStatus status = QuestionStatus.ACTIVE;
+
+	private LocalDateTime createdAt;
+
+	private LocalDateTime updatedAt;
+
+	@PrePersist
+	public void onCreate() {
+		LocalDateTime now = LocalDateTime.now();
+		createdAt = now;
+		updatedAt = now;
+		if (status == null) {
+			status = QuestionStatus.ACTIVE;
+		}
+	}
+
+	@PreUpdate
+	public void onUpdate() {
+		updatedAt = LocalDateTime.now();
+	}
 
 	public Long getId() {
 		return id;
@@ -107,8 +132,20 @@ public class Question {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
 
-	
-	
+	public QuestionStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(QuestionStatus status) {
+		this.status = status;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 }

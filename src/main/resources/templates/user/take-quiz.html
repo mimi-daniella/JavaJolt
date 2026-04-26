@@ -7,23 +7,38 @@
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
 <main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
-    <!-- User quiz-taking page added for the real /quiz/start route. -->
-    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]" data-aos="fade-down">
+    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
                 <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Arena</p>
-                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]">JavaJolt Challenge</h1>
-                <p class="mt-4 text-lg max-w-2xl">Answer each question once, submit at the end, and your score will be saved to your account activity.</p>
+                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]" th:text="${featuredTitle}">JavaJolt Challenge</h1>
+                <p class="mt-4 text-lg max-w-2xl">Answer each question once, submit at the end, and your score will be saved with XP and streak progress.</p>
+                <p class="mt-2 text-sm text-gray-600">Category filter: <span class="font-bold" th:text="${selectedCategory != null and !selectedCategory.isBlank() ? selectedCategory : 'Mixed'}">Mixed</span> • Difficulty: <span class="font-bold" th:text="${selectedDifficulty != null and !selectedDifficulty.isBlank() ? selectedDifficulty : 'Mixed'}">Mixed</span></p>
             </div>
-            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-4 text-center shadow-[4px_4px_0px_var(--espresso)]">
-                <p class="text-sm uppercase font-bold text-[var(--espresso)]">Questions Loaded</p>
-                <p class="kavoon text-4xl text-[var(--espresso)]" th:text="${#lists.size(questions)}">10</p>
+            <div class="flex flex-col gap-3">
+                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-4 text-center shadow-[4px_4px_0px_var(--espresso)]">
+                    <p class="text-sm uppercase font-bold text-[var(--espresso)]">Questions Loaded</p>
+                    <p class="kavoon text-4xl text-[var(--espresso)]" th:text="${#lists.size(questions)}">10</p>
+                </div>
+                <div th:if="${timerEnabled}" class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-6 py-4 text-center shadow-[4px_4px_0px_var(--light-brown)]">
+                    <p class="text-sm uppercase font-bold text-[var(--espresso)]">Timer</p>
+                    <p id="timerLabel" class="kavoon text-3xl text-[var(--espresso)]">15:00</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <form th:action="@{/quiz/submit}" method="post" class="space-y-6">
-        <section th:each="question, stat : ${questions}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[6px_6px_0px_var(--light-brown)]" data-aos="fade-up">
+    <form th:action="@{/quiz/submit}" method="post" class="space-y-6" id="quizForm">
+        <input type="hidden" name="selectedCategory" th:value="${selectedCategory}">
+        <input type="hidden" name="selectedDifficulty" th:value="${selectedDifficulty}">
+
+        <section th:if="${#lists.isEmpty(questions)}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 text-center shadow-[6px_6px_0px_var(--light-brown)]">
+            <h2 class="kavoon text-3xl text-[var(--espresso)]">No Questions Found</h2>
+            <p class="mt-3 text-lg">The current filters do not have enough active questions yet.</p>
+            <a th:href="@{/quizzes}" class="inline-block mt-6 rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-3 font-bold text-[var(--espresso)]">Back to Quizzes</a>
+        </section>
+
+        <section th:each="question, stat : ${questions}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[6px_6px_0px_var(--light-brown)]">
             <div class="flex items-center justify-between gap-4">
                 <span class="rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 font-bold text-[var(--espresso)]" th:text="'Question ' + ${stat.count}">Question 1</span>
                 <span class="rounded-full border-2 border-[var(--espresso)] bg-white px-4 py-2 text-sm font-bold text-[var(--espresso)]" th:text="${question.category}">Syntax</span>
@@ -51,7 +66,7 @@
             </div>
         </section>
 
-        <div class="sticky bottom-5 flex justify-center">
+        <div th:unless="${#lists.isEmpty(questions)}" class="sticky bottom-5 flex justify-center">
             <button type="submit" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-10 py-4 text-xl font-bold text-white shadow-[6px_6px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
                 Submit Quiz
             </button>
@@ -61,8 +76,26 @@
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 
-<script>
+<script th:inline="javascript">
   AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+  const timerEnabled = /*[[${timerEnabled}]]*/ false;
+  if (timerEnabled) {
+    let secondsLeft = 15 * 60;
+    const label = document.getElementById('timerLabel');
+    const form = document.getElementById('quizForm');
+    const interval = setInterval(() => {
+      const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+      const seconds = String(secondsLeft % 60).padStart(2, '0');
+      if (label) {
+        label.textContent = `${minutes}:${seconds}`;
+      }
+      if (secondsLeft <= 0) {
+        clearInterval(interval);
+        if (form) form.submit();
+      }
+      secondsLeft -= 1;
+    }, 1000);
+  }
 </script>
 </body>
 </html>

@@ -1,2 +1,140 @@
-<div th:replace="~{fragments/head :: head}"></div>
-<h1>System settings</h1>
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen flex bg-gray-100">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+  <div class="flex-1 flex flex-col md:ml-64">
+    <header class="flex items-center justify-between bg-white shadow px-6 py-4">
+      <div>
+        <h1 class="text-xl font-bold text-black">System Settings</h1>
+        <p class="text-gray-600">Tune quiz rules, game switches, platform messaging, and data tools.</p>
+      </div>
+      <a th:href="@{/admin/audit}" class="text-[var(--espresso)] font-semibold hover:underline">View audit log</a>
+    </header>
+
+    <main class="p-6 space-y-6">
+      <div th:if="${success}" class="rounded-xl border border-green-200 bg-green-50 px-5 py-4 text-green-700" th:text="${success}"></div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Users</p>
+          <p class="text-3xl font-bold" th:text="${userCount}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Questions</p>
+          <p class="text-3xl font-bold" th:text="${questionCount}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Results</p>
+          <p class="text-3xl font-bold" th:text="${resultCount}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Open Feedback</p>
+          <p class="text-3xl font-bold" th:text="${openFeedbackCount}">0</p>
+        </div>
+      </div>
+
+      <form th:action="@{/admin/settings}" method="post" class="grid xl:grid-cols-2 gap-6">
+        <section class="bg-white rounded-xl shadow border p-6 space-y-5">
+          <h2 class="text-lg font-bold text-black">Quiz Control</h2>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Questions Per Round</label>
+            <input name="questionsPerRound" th:value="${quizSettings['quiz.questionsPerRound']}" type="number" min="1" max="50" class="w-full rounded-xl border px-4 py-3" />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Pass Mark (%)</label>
+            <input name="passMark" th:value="${quizSettings['quiz.passMark']}" type="number" min="1" max="100" class="w-full rounded-xl border px-4 py-3" />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Default Category</label>
+            <input name="defaultCategory" th:value="${quizSettings['quiz.defaultCategory']}" class="w-full rounded-xl border px-4 py-3" placeholder="Leave blank for mixed questions" />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Default Difficulty</label>
+            <input name="defaultDifficulty" th:value="${quizSettings['quiz.defaultDifficulty']}" class="w-full rounded-xl border px-4 py-3" placeholder="EASY, MEDIUM, HARD, or blank" />
+          </div>
+          <label class="flex items-center gap-3 font-semibold">
+            <input type="checkbox" name="timerEnabled" th:checked="${quizSettings['quiz.timerEnabled'] == 'true'}" class="w-5 h-5">
+            Enable quiz timer
+          </label>
+          <label class="flex items-center gap-3 font-semibold">
+            <input type="checkbox" name="allowRetakes" th:checked="${quizSettings['quiz.allowRetakes'] == 'true'}" class="w-5 h-5">
+            Allow retakes
+          </label>
+        </section>
+
+        <section class="bg-white rounded-xl shadow border p-6 space-y-5">
+          <h2 class="text-lg font-bold text-black">Game Layer</h2>
+          <label class="flex items-center gap-3 font-semibold">
+            <input type="checkbox" name="dailyChallengeEnabled" th:checked="${gameSettings['game.dailyChallengeEnabled'] == 'true'}" class="w-5 h-5">
+            Enable daily challenge
+          </label>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Featured Challenge Title</label>
+            <input name="featuredChallengeTitle" th:value="${gameSettings['game.featuredChallengeTitle']}" class="w-full rounded-xl border px-4 py-3" />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Daily Challenge Category</label>
+            <input name="dailyChallengeCategory" th:value="${gameSettings['game.dailyChallengeCategory']}" class="w-full rounded-xl border px-4 py-3" />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">XP Per Correct</label>
+              <input name="baseXpPerCorrect" th:value="${gameSettings['game.baseXpPerCorrect']}" type="number" min="1" class="w-full rounded-xl border px-4 py-3" />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Streak Bonus XP</label>
+              <input name="streakBonusXp" th:value="${gameSettings['game.streakBonusXp']}" type="number" min="0" class="w-full rounded-xl border px-4 py-3" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Branding Tagline</label>
+            <input name="brandingTagline" th:value="${brandingSettings['branding.tagline']}" class="w-full rounded-xl border px-4 py-3" />
+          </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow border p-6 space-y-5">
+          <h2 class="text-lg font-bold text-black">Content & Messaging</h2>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Announcement</label>
+            <textarea name="announcement" rows="4" class="w-full rounded-xl border px-4 py-3" th:text="${contentSettings['content.announcement']}"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Maintenance Banner</label>
+            <textarea name="maintenanceBanner" rows="3" class="w-full rounded-xl border px-4 py-3" th:text="${contentSettings['content.maintenanceBanner']}"></textarea>
+          </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow border p-6 space-y-5">
+          <h2 class="text-lg font-bold text-black">Data Tools</h2>
+          <div class="grid gap-3">
+            <a th:href="@{/admin/data/export/users}" class="rounded-lg border px-4 py-3 font-semibold">Export Users JSON</a>
+            <a th:href="@{/admin/data/export/results}" class="rounded-lg border px-4 py-3 font-semibold">Export Results JSON</a>
+            <a th:href="@{/admin/data/export/questions}" class="rounded-lg border px-4 py-3 font-semibold">Export Questions JSON</a>
+          </div>
+          <div class="rounded-xl bg-gray-50 p-4">
+            <p class="font-semibold text-black">Database health summary</p>
+            <p class="text-sm text-gray-600 mt-2">Current records: <span th:text="${userCount}">0</span> users, <span th:text="${questionCount}">0</span> questions, <span th:text="${resultCount}">0</span> results.</p>
+          </div>
+        </section>
+
+        <div class="xl:col-span-2">
+          <button type="submit" class="w-full rounded-xl bg-[var(--espresso)] text-white py-4 font-bold">Save Settings</button>
+        </div>
+      </form>
+
+      <section class="bg-white rounded-xl shadow border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-black">Recent Admin Actions</h2>
+          <a th:href="@{/admin/audit}" class="text-sm text-[var(--espresso)] font-semibold hover:underline">Full audit log</a>
+        </div>
+        <div class="space-y-3">
+          <div th:each="log : ${recentAdminActions}" class="rounded-lg border px-4 py-3">
+            <p class="font-semibold text-gray-900"><span th:text="${log.actionType}">UPDATE_SETTINGS</span> by <span th:text="${log.actorEmail}">admin@example.com</span></p>
+            <p class="text-sm text-gray-500" th:text="${log.createdAt != null ? #temporals.format(log.createdAt, 'dd MMM yyyy HH:mm') : 'Recently'}">Recently</p>
+            <p class="text-sm text-gray-600" th:text="${log.details}">Action details</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>

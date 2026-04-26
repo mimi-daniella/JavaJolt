@@ -1,7 +1,10 @@
 package com.daniella.entity;
 
+import java.time.LocalDateTime;
+
 import com.daniella.enums.Role;
 import com.daniella.enums.UserStatus;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +39,29 @@ public class User {
 
 	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean isVerified = false;
+
+	private LocalDateTime createdAt;
+
+	private LocalDateTime lastLoginAt;
+
+	@Column(nullable = false)
+	private int xp = 0;
+
+	@Column(nullable = false)
+	private int streakCount = 0;
+
+	@Column(nullable = false)
+	private String rankTitle = "ROOKIE";
+
+	@PrePersist
+	public void onCreate() {
+		if (createdAt == null) {
+			createdAt = LocalDateTime.now();
+		}
+		if (status == null) {
+			status = UserStatus.ACTIVE;
+		}
+	}
 	
 	// --- Getters & Setters ---
 	public Long getId() {
@@ -100,5 +126,45 @@ public class User {
 	
 	public void setVerified(boolean verified) {
 		isVerified = verified;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getLastLoginAt() {
+		return lastLoginAt;
+	}
+
+	public void setLastLoginAt(LocalDateTime lastLoginAt) {
+		this.lastLoginAt = lastLoginAt;
+	}
+
+	public int getXp() {
+		return xp;
+	}
+
+	public void setXp(int xp) {
+		this.xp = xp;
+	}
+
+	public int getStreakCount() {
+		return streakCount;
+	}
+
+	public void setStreakCount(int streakCount) {
+		this.streakCount = streakCount;
+	}
+
+	public String getRankTitle() {
+		return rankTitle;
+	}
+
+	public void setRankTitle(String rankTitle) {
+		this.rankTitle = rankTitle;
 	}
 }
