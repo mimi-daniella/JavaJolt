@@ -1,0 +1,53 @@
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen flex bg-gray-100">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="flex-1 flex flex-col md:ml-64">
+    <header class="flex items-center justify-between bg-white shadow px-6 py-4">
+      <div>
+        <h1 class="text-xl font-bold text-black">Admin Profile</h1>
+        <p class="text-gray-600">Manage your command-center identity and review access details.</p>
+      </div>
+      <a th:href="@{/admin/settings}" class="text-[var(--espresso)] font-bold hover:underline">System Settings</a>
+    </header>
+
+    <main class="p-6">
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow border p-8">
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <p class="text-sm uppercase text-gray-500 mb-2">Name</p>
+            <p class="text-lg font-semibold" th:text="${firstName} + ' ' + ${lastName}">Admin Name</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase text-gray-500 mb-2">Email</p>
+            <p class="text-lg font-semibold" th:text="${email}">admin@example.com</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase text-gray-500 mb-2">Role</p>
+            <p class="text-lg font-semibold" th:text="${role}">ROLE_ADMIN</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase text-gray-500 mb-2">Status</p>
+            <p class="text-lg font-semibold text-green-600" th:text="${status}">ACTIVE</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase text-gray-500 mb-2">Account Created</p>
+            <p class="text-lg font-semibold" th:text="${createdAt != null ? #temporals.format(createdAt, 'dd MMM yyyy HH:mm') : 'N/A'}">N/A</p>
+          </div>
+          <div>
+            <p class="text-sm uppercase text-gray-500 mb-2">Last Login</p>
+            <p class="text-lg font-semibold" th:text="${lastLoginAt != null ? #temporals.format(lastLoginAt, 'dd MMM yyyy HH:mm') : 'Never'}">Never</p>
+          </div>
+        </div>
+
+        <div class="mt-8 border-t pt-6">
+          <h2 class="text-xl font-bold text-black mb-3">Quick links</h2>
+          <div class="grid gap-4 md:grid-cols-3">
+            <a th:href="@{/admin/dashboard}" class="block rounded-xl bg-[var(--espresso)] px-5 py-4 text-white font-semibold hover:bg-[var(--yellow)] transition text-center">Dashboard</a>
+            <a th:href="@{/admin/users}" class="block rounded-xl bg-[var(--light-brown)] px-5 py-4 text-white font-semibold hover:bg-[#3b2a1f] transition text-center">User Management</a>
+            <a th:href="@{/admin/audit}" class="block rounded-xl border px-5 py-4 font-semibold transition text-center">Audit Log</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>

@@ -1,0 +1,41 @@
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen flex bg-gray-100">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="flex-1 flex flex-col md:ml-64">
+    <header class="flex items-center justify-between bg-white shadow px-6 py-4">
+      <div>
+        <h1 class="text-xl font-bold text-black">Audit Log</h1>
+        <p class="text-gray-600">Track who changed what and when across the admin command center.</p>
+      </div>
+      <a th:href="@{/admin/settings}" class="text-[var(--espresso)] font-semibold hover:underline">Back to settings</a>
+    </header>
+
+    <main class="p-6">
+      <section class="bg-white rounded-xl shadow border overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Actor</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Action</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Target</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Details</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Time</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr th:each="log : ${logs}">
+              <td class="px-6 py-4 text-sm text-gray-800" th:text="${log.actorEmail}">admin@example.com</td>
+              <td class="px-6 py-4 text-sm font-semibold text-gray-900" th:text="${log.actionType}">UPDATE_SETTINGS</td>
+              <td class="px-6 py-4 text-sm text-gray-700">
+                <span th:text="${log.targetType}">SYSTEM</span>
+                <span th:if="${log.targetId != null}" th:text="' #' + ${log.targetId}"></span>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-700" th:text="${log.details}">Action details</td>
+              <td class="px-6 py-4 text-sm text-gray-500" th:text="${log.createdAt != null ? #temporals.format(log.createdAt, 'dd MMM yyyy HH:mm') : 'Recently'}">Recently</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>

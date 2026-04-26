@@ -3,6 +3,7 @@ package com.daniella.controller;
 import java.security.Principal;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,9 @@ public class UserController {
 	@PostMapping("/avatar")
 	public ResponseEntity<String>  updateAvatar(@RequestBody Map<String, String> payload,
             Principal principal){
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please log in first.");
+        }
 		String avatarPath = payload.get("avatarPath");
 		String email = principal.getName();
 		userService.updateUserAvatar(email, avatarPath);

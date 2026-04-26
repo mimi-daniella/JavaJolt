@@ -1,74 +1,84 @@
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head}"></head>
-<body>
+<body class="min-h-screen">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
-<!-- Hero Section (Lightened from solid Yellow to Cream with Yellow accent) -->
-<section class="mt-4 flex flex-col items-center justify-center min-h-[45vh] px-6 text-center 
-                 bg-[var(--cream)] border-b-2 border-[var(--yellow)] shadow-sm" data-aos="fade-up">
-	<h1 class="text-5xl md:text-7xl font-bold kavoon text-[var(--espresso)] mb-4 drop-shadow-sm">
-		About <span class="text-[var(--light-brown)] opacity-90">JavaJolt</span>
-	</h1>
-	<p class="text-lg md:text-xl max-w-2xl text-[var(--light-text)] opacity-80">
-		JavaJolt is built to test & improve your knowledge in the Java programming language. With fun quizzes at every level,
-		we make coding feel like an adventure — playful, colorful, and full of “aha!” moments.
-	</p>
-</section>
+<main class="space-y-14 pb-12">
+  <section class="public-shell pt-8">
+    <div class="rounded-[2.2rem] border-4 border-[var(--espresso)] bg-white px-6 py-12 sm:px-10 shadow-[10px_10px_0px_var(--yellow)] text-center">
+      <p class="inline-flex rounded-full border-2 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 text-xs uppercase tracking-[0.28em] font-bold text-[var(--espresso)]">
+        About JavaJolt
+      </p>
+      <h1 class="mt-6 text-4xl md:text-6xl font-bold kavoon text-[var(--espresso)]">
+        Learning Java Should Feel Like A Challenge Worth Playing
+      </h1>
+      <p class="mt-6 mx-auto max-w-3xl text-lg text-[var(--light-text)]">
+        JavaJolt is a game-quiz interpretation of the online question bank system. Students still register, log in, answer randomized Java questions, and get scored, but the experience feels lively, playful, and memorable instead of stiff.
+      </p>
+    </div>
+  </section>
 
-<section class="py-16 px-6 md:px-20 bg-white" data-aos="fade-right">
-	<h2 class="text-3xl font-bold text-center mb-6 text-[var(--espresso)]">Our Mission</h2>
-	<div class="w-16 h-1 bg-[var(--light-brown)] mx-auto mb-8 rounded-full"></div> <!-- Subtle divider -->
-	<p class="max-w-3xl mx-auto text-center text-[var(--light-text)] text-lg leading-relaxed">
-		We believe learning should feel like flipping through your favorite comic — surprising, engaging,
-		and never dull. Our mission is to empower learners with quizzes and challenges that spark curiosity.
-	</p>
-</section>
+  <section class="public-shell">
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]">
+        <h2 class="kavoon text-3xl text-[var(--espresso)]">Our Mission</h2>
+        <p class="mt-4 text-[var(--light-text)] text-lg leading-relaxed">
+          We want students to practice Java in an environment that feels inviting, motivating, and rewarding. JavaJolt keeps the academic core of the project while adding energy through game design, visual identity, and progress systems.
+        </p>
+      </div>
+      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-[var(--cream)] p-8 shadow-[8px_8px_0px_var(--yellow)]">
+        <h2 class="kavoon text-3xl text-[var(--espresso)]">What Makes It Different</h2>
+        <p class="mt-4 text-[var(--light-text)] text-lg leading-relaxed">
+          The platform blends a serious Java question bank with a fun coffee-powered atmosphere. That means the system still teaches and measures learning, but it does it in a way that feels human and engaging.
+        </p>
+      </div>
+    </div>
+  </section>
 
-<section class="py-16 px-6 md:px-20 bg-[var(--cream)]/50">
-	<h2 class="text-3xl font-bold text-center mb-12 text-[var(--espresso)]" data-aos="fade-up">Our Values</h2>
-	<div class="grid md:grid-cols-3 gap-8 text-center">
-		<!-- Value 1 -->
-		<div class="p-8 bg-white rounded-2xl shadow-md border-2 border-[var(--yellow)]"
-			data-aos="zoom-in" data-aos-delay="200">
-			<h3 class="text-xl font-bold mb-3 text-[var(--espresso)]">Simplicity</h3>
-			<p class="text-[var(--light-text)] text-sm">We keep quizzes clear and fun, so you focus on learning — not stress.</p>
-		</div>
-		<!-- Value 2 -->
-		<div class="p-8 bg-white rounded-2xl shadow-md border-2 border-[var(--light-brown)]"
-			data-aos="zoom-in" data-aos-delay="400">
-			<h3 class="text-xl font-bold mb-3 text-[var(--light-brown)]">Community</h3>
-			<p class="text-[var(--light-text)] text-sm">We’re building a league of learners — cheering each other on like heroes.</p>
-		</div>
-		<!-- Value 3 -->
-		<div class="p-8 bg-white rounded-2xl shadow-md border-2 border-[var(--espresso)]"
-			data-aos="zoom-in" data-aos-delay="600">
-			<h3 class="text-xl font-bold mb-3 text-[var(--espresso)]">Playfulness</h3>
-			<p class="text-[var(--light-text)] text-sm">Every quiz is a mini‑adventure. Learning should feel like fun.</p>
-		</div>
-	</div>
-</section>
+  <section class="public-shell">
+    <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]">
+      <h2 class="kavoon text-3xl text-center text-[var(--espresso)]">Our Values</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        <div class="rounded-[1.7rem] border-4 border-[var(--yellow)] bg-[var(--cream)] p-6 text-center">
+          <h3 class="text-xl font-bold text-[var(--espresso)]">Clarity</h3>
+          <p class="mt-3 text-sm text-[var(--light-text)]">Students should focus on learning and answering, not fighting a confusing interface.</p>
+        </div>
+        <div class="rounded-[1.7rem] border-4 border-[var(--light-brown)] bg-white p-6 text-center">
+          <h3 class="text-xl font-bold text-[var(--espresso)]">Playfulness</h3>
+          <p class="mt-3 text-sm text-[var(--light-text)]">Practice becomes more effective when the environment feels enjoyable and rewarding.</p>
+        </div>
+        <div class="rounded-[1.7rem] border-4 border-[var(--espresso)] bg-[var(--cream)] p-6 text-center">
+          <h3 class="text-xl font-bold text-[var(--espresso)]">Growth</h3>
+          <p class="mt-3 text-sm text-[var(--light-text)]">Every quiz attempt should help students build confidence, recall, and momentum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-
-<section class="py-4 bg-gradient-to-br from-[var(--espresso)] to-[#4a332d] text-center px-6" data-aos="fade-up">
-	<h2 class="text-4xl font-bold kavoon mb-4 text-[var(--yellow)]">Ready to Test Your Java Knowledge?</h2>
-	<p class="text-lg text-white/80 mb-8 max-w-xl mx-auto">
-		From beginner to advanced, our quizzes challenge you like villains — and you’ll level up with every win.
-	</p>
-	<a th:href="@{/quizzes}" class="inline-block bg-[var(--light-brown)] text-white font-bold px-8 py-4 rounded-full shadow-lg 
-              hover:bg-[var(--yellow)] hover:text-[var(--espresso)] transition-all transform hover:-translate-y-1">
-		Start a Quiz
-	</a>
-	<a th:if="${loggedIn}" th:href="@{/dashboard}" class="inline-block ml-3 bg-white text-[var(--espresso)] font-bold px-8 py-4 rounded-full border-4 border-[var(--espresso)] shadow-lg 
-              hover:bg-[var(--yellow)] transition-all transform hover:-translate-y-1">
-		Open Dashboard
-	</a>
-</section>
+  <section class="public-shell">
+    <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-gradient-to-br from-[var(--espresso)] to-[#4a332d] px-8 py-10 text-center shadow-[8px_8px_0px_var(--yellow)]">
+      <h2 class="text-3xl md:text-4xl font-bold kavoon text-[var(--yellow)]">Ready to test your Java knowledge?</h2>
+      <p class="mt-4 mx-auto max-w-2xl text-lg text-white/85">
+        Step into the JavaJolt arena, sharpen your skills, and make each quiz attempt count.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a th:href="@{/quizzes}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--light-brown)] px-8 py-4 font-bold text-white shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+          Start A Quiz
+        </a>
+        <a th:if="${loggedIn}" th:href="@{/dashboard}" class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-8 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+          Open Dashboard
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
+
 <script>
-	AOS.init({once: true, duration: 1000, easing: 'ease-out'});
+  AOS.init({ once: true, duration: 1000, easing: 'ease-out' });
 </script>
 </body>
-
 </html>

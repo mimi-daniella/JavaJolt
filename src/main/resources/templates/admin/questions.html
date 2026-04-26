@@ -1,0 +1,109 @@
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen flex bg-gray-100">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="flex-1 flex flex-col md:ml-64">
+    <header class="flex items-center justify-between bg-white shadow px-6 py-4">
+      <div>
+        <h1 class="text-xl font-bold text-black">Question Bank Ops</h1>
+        <p class="text-gray-600">Filter, import, export, draft, and maintain the live question bank.</p>
+      </div>
+      <div class="flex gap-3">
+        <a th:href="@{/admin/questions/export}" class="border border-gray-300 rounded-lg px-4 py-2 font-semibold">Export JSON</a>
+        <a th:href="@{/admin/questions/new}" class="bg-[var(--espresso)] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[var(--yellow)] transition">Add New Question</a>
+      </div>
+    </header>
+
+    <main class="p-6 space-y-6">
+      <div th:if="${success}" class="p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl">
+        <p th:text="${success}"></p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Total Questions</p>
+          <p class="text-3xl font-bold" th:text="${totalQuestions}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Active</p>
+          <p class="text-3xl font-bold text-green-700" th:text="${activeQuestions}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Drafts</p>
+          <p class="text-3xl font-bold text-yellow-700" th:text="${draftQuestions}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow border">
+          <p class="text-sm font-bold text-gray-500">Possible Duplicates</p>
+          <p class="text-3xl font-bold text-red-700" th:text="${duplicateCount}">0</p>
+        </div>
+      </div>
+
+      <div class="grid xl:grid-cols-4 gap-6">
+        <form method="get" class="xl:col-span-3 bg-white rounded-xl shadow border p-5 grid md:grid-cols-4 gap-4">
+          <input type="text" name="search" th:value="${search}" placeholder="Search question text" class="rounded-xl border px-4 py-3 md:col-span-2" />
+          <select name="difficulty" class="rounded-xl border px-4 py-3">
+            <option value="">All Difficulties</option>
+            <option th:each="difficultyItem : ${difficulties}" th:value="${difficultyItem}" th:text="${difficultyItem}" th:selected="${selectedDifficulty == difficultyItem.name()}"></option>
+          </select>
+          <select name="status" class="rounded-xl border px-4 py-3">
+            <option value="">All Statuses</option>
+            <option th:each="statusItem : ${statuses}" th:value="${statusItem}" th:text="${statusItem}" th:selected="${selectedStatus == statusItem.name()}"></option>
+          </select>
+          <select name="category" class="rounded-xl border px-4 py-3 md:col-span-2">
+            <option value="">All Categories</option>
+            <option th:each="categoryItem : ${categories}" th:value="${categoryItem}" th:text="${categoryItem}" th:selected="${selectedCategory == categoryItem}"></option>
+          </select>
+          <div class="md:col-span-2 flex gap-3">
+            <button type="submit" class="bg-[var(--espresso)] text-white font-bold px-5 py-3 rounded-lg">Apply Filters</button>
+            <a th:href="@{/admin/questions}" class="border px-5 py-3 rounded-lg font-semibold">Reset</a>
+          </div>
+        </form>
+
+        <form th:action="@{/admin/questions/import}" method="post" enctype="multipart/form-data" class="bg-white rounded-xl shadow border p-5 space-y-4">
+          <div>
+            <h2 class="font-bold text-black">Bulk Import</h2>
+            <p class="text-sm text-gray-500">Upload a JSON array of questions.</p>
+          </div>
+          <input type="file" name="file" accept=".json,application/json" class="w-full rounded-xl border px-4 py-3" required />
+          <button type="submit" class="w-full rounded-lg bg-[var(--light-brown)] text-white py-3 font-bold">Import Questions</button>
+        </form>
+      </div>
+
+      <div class="bg-white rounded-xl shadow border overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Question</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Difficulty</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Category</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Answer</th>
+              <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr th:each="question : ${questions}">
+              <td class="px-6 py-4 text-sm text-gray-900" th:text="${question.questionText}">What is Java?</td>
+              <td class="px-6 py-4 text-sm text-gray-500" th:text="${question.difficulty}">EASY</td>
+              <td class="px-6 py-4 text-sm text-gray-500" th:text="${question.category ?: 'Uncategorized'}">Java</td>
+              <td class="px-6 py-4 text-sm">
+                <span th:text="${question.status}"
+                      th:classappend="${question.status.name() == 'ACTIVE'} ? ' bg-green-100 text-green-800' :
+                                      (${question.status.name() == 'DRAFT'} ? ' bg-yellow-100 text-yellow-800' : ' bg-gray-200 text-gray-700')"
+                      class="px-2 py-1 rounded-full text-xs font-semibold">ACTIVE</span>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-500" th:text="${question.correctOption}">A</td>
+              <td class="px-6 py-4 text-right text-sm font-medium">
+                <div class="flex justify-end space-x-3">
+                  <a th:href="@{/admin/questions/{id}/edit(id=${question.id})}" class="text-blue-600 hover:text-blue-900">Edit</a>
+                  <form th:action="@{/admin/questions/{id}/delete(id=${question.id})}" method="post" onsubmit="return confirm('Delete this question?');">
+                    <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>

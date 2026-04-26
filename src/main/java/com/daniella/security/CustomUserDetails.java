@@ -43,7 +43,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return user.getStatus() == null || !"SUSPENDED".equalsIgnoreCase(user.getStatus().name());
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return user.isVerified();
 	}
 
 	public String getDisplayName() {

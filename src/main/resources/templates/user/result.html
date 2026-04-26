@@ -4,23 +4,41 @@
 <body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/floatingUtils :: utils}"></div>
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
 <main class="max-w-4xl mx-auto pt-10 pb-12 px-6">
-    <!-- Quiz result page added for the real /quiz/submit flow. -->
-    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 text-center shadow-[8px_8px_0px_var(--yellow)]" data-aos="zoom-in">
+    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 text-center shadow-[8px_8px_0px_var(--yellow)]">
         <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Result</p>
-        <h1 class="kavoon mt-4 text-5xl text-[var(--espresso)]">Nice run!</h1>
-        <p class="mt-4 text-lg">Your latest JavaJolt score has been calculated and saved to your activity history.</p>
+        <h1 class="kavoon mt-4 text-5xl text-[var(--espresso)]" th:text="${passed} ? 'Victory Brew!' : 'Almost there!'">Nice run!</h1>
+        <p class="mt-4 text-lg" th:if="${error}" th:text="${error}">Retakes are currently disabled.</p>
+        <p class="mt-4 text-lg" th:unless="${error}">Your latest JavaJolt score has been calculated and saved to your activity history.</p>
 
         <div class="mt-10 inline-flex flex-col items-center justify-center rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-12 py-10 shadow-[6px_6px_0px_var(--espresso)]">
             <span class="text-sm uppercase font-bold text-[var(--espresso)]">Your Score</span>
             <span class="kavoon mt-2 text-6xl text-[var(--espresso)]" th:text="${score + ' / ' + total}">0 / 0</span>
         </div>
 
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
+                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Pass Mark</p>
+                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${passMark} + '%'">60%</p>
+            </div>
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
+                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Rank</p>
+                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${rankTitle ?: 'ROOKIE'}">ROOKIE</p>
+            </div>
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
+                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Current Streak</p>
+                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${streakCount ?: 0} + ' day(s)'">0 day(s)</p>
+            </div>
+        </div>
+
+        <p class="mt-6 text-lg font-bold text-[var(--espresso)]" th:if="${xp != null}" th:text="'Total XP: ' + ${xp}">Total XP: 0</p>
+
         <div class="mt-10 flex flex-wrap justify-center gap-4">
-            <a th:href="@{/quiz/start}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-                Try Another Quiz
+            <a th:href="@{/quizzes}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                Set Up Another Quiz
             </a>
             <a th:href="@{/dashboard}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
                 Back to Dashboard
@@ -29,10 +47,79 @@
     </section>
 </main>
 
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div id="resultPopup" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-[95] p-4">
+    <div class="result-popup-card max-w-xl w-full rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 text-center shadow-[10px_10px_0px_var(--yellow)]">
+        <p id="resultPopupBadge" class="uppercase tracking-[0.3em] text-xs font-bold text-[var(--espresso)]">Round Complete</p>
+        <h2 id="resultPopupTitle" class="kavoon text-4xl text-[var(--espresso)] mt-3">Nice run!</h2>
+        <p id="resultPopupText" class="mt-4 text-lg text-[var(--light-text)]">You handled that round well.</p>
+        <button type="button" id="closeResultPopup" class="mt-8 rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-8 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)]">
+            Continue
+        </button>
+    </div>
+</div>
 
-<script>
+<style>
+  .result-popup-card {
+    animation: result-pop 0.45s ease-out;
+  }
+
+  @keyframes result-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.86) translateY(18px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+</style>
+
+<script th:inline="javascript">
   AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const score = /*[[${score}]]*/ 0;
+    const total = /*[[${total}]]*/ 0;
+    const popup = document.getElementById("resultPopup");
+    const title = document.getElementById("resultPopupTitle");
+    const text = document.getElementById("resultPopupText");
+    const badge = document.getElementById("resultPopupBadge");
+    const closeButton = document.getElementById("closeResultPopup");
+
+    let tier = "warning";
+    if (total > 0 && score === total) {
+      tier = "victory";
+      badge.textContent = "Perfect Score";
+      title.textContent = "Legendary!";
+      text.textContent = "All 10 right? That was a full-power JavaJolt run. Congratulations!";
+    } else if (score >= 6) {
+      tier = "praise";
+      badge.textContent = "Strong Finish";
+      title.textContent = "Well Played!";
+      text.textContent = "You brewed a solid result. Keep that momentum rolling.";
+    } else if (score <= 4) {
+      tier = "warning";
+      badge.textContent = "Training Mode";
+      title.textContent = "Oof... Try Again!";
+      text.textContent = "That round was rough, but real players bounce back stronger.";
+    } else {
+      tier = "warning";
+      badge.textContent = "Warm-Up Round";
+      title.textContent = "You're Warming Up";
+      text.textContent = "Halfway there. Tune your setup and come back sharper.";
+    }
+
+    popup.classList.remove("hidden");
+    popup.classList.add("flex");
+    if (window.JavaJoltAudio) window.JavaJoltAudio.playResultTier(tier);
+
+    closeButton?.addEventListener("click", () => {
+      popup.classList.add("hidden");
+      popup.classList.remove("flex");
+    });
+  });
 </script>
 </body>
 </html>

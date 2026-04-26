@@ -19,6 +19,8 @@
          class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Quizzes</a>
       <a th:href="@{/admin/settings}" th:classappend="${activePage == 'settings'} ? ' bg-gray-700' : ''"
          class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">System Settings</a>
+      <a th:href="@{/admin/profile}" th:classappend="${activePage == 'profile'} ? ' bg-gray-700' : ''"
+         class="py-2 px-4 rounded-lg hover:bg-gray-700 transition">Admin Profile</a>
     </nav>
   </div>
 </aside>
