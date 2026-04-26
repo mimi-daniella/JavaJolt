@@ -125,5 +125,14 @@ public class UserServiceImpl implements UserService {
 	        userRepository.save(user);
 	    }
 
+		@Override
+		public void updateUserAvatar(String email, String avatarPath) {
+			User user = userRepository.findByEmail(email)
+					.orElseThrow(() -> new BusinessException("User not found"));
+			user.setAvatarPath(avatarPath);
+			userRepository.save(user);
+			
+		}
+
 	
 }

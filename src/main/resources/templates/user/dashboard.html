@@ -33,7 +33,7 @@
     </div>
 
     <!-- 2. MAIN CALL TO ACTION (CodeChef Style) -->
-    <section class="mb-12 p-8 md:p-12 rounded-[2rem] border-4 border-[var(--espresso)] bg-white shadow-[10px_10px_0px_var(--espresso)] flex flex-col md:flex-row items-center justify-between gap-8" data-aos="zoom-in">
+    <section class="mb-12 p-8 md:p-12 rounded-[2rem] border-4 border-[var(--espresso)] bg-white shadow-[6px_6px_0px_var(--espresso)] flex flex-col md:flex-row items-center justify-between gap-8" data-aos="zoom-in">
         <div class="max-w-xl">
             <h2 class="kavoon text-4xl text-[var(--espresso)] mb-3">THE PRACTICE ARENA</h2>
             <p class="text-lg leading-relaxed opacity-80">Jump into randomized sprints or tackle specific Java topics. Your progress is tracked in real-time.</p>
@@ -86,16 +86,23 @@
         </div>
 
         <!-- Right Side: Mini Profile/Rank -->
-        <div class="space-y-6">
-            <div class="rounded-3xl border-4 border-[var(--espresso)] bg-[var(--yellow)] p-6 shadow-[6px_6px_0px_var(--espresso)]">
-                <h3 class="kavoon text-2xl text-[var(--espresso)] mb-1">ROOKIE</h3>
-                <div class="mt-4 w-full bg-black/10 h-3 rounded-full border border-black/5">
-                    <div class="bg-[var(--espresso)] h-full rounded-full" style="width: 35%"></div>
-                </div>
-                <p class="text-[10px] mt-2 font-bold text-[var(--espresso)] uppercase opacity-70">150 XP to Next Level</p>
-            </div>
+		<div class="space-y-4 text-center">
+		  <!-- Rank Title -->
+		  <h3 class="kavoon text-3xl text-[var(--espresso)] tracking-wide">
+		    ROOKIE
+		  </h3>
 
-        </div>
+		  <!-- Progress Bar -->
+		  <div class="relative w-full max-w-md mx-auto h-4 bg-black/10 rounded-full border border-black/5 overflow-hidden">
+		    <div class="bg-[var(--yellow)] h-full rounded-full shadow-[inset_2px_2px_4px_var(--espresso)]" style="width: 35%"></div>
+		  </div>
+
+		  <!-- XP Text -->
+		  <p class="text-xs font-bold text-[var(--espresso)] uppercase opacity-70">
+		    150 POINTS to Next Level
+		  </p>
+		</div>
+
     </div>
 </main>
 
@@ -175,6 +182,11 @@
     .btn-util {
         @apply w-12 h-12 flex items-center justify-center bg-white border-2 border-[var(--espresso)] rounded-xl shadow-[4px_4px_0px_var(--espresso)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xl;
     }
+	
+	.progress-glow {
+	  box-shadow: 0 0 8px var(--yellow);
+	}
+
 </style>
 
 <script>

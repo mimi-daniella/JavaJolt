@@ -36,7 +36,9 @@ public class User {
 
 	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean isVerified = false;
-	
+
+	private String avatarPath;
+
 	// --- Getters & Setters ---
 	public Long getId() {
 		return id;
@@ -93,12 +95,20 @@ public class User {
 	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
-	
+
 	public boolean isVerified() {
 		return isVerified;
 	}
-	
+
 	public void setVerified(boolean verified) {
 		isVerified = verified;
+	}
+
+	public String getAvatarPath() {
+		return avatarPath;
+	}
+	
+	public void setAvatarPath(String avatarPath) {
+		this.avatarPath = avatarPath;
 	}
 }

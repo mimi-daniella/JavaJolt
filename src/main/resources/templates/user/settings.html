@@ -4,7 +4,7 @@
 <body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<div th:replace="~{fragments/backToTop :: backToTop}"></div>
+<div th:replace="~{fragments/floatingUtils :: utils}"></div>
 
 <main class="max-w-5xl mx-auto pt-10 pb-12 px-6">
     <!-- Settings page added on the real /dashboard/settings route. -->
@@ -62,7 +62,6 @@
     </section>
 </main>
 
-<div th:replace="~{fragments/footer :: footer}"></div>
 
 <script>
   AOS.init({ once: true, duration: 700, easing: 'ease-out' });
