@@ -16,68 +16,77 @@ import jakarta.persistence.PrePersist;
 @Entity
 public class Feedback {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String email;
+    private String email;
 
-	@Column(length = 2000)
-	private String message;
+    @Column(length = 2000)
+    private String message;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private FeedbackStatus status = FeedbackStatus.NEW;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FeedbackStatus status = FeedbackStatus.NEW;
 
-	private LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-	// Constructors
-	public Feedback() {
-	}
+    public Feedback() {
+    }
 
-	public Feedback(String email, String message) {
-		this.email = email;
-		this.message = message;
-	}
+    public Feedback(String email, String message) {
+        this.email = email;
+        this.message = message;
+        this.createdAt = LocalDateTime.now();
+    }
 
-	@PrePersist
-	public void onCreate() {
-		if (status == null) {
-			status = FeedbackStatus.NEW;
-		}
-		createdAt = LocalDateTime.now();
-	}
+    @PrePersist
+    public void onCreate() {
+        if (status == null) {
+            status = FeedbackStatus.NEW;
+        }
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
 
-	// Getters and Setters
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public FeedbackStatus getStatus() {
-		return status;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public void setStatus(FeedbackStatus status) {
-		this.status = status;
-	}
+    public FeedbackStatus getStatus() {
+        return status;
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public void setStatus(FeedbackStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

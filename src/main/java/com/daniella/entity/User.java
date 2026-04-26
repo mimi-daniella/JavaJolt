@@ -5,7 +5,15 @@ import java.time.LocalDateTime;
 import com.daniella.enums.Role;
 import com.daniella.enums.UserStatus;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -13,158 +21,170 @@ import jakarta.validation.constraints.NotBlank;
 @Table(name = "users")
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank
-	private String firstName;
+    @NotBlank
+    private String firstName;
 
-	@NotBlank
-	private String lastName;
+    @NotBlank
+    private String lastName;
 
-	@NotBlank
-	@Email
-	@Column(unique = true, nullable = false)
-	private String email;
+    @NotBlank
+    @Email
+    @Column(unique = true, nullable = false)
+    private String email;
 
-	@NotBlank
-	private String password;
+    @NotBlank
+    private String password;
 
-	@Enumerated(EnumType.STRING)
-	private Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-	@Enumerated(EnumType.STRING)
-	private UserStatus status = UserStatus.ACTIVE;
+    @Enumerated(EnumType.STRING)
+    private UserStatus status = UserStatus.ACTIVE;
 
-	@Column(nullable = false, columnDefinition = "boolean default false")
-	private boolean isVerified = false;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isVerified = false;
 
-	private LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-	private LocalDateTime lastLoginAt;
+    private LocalDateTime lastLoginAt;
 
-	@Column(nullable = false)
-	private int xp = 0;
+    @Column(nullable = false)
+    private int xp = 0;
 
-	@Column(nullable = false)
-	private int streakCount = 0;
+    @Column(nullable = false)
+    private int streakCount = 0;
 
-	@Column(nullable = false)
-	private String rankTitle = "ROOKIE";
+    @Column(nullable = false)
+    private String rankTitle = "ROOKIE";
 
-	@PrePersist
-	public void onCreate() {
-		if (createdAt == null) {
-			createdAt = LocalDateTime.now();
-		}
-		if (status == null) {
-			status = UserStatus.ACTIVE;
-		}
-	}
-	
-	// --- Getters & Setters ---
-	public Long getId() {
-		return id;
-	}
+    private String avatarPath;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @PrePersist
+    public void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (status == null) {
+            status = UserStatus.ACTIVE;
+        }
+        if (rankTitle == null || rankTitle.isBlank()) {
+            rankTitle = "ROOKIE";
+        }
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public UserStatus getStatus() {
-		return status;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public void setStatus(UserStatus status) {
-		this.status = status;
-	}
-	
-	public boolean isVerified() {
-		return isVerified;
-	}
-	
-	public void setVerified(boolean verified) {
-		isVerified = verified;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public UserStatus getStatus() {
+        return status;
+    }
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
 
-	public LocalDateTime getLastLoginAt() {
-		return lastLoginAt;
-	}
+    public boolean isVerified() {
+        return isVerified;
+    }
 
-	public void setLastLoginAt(LocalDateTime lastLoginAt) {
-		this.lastLoginAt = lastLoginAt;
-	}
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
 
-	public int getXp() {
-		return xp;
-	}
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-	public void setXp(int xp) {
-		this.xp = xp;
-	}
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
-	public int getStreakCount() {
-		return streakCount;
-	}
+    public LocalDateTime getLastLoginAt() {
+        return lastLoginAt;
+    }
 
-	public void setStreakCount(int streakCount) {
-		this.streakCount = streakCount;
-	}
+    public void setLastLoginAt(LocalDateTime lastLoginAt) {
+        this.lastLoginAt = lastLoginAt;
+    }
 
-	public String getRankTitle() {
-		return rankTitle;
-	}
+    public int getXp() {
+        return xp;
+    }
 
-	public void setRankTitle(String rankTitle) {
-		this.rankTitle = rankTitle;
-	}
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public int getStreakCount() {
+        return streakCount;
+    }
+
+    public void setStreakCount(int streakCount) {
+        this.streakCount = streakCount;
+    }
+
+    public String getRankTitle() {
+        return rankTitle;
+    }
+
+    public void setRankTitle(String rankTitle) {
+        this.rankTitle = rankTitle;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
 }

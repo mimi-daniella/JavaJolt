@@ -39,30 +39,21 @@ public class QuizzesController {
                 .filter(category -> category != null && !category.isBlank())
                 .distinct()
                 .sorted()
-                .limit(6)
                 .collect(Collectors.toList());
+        Map<String, Integer> quizStats = Map.of(
+                "Easy", questionRepository.findByDifficulty(Difficulty.EASY).size(),
+                "Medium", questionRepository.findByDifficulty(Difficulty.MEDIUM).size(),
+                "Hard", questionRepository.findByDifficulty(Difficulty.HARD).size(),
+                "Categories", categories.size());
 
-        model.addAttribute("quizStats", List.of(
-                Map.of("label", "Easy", "value", String.valueOf(questionRepository.findByDifficulty(Difficulty.EASY).size())),
-                Map.of("label", "Medium", "value", String.valueOf(questionRepository.findByDifficulty(Difficulty.MEDIUM).size())),
-                Map.of("label", "Hard", "value", String.valueOf(questionRepository.findByDifficulty(Difficulty.HARD).size())),
-                Map.of("label", "Categories", "value", String.valueOf(categories.size()))
-        ));
-
-        model.addAttribute("quizLanes", List.of(
-                Map.of("title", "Quick Battle", "copy", "Jump into a random Java challenge and test your instincts fast.",
-                        "cta", "Start Challenge", "href", "/quiz/start"),
-                Map.of("title", "Daily Challenge", "copy", "Take today's featured category and push your streak higher.",
-                        "cta", "Play Daily Challenge", "href", "/quiz/start?dailyChallenge=true"),
-                Map.of("title", "Dashboard Mode", "copy", "Review progress, open settings, and track recent scores.",
-                        "cta", "Open Dashboard", "href", "/dashboard")
-        ));
+        model.addAttribute("quizStats", quizStats);
         model.addAttribute("categories", categories);
         model.addAttribute("dailyChallengeEnabled", systemSettingService.getBoolean(SystemSettingService.DAILY_CHALLENGE_ENABLED, true));
         model.addAttribute("dailyChallengeCategory", systemSettingService.get(SystemSettingService.DAILY_CHALLENGE_CATEGORY, "Java"));
         model.addAttribute("featuredChallengeTitle", systemSettingService.get(SystemSettingService.FEATURED_CHALLENGE_TITLE, "Barista Boss Battle"));
         model.addAttribute("defaultCategory", systemSettingService.get(SystemSettingService.DEFAULT_CATEGORY, ""));
         model.addAttribute("defaultDifficulty", systemSettingService.get(SystemSettingService.DEFAULT_DIFFICULTY, ""));
+        model.addAttribute("defaultTimerMinutes", 10);
         model.addAttribute("leaderboard", gamificationService.leaderboardSlice());
         return "user/quizzes";
     }

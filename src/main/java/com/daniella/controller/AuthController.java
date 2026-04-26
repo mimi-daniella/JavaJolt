@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Instant;
+import java.time.Duration;
 import java.util.Optional;
-import java.util.Random;
+import java.security.SecureRandom;
 
 @Controller
 @RequestMapping("/auth")
@@ -32,6 +33,8 @@ public class AuthController {
     private static final String OtpKey = "PASSWORD_RESET_OTP";
     private static final String OtpEmailKey = "PASSWORD_RESET_EMAIL";
     private static final String OtpVerifiedKey = "PASSWORD_RESET_VERIFIED";
+    private static final Duration OTP_TTL = Duration.ofMinutes(10);
+    private static final SecureRandom OTP_RANDOM = new SecureRandom();
 
     private final UserService userService;
     private final UserRepository userRepository;
@@ -67,7 +70,7 @@ public class AuthController {
         try {
             userService.createUser(userRequest);
 
-            String otp = String.format("%06d", new Random().nextInt(1_000_000));
+            String otp = generateOtp();
             session.setAttribute(OtpKey, otp);
             session.setAttribute(OtpEmailKey, userRequest.getEmail());
             session.setAttribute(OtpVerifiedKey, false);
@@ -98,10 +101,14 @@ public class AuthController {
                         @RequestParam(required = false) String registered,
                         @RequestParam(required = false) String reset,
                         @RequestParam(required = false) String unverified,
+                        @RequestParam(required = false) String suspended,
                         @RequestParam(required = false) String email,
                         Model model) {
         if (error != null) {
             model.addAttribute("error", "Invalid email or password.");
+        }
+        if (suspended != null) {
+            model.addAttribute("error", "This account is suspended.");
         }
         if (logout != null) {
             model.addAttribute("success", "You have been logged out.");
@@ -130,7 +137,12 @@ public class AuthController {
             return "redirect:/auth/login";
         }
 
-        String otp = String.format("%06d", new Random().nextInt(1_000_000));
+        if (userOpt.get().isVerified()) {
+            ra.addFlashAttribute("info", "This account is already verified.");
+            return "redirect:/auth/login";
+        }
+
+        String otp = generateOtp();
         session.setAttribute(OtpKey, otp);
         session.setAttribute(OtpEmailKey, email);
         session.setAttribute(OtpVerifiedKey, false);
@@ -163,7 +175,7 @@ public class AuthController {
             return "auth/forgot-password";
         }
 
-        String otp = String.format("%06d", new Random().nextInt(1_000_000));
+        String otp = generateOtp();
         session.setAttribute(OtpKey, otp);
         session.setAttribute(OtpEmailKey, email);
         session.setAttribute(OtpVerifiedKey, false);
@@ -197,6 +209,13 @@ public class AuthController {
                             Model model) {
         Object expected = session.getAttribute(OtpKey);
         String email = (String) session.getAttribute(OtpEmailKey);
+        Instant sentAt = (Instant) session.getAttribute("OTP_SENT_AT");
+
+        if (sentAt == null || sentAt.plus(OTP_TTL).isBefore(Instant.now())) {
+            clearOtpSession(session);
+            model.addAttribute("error", "The code has expired. Please request a new one.");
+            return "auth/verify-otp";
+        }
 
         if (expected == null || !expected.toString().equals(code.trim())) {
             model.addAttribute("error", "The code is invalid. Please try again.");
@@ -267,5 +286,9 @@ public class AuthController {
         session.removeAttribute(OtpVerifiedKey);
         session.removeAttribute("OTP_SENT_AT");
         session.removeAttribute("IS_REGISTRATION");
+    }
+
+    private String generateOtp() {
+        return String.format("%06d", OTP_RANDOM.nextInt(1_000_000));
     }
 }

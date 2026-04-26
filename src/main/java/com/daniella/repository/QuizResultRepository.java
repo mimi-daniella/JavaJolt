@@ -14,6 +14,7 @@ public interface QuizResultRepository extends JpaRepository<QuizResult, Long> {
 	 List<QuizResult> findTop10ByOrderByCompletedAtDesc();
 	 List<QuizResult> findByUserAndCompletedAtBetween(User user, LocalDateTime start, LocalDateTime end);
 	 List<QuizResult> findTop10ByOrderByPercentageScoreDescCompletedAtAsc();
+     void deleteByUser(User user);
 
 	
 }

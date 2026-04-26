@@ -1,72 +1,104 @@
-<div th:replace="~{fragments/head :: head}"></div>
-<body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
+<main class="space-y-16 pb-12">
+  <section class="public-shell pt-8">
+    <div class="rounded-[2.2rem] border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-12 sm:px-10 lg:px-14 shadow-[10px_10px_0px_var(--espresso)]">
+      <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+        <div class="text-center lg:text-left">
+          <p class="inline-flex rounded-full border-2 border-[var(--espresso)] bg-white px-4 py-2 text-xs uppercase tracking-[0.28em] font-bold text-[var(--espresso)]">
+            Game Quiz Project
+          </p>
+          <h1 class="mt-6 text-4xl sm:text-5xl lg:text-7xl text-white font-bold kavoon leading-tight [-webkit-text-stroke:1px_black]">
+            Power Up Your Java Journey
+          </h1>
+          <p class="mt-6 max-w-2xl text-base sm:text-lg text-[var(--espresso)]">
+            JavaJolt transforms Java practice into a playful challenge arena where students register, log in, answer randomized questions, track progress, and level up their confidence one quiz at a time.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a th:if="${loggedIn}" th:href="@{/quizzes}" class="w-full sm:w-auto rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-8 py-4 text-center text-lg font-bold text-white shadow-[6px_6px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+              Browse Quizzes
+            </a>
+            <a th:unless="${loggedIn}" th:href="@{/auth/register}" class="w-full sm:w-auto rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-8 py-4 text-center text-lg font-bold text-white shadow-[6px_6px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+              Get Started
+            </a>
+            <a th:href="@{/public/about}" class="w-full sm:w-auto rounded-2xl border-4 border-[var(--espresso)] bg-white px-8 py-4 text-center text-lg font-bold text-[var(--espresso)] shadow-[6px_6px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+              Learn More
+            </a>
+          </div>
+        </div>
 
-<div class="w-full min-h-[310px] bg-[var(--yellow)] flex flex-col items-center justify-center pt-6 mt-4 relative px-6 text-center" data-aos="fade-in">
-	<h1 class="text-3xl sm:text-5xl md:text-7xl text-white font-bold kavoon [-webkit-text-stroke:0.5px_black]">
-		Power Up Your Syntax
-	</h1>
+        <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-6 shadow-[8px_8px_0px_var(--light-brown)]">
+          <img th:src="@{/images/heroImage-removebg-preview.png}" alt="JavaJolt hero illustration" class="mx-auto w-full max-w-sm object-contain">
+          <div class="mt-6 grid grid-cols-2 gap-4 text-center">
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--cream)] p-4">
+              <p class="text-xs uppercase font-bold text-[var(--espresso)]">Quiz Style</p>
+              <p class="mt-2 text-xl font-bold text-[var(--espresso)]">Game-Based</p>
+            </div>
+            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--cream)] p-4">
+              <p class="text-xs uppercase font-bold text-[var(--espresso)]">Question Bank</p>
+              <p class="mt-2 text-xl font-bold text-[var(--espresso)]">Java Focused</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<p class="text-md md:text-lg mt-6 max-w-2xl" data-aos="fade-in" data-aos-delay="400">
-		Test your Java skills with gamified quizzes, earn epic badges, and level up from rookie to legend.
-	</p>
+  <div th:replace="~{fragments/cards :: cards}"></div>
 
-	<div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+  <section class="public-shell">
+    <div class="grid gap-6 lg:grid-cols-3">
+      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-7 shadow-[6px_6px_0px_var(--yellow)]">
+        <h2 class="kavoon text-3xl text-[var(--espresso)]">How It Works</h2>
+        <p class="mt-4 text-[var(--light-text)]">Students sign up, log in, get a randomized question set, submit answers, and instantly see results saved to their history.</p>
+      </div>
+      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-7 shadow-[6px_6px_0px_var(--light-brown)]">
+        <h2 class="kavoon text-3xl text-[var(--espresso)]">Why It Feels Different</h2>
+        <p class="mt-4 text-[var(--light-text)]">Instead of a cold exam page, JavaJolt uses ranks, XP, streaks, and a coffee-shop battle vibe to make practice feel exciting.</p>
+      </div>
+      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-7 shadow-[6px_6px_0px_var(--yellow)]">
+        <h2 class="kavoon text-3xl text-[var(--espresso)]">Built For Growth</h2>
+        <p class="mt-4 text-[var(--light-text)]">The platform supports both quick quiz sessions and a long-term learning journey with progress tracking and feedback loops.</p>
+      </div>
+    </div>
+  </section>
 
-		<a th:if="${loggedIn}" th:href="@{/quizzes}">
-			<button class="kavoon bg-[var(--espresso)] text-white      
-						    py-3 px-5 md:py-4 md:px-8     
-						    text-lg md:text-2xl
-						    rounded-sm absolute   
-						    bottom-[-22px] md:bottom-[-30px] 
-						    left-1/2 -translate-x-1/2
-						    transition-all duration-300 
-						    hover:scale-105 hover:-translate-y-1
-						    hover:bg-[var(--light-brown)] shadow-xl whitespace-nowrap">
-						 Browse Quizzes
-			</button>
-		</a>
-		<a th:unless="${loggedIn}" th:href="@{/auth/register}">
-			<button class="kavoon bg-[var(--espresso)] text-white      
-			    py-3 px-5 md:py-4 md:px-8     
-			    text-lg md:text-2xl
-			    rounded-sm absolute   
-			    bottom-[-22px] md:bottom-[-30px] 
-			    left-1/2 -translate-x-1/2
-			    transition-all duration-300 
-			    hover:scale-105 hover:-translate-y-1
-			    hover:bg-[var(--light-brown)] shadow-xl whitespace-nowrap
-			    ">
-				Get Started
-			</button>
-		</a>
+  <section class="public-shell">
+    <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]">
+      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 class="kavoon text-3xl md:text-4xl text-[var(--espresso)]">Curated from trusted study platforms</h2>
+          <p class="mt-3 text-[var(--light-text)] max-w-2xl">
+            JavaJolt draws inspiration from recognizable Java learning communities while giving the experience its own game-quiz identity.
+          </p>
+        </div>
+        <a th:href="@{/public/contact}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-3 text-center font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+          Contact Support
+        </a>
+      </div>
+    </div>
+  </section>
 
-	</div>
-</div>
-
-<div th:replace="~{fragments/cards :: cards}"></div>
-
-
-
-<h2 class="kavoon text-center text-black mt-14 text-2xl md:text-4xl mb-4">Curated from trusted study platforms...</h2>
-
-<div th:replace="~{fragments/logos :: logos}"></div>
+  <div th:replace="~{fragments/logos :: logos}"></div>
+</main>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", () => {
-	  AOS.init({
-	    once: true,
-	    duration:1500,
-	    easing: 'ease-out',
-	    startEvent: 'DOMContentLoaded'
-	  });
-	  AOS.refreshHard();
-	});
+  document.addEventListener("DOMContentLoaded", () => {
+    AOS.init({
+      once: true,
+      duration: 1100,
+      easing: 'ease-out',
+      startEvent: 'DOMContentLoaded'
+    });
+    AOS.refreshHard();
+  });
 </script>
 </body>
-
-
+</html>

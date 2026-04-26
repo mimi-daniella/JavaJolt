@@ -1,32 +1,171 @@
-<!-- Bottom Floating Nav -->
-<nav th:fragment="utils">
-<div class="fixed bottom-6 right-4 flex flex-col gap-4 z-50">
-    <!-- Sound Toggle -->
-    <button onclick="toggleSound()" id="soundBtn"
-        class="w-12 h-12 flex items-center justify-center ">
-        <!-- Speaker SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-black" fill="none" viewBox="0 0 24 24">
-            <path d="M9 9v6h4l5 5V4l-5 5H9z"/>
-        </svg>
-    </button>
+<div th:fragment="utils">
+  <audio th:src="@{/sounds/theme_music.mp3}" loop id="jj-theme-audio" preload="auto"></audio>
+  <audio th:src="@{/sounds/button_press.mp3}" id="jj-button-audio" preload="auto"></audio>
+  <audio th:src="@{/sounds/correct.mp3}" id="jj-praise-audio" preload="auto"></audio>
+  <audio th:src="@{/sounds/game_successful.mp3}" id="jj-victory-audio" preload="auto"></audio>
+  <audio th:src="@{/sounds/wrong.mp3}" id="jj-warning-audio" preload="auto"></audio>
+  <audio th:src="@{/sounds/timer.mp3}" id="jj-timer-audio" preload="auto"></audio>
 
-    <!-- Dark Mode Toggle -->
-    <button onclick="toggleDarkMode()" id="darkBtn"
-        class="w-12 h-12 flex items-center justify-center ">
-        <!-- Moon SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-black" fill="none" viewBox="0 0 24 24">
-            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
-        </svg>
+  <div class="fixed bottom-6 right-4 flex flex-col gap-3 z-50">
+    <button id="jj-theme-toggle" type="button" class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-4 py-3 text-xs font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+      Music: Off
     </button>
-
-    <!-- Settings -->
-    <a th:href="@{/dashboard/settings}"
-        class="w-12 h-12 flex items-center justify-center ">
-        <!-- Gear SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-black" fill="none" viewBox="0 0 24 24">
-            <path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"/>
-            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09c.7 0 1.31-.39 1.51-1a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06c.51.51 1.21.7 1.82.33.61-.36 1-1.01 1-1.71V3a2 2 0 014 0v.09c0 .7.39 1.35 1 1.71.61.36 1.31.18 1.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06c-.36.51-.18 1.21.33 1.82.36.61 1.01 1 1.71 1H21a2 2 0 010 4h-.09c-.7 0-1.35.39-1.71 1z"/>
-        </svg>
+    <button id="jj-effects-toggle" type="button" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-3 text-xs font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+      Effects: On
+    </button>
+    <a th:href="@{/dashboard/settings}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-4 py-3 text-center text-xs font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+      Settings
     </a>
+  </div>
+
+  <script>
+    (function () {
+      if (window.JavaJoltAudio) {
+        return;
+      }
+
+      const STORAGE = {
+        theme: "javajolt.theme.enabled",
+        effects: "javajolt.effects.enabled",
+        position: "javajolt.theme.position"
+      };
+
+      const state = {
+        themeEnabled: localStorage.getItem(STORAGE.theme) === "true",
+        effectsEnabled: localStorage.getItem(STORAGE.effects) !== "false",
+        unlocked: false
+      };
+
+      const ids = {
+        theme: "jj-theme-audio",
+        button: "jj-button-audio",
+        praise: "jj-praise-audio",
+        victory: "jj-victory-audio",
+        warning: "jj-warning-audio",
+        timer: "jj-timer-audio"
+      };
+
+      function get(id) {
+        return document.getElementById(id);
+      }
+
+      function updateButtons() {
+        const themeBtn = document.getElementById("jj-theme-toggle");
+        const effectsBtn = document.getElementById("jj-effects-toggle");
+        if (themeBtn) themeBtn.textContent = `Music: ${state.themeEnabled ? "On" : "Off"}`;
+        if (effectsBtn) effectsBtn.textContent = `Effects: ${state.effectsEnabled ? "On" : "Off"}`;
+      }
+
+      function unlockAudio() {
+        if (state.unlocked) return;
+        state.unlocked = true;
+        const themeAudio = get(ids.theme);
+        if (!themeAudio) return;
+        const savedPosition = localStorage.getItem(STORAGE.position);
+        if (savedPosition) {
+          themeAudio.currentTime = parseFloat(savedPosition);
+        }
+        if (state.themeEnabled) {
+          themeAudio.play().catch(() => {});
+        }
+      }
+
+      function safePlay(audio) {
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+
+      function toggleThemeMusic(forceValue) {
+        state.themeEnabled = typeof forceValue === "boolean" ? forceValue : !state.themeEnabled;
+        localStorage.setItem(STORAGE.theme, String(state.themeEnabled));
+        const themeAudio = get(ids.theme);
+        if (themeAudio) {
+          if (state.themeEnabled && state.unlocked) {
+            themeAudio.play().catch(() => {});
+          } else {
+            localStorage.setItem(STORAGE.position, String(themeAudio.currentTime || 0));
+            themeAudio.pause();
+          }
+        }
+        updateButtons();
+      }
+
+      function toggleSoundEffects(forceValue) {
+        state.effectsEnabled = typeof forceValue === "boolean" ? forceValue : !state.effectsEnabled;
+        localStorage.setItem(STORAGE.effects, String(state.effectsEnabled));
+        updateButtons();
+      }
+
+      function playEffect(type) {
+        if (!state.effectsEnabled) return;
+        unlockAudio();
+        const map = {
+          button: ids.button,
+          praise: ids.praise,
+          victory: ids.victory,
+          warning: ids.warning,
+          timer: ids.timer
+        };
+        safePlay(get(map[type] || ids.button));
+      }
+
+      function playResultTier(tier) {
+        if (tier === "victory") {
+          playEffect("victory");
+          return;
+        }
+        if (tier === "praise") {
+          playEffect("praise");
+          return;
+        }
+        playEffect("warning");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        updateButtons();
+        const themeBtn = document.getElementById("jj-theme-toggle");
+        const effectsBtn = document.getElementById("jj-effects-toggle");
+        const themeAudio = get(ids.theme);
+
+        themeBtn?.addEventListener("click", () => {
+          unlockAudio();
+          toggleThemeMusic();
+        });
+
+        effectsBtn?.addEventListener("click", () => {
+          unlockAudio();
+          toggleSoundEffects();
+          playEffect("button");
+        });
+
+        themeAudio?.addEventListener("timeupdate", () => {
+          if (state.themeEnabled) {
+            localStorage.setItem(STORAGE.position, String(themeAudio.currentTime));
+          }
+        });
+
+        document.addEventListener("pointerdown", unlockAudio, { once: true });
+
+        document.querySelectorAll("a, button").forEach(element => {
+          if (element.id === "jj-theme-toggle" || element.id === "jj-effects-toggle") return;
+          element.addEventListener("click", () => {
+            if (state.effectsEnabled) {
+              playEffect("button");
+            }
+          });
+        });
+      });
+
+      window.JavaJoltAudio = {
+        unlockAudio,
+        toggleThemeMusic,
+        toggleSoundEffects,
+        playEffect,
+        playResultTier,
+        isEffectsEnabled: () => state.effectsEnabled,
+        isThemeEnabled: () => state.themeEnabled
+      };
+    })();
+  </script>
 </div>
-</nav>

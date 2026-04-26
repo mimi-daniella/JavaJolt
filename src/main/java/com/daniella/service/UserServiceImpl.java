@@ -14,7 +14,10 @@ import com.daniella.entity.User;
 import com.daniella.enums.Role;
 import com.daniella.enums.UserStatus;
 import com.daniella.exception.BusinessException;
+import com.daniella.repository.QuizResultRepository;
+import com.daniella.repository.UserAnswerRepository;
 import com.daniella.repository.UserRepository;
+import com.daniella.util.AvatarCatalog;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -23,11 +26,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserAnswerRepository userAnswerRepository;
+    private final QuizResultRepository quizResultRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
+                           UserAnswerRepository userAnswerRepository,
+                           QuizResultRepository quizResultRepository,
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.userAnswerRepository = userAnswerRepository;
+        this.quizResultRepository = quizResultRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -47,6 +56,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRequest.getEmail());
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setRole(Role.ROLE_CLIENT); // default role
+        user.setAvatarPath(resolveAvatarPath(userRequest.getEmail(), null));
 
         userRepository.save(user);
     }
@@ -79,6 +89,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException("User not found"));
 
+        userRepository.findByEmail(updateDTO.email())
+                .filter(found -> !found.getId().equals(user.getId()))
+                .ifPresent(found -> {
+                    throw new BusinessException("Email already registered.");
+                });
+
         user.setFirstName(updateDTO.firstName());
         user.setLastName(updateDTO.lastName());
         user.setEmail(updateDTO.email());
@@ -106,7 +122,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(Long id) {
-		userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("User not found"));
+        userAnswerRepository.deleteByUser(user);
+        quizResultRepository.deleteByUser(user);
+		userRepository.delete(user);
 	}
 
 	   @Override
@@ -125,5 +145,23 @@ public class UserServiceImpl implements UserService {
 	        userRepository.save(user);
 	    }
 
-	
+		@Override
+		public void updateUserAvatar(String email, String avatarPath) {
+			User user = userRepository.findByEmail(email)
+					.orElseThrow(() -> new BusinessException("User not found"));
+            if (!AvatarCatalog.isSupported(avatarPath)) {
+                throw new BusinessException("Unsupported avatar selection.");
+            }
+			user.setAvatarPath(avatarPath);
+			userRepository.save(user);
+			
+		}
+
+        @Override
+        public String resolveAvatarPath(String email, String avatarPath) {
+            if (avatarPath != null && AvatarCatalog.isSupported(avatarPath)) {
+                return avatarPath;
+            }
+            return AvatarCatalog.defaultAvatarFor(email);
+        }
 }

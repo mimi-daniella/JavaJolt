@@ -29,6 +29,7 @@ import com.daniella.repository.QuizResultRepository;
 import com.daniella.repository.UserRepository;
 import com.daniella.service.AdminAuditService;
 import com.daniella.service.UserService;
+import com.daniella.util.AvatarCatalog;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -140,6 +141,7 @@ public class UserManagement {
         user.setRole(role);
         user.setStatus(status);
         user.setVerified(verified);
+        user.setAvatarPath(AvatarCatalog.defaultAvatarFor(userRequest.getEmail()));
         userRepository.save(user);
 
         adminAuditService.log(principal, "CREATE_USER", "USER", String.valueOf(user.getId()), user.getEmail());
@@ -180,6 +182,12 @@ public class UserManagement {
                              Principal principal,
                              RedirectAttributes redirectAttributes) {
         User existing = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        if (userRepository.findByEmail(formUser.getEmail())
+                .filter(found -> !found.getId().equals(existing.getId()))
+                .isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Email already registered.");
+            return "redirect:/admin/users/" + id + "/edit";
+        }
         existing.setFirstName(formUser.getFirstName());
         existing.setLastName(formUser.getLastName());
         existing.setEmail(formUser.getEmail());

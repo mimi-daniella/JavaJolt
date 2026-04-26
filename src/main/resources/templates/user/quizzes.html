@@ -4,52 +4,63 @@
 <body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/floatingUtils :: utils}"></div>
 
 <main class="max-w-6xl mx-auto pt-10 pb-12 px-6 space-y-10">
     <section class="rounded-3xl border-4 border-[var(--espresso)] bg-gradient-to-r from-[var(--yellow)] to-[#ffe7a6] p-8 shadow-[8px_8px_0px_var(--espresso)]">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div class="max-w-2xl">
                 <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quizzes Page</p>
-                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]">Choose how you want to play.</h1>
-                <p class="mt-4 text-lg leading-relaxed">
-                    Random battles, featured challenges, and category-filtered sessions all live here now.
-                </p>
+                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]">Build your next run before you play.</h1>
+                <p class="mt-4 text-lg leading-relaxed">Choose difficulty, category, and timer settings before the round begins. Clean setup, no guesswork.</p>
                 <div class="mt-6 flex flex-wrap gap-4">
-                    <a th:href="@{/quiz/start}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">Start Random Quiz</a>
-                    <a th:if="${dailyChallengeEnabled}" th:href="@{/quiz/start(dailyChallenge=true)}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">Daily Challenge</a>
+                    <button type="button" id="openQuizSetup" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+                        Open Quiz Setup
+                    </button>
+                    <a th:if="${dailyChallengeEnabled}" th:href="@{/quiz/start(dailyChallenge=true)}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+                        Daily Challenge
+                    </a>
                 </div>
             </div>
             <div class="w-full max-w-sm rounded-2xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--light-brown)]">
                 <h2 class="text-2xl font-bold text-[var(--espresso)]">Question Bank Snapshot</h2>
                 <div class="mt-5 grid grid-cols-2 gap-4">
-                    <div th:each="stat : ${quizStats}" class="rounded-xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 text-center">
-                        <p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold" th:text="${stat.label}">Easy</p>
-                        <p class="kavoon mt-2 text-3xl text-[var(--espresso)]" th:text="${stat.value}">0</p>
+                    <div class="rounded-xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 text-center">
+                        <p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Easy</p>
+                        <p class="kavoon mt-2 text-3xl text-[var(--espresso)]" th:text="${quizStats['Easy']}">0</p>
+                    </div>
+                    <div class="rounded-xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 text-center">
+                        <p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Medium</p>
+                        <p class="kavoon mt-2 text-3xl text-[var(--espresso)]" th:text="${quizStats['Medium']}">0</p>
+                    </div>
+                    <div class="rounded-xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 text-center">
+                        <p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Hard</p>
+                        <p class="kavoon mt-2 text-3xl text-[var(--espresso)]" th:text="${quizStats['Hard']}">0</p>
+                    </div>
+                    <div class="rounded-xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 text-center">
+                        <p class="text-xs uppercase tracking-widest text-[var(--light-brown)] font-bold">Categories</p>
+                        <p class="kavoon mt-2 text-3xl text-[var(--espresso)]" th:text="${quizStats['Categories']}">0</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a th:each="lane : ${quizLanes}" th:href="${lane.href}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-            <h2 class="text-3xl font-bold text-[var(--espresso)]" th:text="${lane.title}">Quick Battle</h2>
-            <p class="mt-4 min-h-[90px]" th:text="${lane.copy}">Jump into a random Java challenge.</p>
-            <span class="mt-3 inline-flex rounded-full border-2 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 font-bold text-[var(--espresso)]" th:text="${lane.cta}">Start Challenge</span>
-        </a>
-    </section>
-
     <section class="grid lg:grid-cols-2 gap-8">
         <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]">
             <h2 class="kavoon text-3xl text-[var(--espresso)]">Featured Challenge</h2>
-            <p class="mt-3 text-lg" th:text="${featuredChallengeTitle}">Barista Boss Battle</p>
+            <p class="mt-3 text-lg font-bold text-[var(--espresso)]" th:text="${featuredChallengeTitle}">Barista Boss Battle</p>
             <p class="mt-2 text-sm text-gray-600">Daily category: <span class="font-bold" th:text="${dailyChallengeCategory}">Java</span></p>
-            <p class="mt-2 text-sm text-gray-600">Default filters: <span th:text="${defaultCategory != null and !defaultCategory.isBlank() ? defaultCategory : 'Any category'}">Any category</span> / <span th:text="${defaultDifficulty != null and !defaultDifficulty.isBlank() ? defaultDifficulty : 'Any difficulty'}">Any difficulty</span></p>
+            <p class="mt-2 text-sm text-gray-600">Suggested default filter: <span th:text="${defaultCategory != null and !defaultCategory.isBlank() ? defaultCategory : 'Any category'}">Any category</span> / <span th:text="${defaultDifficulty != null and !defaultDifficulty.isBlank() ? defaultDifficulty : 'Any difficulty'}">Any difficulty</span></p>
+            <p th:unless="${dailyChallengeEnabled}" class="mt-5 rounded-2xl border-2 border-dashed border-[var(--espresso)] bg-[#fffaf0] px-4 py-3 text-sm text-[var(--espresso)]">The daily challenge is cooling down. Stay tuned for future updates.</p>
         </div>
 
         <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]">
             <h2 class="kavoon text-3xl text-[var(--espresso)]">XP Leaderboard</h2>
-            <div class="mt-5 space-y-3">
+            <div th:if="${leaderboard.isEmpty()}" class="mt-5 rounded-2xl border-2 border-dashed border-[var(--espresso)] bg-[#fffaf0] px-4 py-4 text-sm text-[var(--espresso)]">
+                No leaderboard champions yet. The first legends are coming soon.
+            </div>
+            <div th:unless="${leaderboard.isEmpty()}" class="mt-5 space-y-3">
                 <div th:each="entry : ${leaderboard.entrySet()}" class="flex items-center justify-between rounded-xl border-2 border-[var(--espresso)] px-4 py-3">
                     <span class="font-bold text-[var(--espresso)]" th:text="${entry.key}">Player</span>
                     <span class="text-[var(--espresso)]" th:text="${entry.value} + ' XP'">0 XP</span>
@@ -64,7 +75,10 @@
                 <h2 class="kavoon text-3xl text-[var(--espresso)]">Popular Java Topics</h2>
                 <p class="mt-3 text-lg">These are some of the categories currently active in the JavaJolt question bank.</p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full lg:max-w-2xl">
+            <div th:if="${#lists.isEmpty(categories)}" class="w-full lg:max-w-2xl rounded-2xl border-2 border-dashed border-[var(--espresso)] bg-[#fffaf0] px-5 py-4 text-sm text-[var(--espresso)]">
+                More training arenas are coming soon. Stay tuned for future updates.
+            </div>
+            <div th:unless="${#lists.isEmpty(categories)}" class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full lg:max-w-2xl">
                 <div th:each="category : ${categories}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-5 text-center font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)]" th:text="${category}">
                     OOP
                 </div>
@@ -73,8 +87,84 @@
     </section>
 </main>
 
+<div id="quizSetupModal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-[90] p-4">
+    <div class="max-w-2xl w-full rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[10px_10px_0px_var(--yellow)]">
+        <div class="flex items-center justify-between gap-4">
+            <div>
+                <p class="uppercase tracking-[0.3em] text-xs font-bold text-[var(--espresso)]">Game Setup</p>
+                <h2 class="kavoon text-3xl text-[var(--espresso)] mt-2">Choose how you want this round</h2>
+            </div>
+            <button type="button" id="closeQuizSetup" class="rounded-xl border-2 border-[var(--espresso)] px-4 py-2 font-bold text-[var(--espresso)]">Close</button>
+        </div>
+
+        <form th:action="@{/quiz/start}" method="get" class="mt-8 space-y-6">
+            <div class="grid md:grid-cols-2 gap-5">
+                <div>
+                    <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Difficulty Mode</label>
+                    <select name="difficulty" class="w-full rounded-2xl border-4 border-[var(--espresso)] px-4 py-3">
+                        <option value="">Mixed</option>
+                        <option value="EASY" th:selected="${defaultDifficulty == 'EASY'}">Easy</option>
+                        <option value="MEDIUM" th:selected="${defaultDifficulty == 'MEDIUM'}">Medium</option>
+                        <option value="HARD" th:selected="${defaultDifficulty == 'HARD'}">Hard</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Category</label>
+                    <select name="category" class="w-full rounded-2xl border-4 border-[var(--espresso)] px-4 py-3">
+                        <option value="">Mixed</option>
+                        <option th:each="category : ${categories}" th:value="${category}" th:text="${category}" th:selected="${defaultCategory == category}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-5">
+                    <label class="flex items-center justify-between gap-4 font-bold text-[var(--espresso)]">
+                        <span>Enable Timer</span>
+                        <input type="checkbox" name="timerEnabled" value="true" class="h-5 w-5 accent-[var(--espresso)]">
+                    </label>
+                    <p class="text-sm mt-3 text-[var(--light-text)]">Flip this on if you want a real game-pressure countdown.</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-[var(--espresso)] mb-2">Timer Length</label>
+                    <select name="timerMinutes" class="w-full rounded-2xl border-4 border-[var(--espresso)] px-4 py-3">
+                        <option value="5">5 Minutes</option>
+                        <option value="10" selected>10 Minutes</option>
+                        <option value="15">15 Minutes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border-2 border-dashed border-[var(--espresso)] bg-[var(--cream)] px-5 py-4 text-sm text-[var(--espresso)]">
+                Bonus rounds and multiplayer duels are still brewing. Stay tuned for future updates.
+            </div>
+
+            <button type="submit" class="w-full rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-4 text-lg font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+                Start This Quiz
+            </button>
+        </form>
+    </div>
+</div>
+
 <script>
   AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("quizSetupModal");
+    const openButton = document.getElementById("openQuizSetup");
+    const closeButton = document.getElementById("closeQuizSetup");
+
+    const toggleModal = (show) => {
+      modal.classList.toggle("hidden", !show);
+      modal.classList.toggle("flex", show);
+    };
+
+    openButton?.addEventListener("click", () => toggleModal(true));
+    closeButton?.addEventListener("click", () => toggleModal(false));
+    modal?.addEventListener("click", (event) => {
+      if (event.target === modal) toggleModal(false);
+    });
+  });
 </script>
 </body>
 </html>

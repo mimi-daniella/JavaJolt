@@ -1,126 +1,117 @@
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head}"></head>
-<body>
-
-  <!-- Navbar -->
+<body class="min-h-screen">
   <div th:replace="~{fragments/navbar :: navbar}"></div>
-  <!-- Back to Top -->
   <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
-  <!-- Hero -->
-  <section class="flex flex-col items-center justify-center min-h-[40vh] px-6 text-center"
-           data-aos="fade-up">
-    <h1 class="text-5xl md:text-6xl font-bold kavoon text-[var(--espresso)] mb-4 drop-shadow-md">
-      Contact Support
-    </h1>
-    <p class="text-lg md:text-xl max-w-2xl">
-      Need help, feedback, or just want to say hi? Our friendly assistant <strong>Daniella</strong> is here to listen.
-    </p>
-    <div th:if="${loggedIn}" class="mt-6 flex flex-wrap justify-center gap-4">
-      <a th:href="@{/dashboard}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
-        Back to Dashboard
-      </a>
-      <a th:href="@{/quizzes}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-        Open Quizzes
-      </a>
-    </div>
-  </section>
-
-  <!-- Split Layout -->
-  <section class="px-6 md:px-20 bg-[var(--cream)]">
-
-    <!-- ONLY SUCCESS MESSAGE -->
-    <div th:if="${success}"
-         class="mb-8 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)]"
-         th:text="${success}">
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-12 items-start">
-
-      <!-- Contact Info Bubble -->
-      <div class="p-8 bg-white border-2 border-black border-dashed rounded-xl shadow-lg relative"
-           data-aos="fade-right">
-        <h2 class="text-3xl font-bold mb-6">Reach Us</h2>
-        <ul class="space-y-4 text-lg">
-          <li><span class="font-bold">Email:</span> 
-              <a href="mailto:support@javajolt.com">support@javajolt.com</a></li>
-          <li><span class="font-bold">Twitter:</span> 
-              <a href="https://twitter.com/javajolt">@javajolt</a></li>
-          <li><span class="font-bold">Instagram:</span> 
-              <a href="https://instagram.com/javajolt">@javajolt</a></li>
-          <li><span class="font-bold">Phone:</span> +234-800-JAVA-JOLT</li>
-        </ul>
-        <div class="absolute -bottom-6 left-6 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[20px] border-l-transparent border-r-transparent border-t-[var(--espresso)]"></div>
+  <main class="space-y-12 pb-12">
+    <section class="public-shell pt-8">
+      <div class="rounded-[2.2rem] border-4 border-[var(--espresso)] bg-white px-6 py-12 sm:px-10 shadow-[10px_10px_0px_var(--yellow)] text-center">
+        <p class="inline-flex rounded-full border-2 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 text-xs uppercase tracking-[0.28em] font-bold text-[var(--espresso)]">
+          Contact Support
+        </p>
+        <h1 class="mt-6 text-4xl md:text-6xl font-bold kavoon text-[var(--espresso)]">Need help or want to share feedback?</h1>
+        <p class="mt-5 mx-auto max-w-3xl text-lg text-[var(--light-text)]">
+          Whether you found a bug, want to suggest a feature, or just want to talk about the JavaJolt experience, this is the right place.
+        </p>
+        <div th:if="${loggedIn}" class="mt-7 flex flex-wrap justify-center gap-4">
+          <a th:href="@{/dashboard}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+            Back to Dashboard
+          </a>
+          <a th:href="@{/quizzes}" class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+            Open Quizzes
+          </a>
+        </div>
       </div>
+    </section>
 
-      <!-- Feedback Form -->
-      <div class="p-2 px-6 border-2 border-black border-dashed rounded-xl shadow-lg relative"
-           data-aos="fade-left">
-        <h2 class="text-3xl font-bold mb-6">Send Feedback</h2>
-		<form id="feedbackForm" class="space-y-1">
+    <section class="public-shell">
+      <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] items-start">
+        <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]">
+          <h2 class="kavoon text-3xl text-[var(--espresso)]">Reach Us</h2>
+          <ul class="mt-6 space-y-4 text-base sm:text-lg text-[var(--light-text)]">
+            <li><span class="font-bold text-[var(--espresso)]">Email:</span> <a href="mailto:support@javajolt.com" class="underline decoration-[var(--yellow)]">support@javajolt.com</a></li>
+            <li><span class="font-bold text-[var(--espresso)]">Twitter:</span> <a href="https://twitter.com/javajolt" class="underline decoration-[var(--yellow)]">@javajolt</a></li>
+            <li><span class="font-bold text-[var(--espresso)]">Instagram:</span> <a href="https://instagram.com/javajolt" class="underline decoration-[var(--yellow)]">@javajolt</a></li>
+            <li><span class="font-bold text-[var(--espresso)]">Phone:</span> +234-800-JAVA-JOLT</li>
+          </ul>
+          <div class="mt-8 rounded-[1.5rem] border-4 border-[var(--yellow)] bg-[var(--cream)] p-5">
+            <p class="text-sm text-[var(--light-text)]">
+              Best for: bug reports, support requests, UI feedback, improvement ideas, and anything that helps JavaJolt grow stronger.
+            </p>
+          </div>
+        </div>
 
-		  <div>
-		    <label class="block font-semibold mb-2">Your Email</label>
-		    <input type="email" name="email"
-		           class="w-full px-4 py-2 border-2 rounded-lg focus:outline-none focus:border-[var(--espresso)]"
-		           required>
-		  </div>
+        <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]">
+          <div th:if="${success}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)]" th:text="${success}"></div>
 
-		  <div>
-		    <label class="block font-semibold mb-2">Message</label>
-		    <textarea name="message" rows="5"
-		              class="w-full px-4 py-2 border-2 rounded-lg focus:outline-none focus:border-[var(--espresso)]"
-		              required></textarea>
-		  </div>
+          <h2 class="kavoon text-3xl text-[var(--espresso)]">Send Feedback</h2>
+          <p class="mt-3 text-[var(--light-text)]">Tell us what’s working, what feels off, or what would make the game-quiz experience better.</p>
 
-		  <div class="text-center">
-		    <button type="submit"
-		            class="bg-[var(--espresso)] text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[var(--light-brown)] transition">
-		      Submit
-		    </button>
-		  </div>
+          <form id="feedbackForm" class="mt-6 space-y-5">
+            <div>
+              <label class="block font-bold mb-2 text-[var(--espresso)]">Your Email</label>
+              <input type="email" name="email" class="w-full rounded-2xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none" required>
+            </div>
 
-		</form>
+            <div>
+              <label class="block font-bold mb-2 text-[var(--espresso)]">Message</label>
+              <textarea name="message" rows="6" class="w-full rounded-2xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none resize-y" required></textarea>
+            </div>
 
-		<div id="responseMsg" class="mt-4 font-bold text-[var(--espresso)]"></div>
+            <button type="submit" class="w-full sm:w-auto rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-8 py-4 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+              Submit Feedback
+            </button>
+          </form>
 
-		<script>
-		document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
-		    e.preventDefault();
-
-		    const formData = new URLSearchParams();
-		    formData.append("email", this.email.value);
-		    formData.append("message", this.message.value);
-
-		    const res = await fetch("/api/feedback/submit", {
-		        method: "POST",
-		        headers: {
-		            "Content-Type": "application/x-www-form-urlencoded"
-		        },
-		        body: formData
-		    });
-
-		    const text = await res.text();
-		    document.getElementById("responseMsg").innerText = text;
-
-		    this.reset();
-		});
-		</script>
-
-        <div class="absolute -bottom-6 right-10 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[20px] border-l-transparent border-r-transparent border-t-[var(--espresso)]"></div>
+          <div id="responseMsg" class="mt-4 font-bold text-[var(--espresso)]"></div>
+        </div>
       </div>
+    </section>
+  </main>
 
-    </div>
-  </section>
-
-  <!-- Footer -->
   <div th:replace="~{fragments/footer :: footer}"></div>
 
-  <!-- AOS Script -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
+    function getCookie(name) {
+      const match = document.cookie.split('; ').find(row => row.startsWith(name + '='));
+      return match ? decodeURIComponent(match.split('=')[1]) : null;
+    }
+  </script>
+  <script th:inline="javascript">
+    const feedbackUrl = /*[[@{/api/feedback/submit}]]*/ '/api/feedback/submit';
+    const csrfToken = getCookie('XSRF-TOKEN');
+
+    document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("email", this.email.value);
+      formData.append("message", this.message.value);
+
+      const msgBox = document.getElementById("responseMsg");
+
+      try {
+        const res = await fetch(feedbackUrl, {
+          method: "POST",
+          body: formData,
+          headers: csrfToken ? { "X-XSRF-TOKEN": csrfToken } : {}
+        });
+
+        const text = await res.text();
+        msgBox.innerText = text;
+        this.reset();
+      } catch (error) {
+        msgBox.innerText = "We could not send your feedback right now. Please try again.";
+      }
+
+      setTimeout(() => {
+        msgBox.innerText = "";
+      }, 3500);
+    });
+
     AOS.init({ once: true, duration: 1000, easing: 'ease-out' });
   </script>
-
 </body>
 </html>

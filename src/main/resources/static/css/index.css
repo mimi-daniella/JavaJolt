@@ -1,15 +1,23 @@
 :root{
-	--espresso: #B23918;   /* dark brown */
-	--light-brown: #D45A3A;      /* lighter brown */
-	--yellow: #FFCF22;  /*dark yellow*/ 
+	--espresso: #B23918;
+	--light-brown: #D45A3A;
+	--yellow: #FFCF22;
 	--cream: #FFF7E2;
-	--light-text:#4D3E3E;   /* Lighter black text */  
+	--light-text:#4D3E3E;
+	--surface:#FFFDF8;
 }
 
-body {             
+html {
+	scroll-behavior: smooth;
+}
+
+body {
 	font-family: "Jua", sans-serif;
 	color:black;
-	background-color: #FFFFFF;
+	background:
+		radial-gradient(circle at top left, rgba(255, 207, 34, 0.16), transparent 32%),
+		radial-gradient(circle at bottom right, rgba(178, 57, 24, 0.08), transparent 30%),
+		#FFFFFF;
 }
 
 .kavoon{
@@ -21,6 +29,13 @@ body {
   border-radius: 8px;
   box-shadow: 6px 6px 0 var(--light-brown);
   padding: 1rem;
-  background-color: var(--cream); /* optional accent */
-} 
+  background-color: var(--cream);
+}
+
+.public-shell {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
 

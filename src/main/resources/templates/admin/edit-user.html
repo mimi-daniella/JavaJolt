@@ -12,6 +12,9 @@
 
     <main class="p-6">
       <div class="max-w-3xl mx-auto bg-white rounded-xl shadow border p-8">
+        <div th:if="${error}" class="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+          <p th:text="${error}"></p>
+        </div>
         <form th:action="@{/admin/users/{id}/edit(id=${user.id})}" th:object="${user}" method="post" class="space-y-5">
           <div class="grid gap-4 md:grid-cols-2">
             <div>

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head}"></head>
 <body class="min-h-screen flex bg-gray-100">
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
@@ -27,6 +29,9 @@
             </form>
           </div>
           <div class="divide-y">
+            <div th:if="${#lists.isEmpty(messages)}" class="p-6 text-gray-500">
+              No feedback messages yet.
+            </div>
             <div th:each="message : ${messages}" class="p-6">
               <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                 <div>
@@ -63,3 +68,4 @@
     </main>
   </div>
 </body>
+</html>

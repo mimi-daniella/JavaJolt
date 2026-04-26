@@ -4,6 +4,7 @@
 <body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/floatingUtils :: utils}"></div>
 <div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
 <main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
@@ -13,17 +14,27 @@
                 <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Arena</p>
                 <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]" th:text="${featuredTitle}">JavaJolt Challenge</h1>
                 <p class="mt-4 text-lg max-w-2xl">Answer each question once, submit at the end, and your score will be saved with XP and streak progress.</p>
-                <p class="mt-2 text-sm text-gray-600">Category filter: <span class="font-bold" th:text="${selectedCategory != null and !selectedCategory.isBlank() ? selectedCategory : 'Mixed'}">Mixed</span> • Difficulty: <span class="font-bold" th:text="${selectedDifficulty != null and !selectedDifficulty.isBlank() ? selectedDifficulty : 'Mixed'}">Mixed</span></p>
+                <p class="mt-2 text-sm text-gray-600">
+                    Category:
+                    <span class="font-bold" th:text="${selectedCategory != null and !selectedCategory.isBlank() ? selectedCategory : 'Mixed'}">Mixed</span>
+                    |
+                    Difficulty:
+                    <span class="font-bold" th:text="${selectedDifficulty != null and !selectedDifficulty.isBlank() ? selectedDifficulty : 'Mixed'}">Mixed</span>
+                </p>
             </div>
             <div class="flex flex-col gap-3">
                 <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-4 text-center shadow-[4px_4px_0px_var(--espresso)]">
                     <p class="text-sm uppercase font-bold text-[var(--espresso)]">Questions Loaded</p>
                     <p class="kavoon text-4xl text-[var(--espresso)]" th:text="${#lists.size(questions)}">10</p>
                 </div>
-                <div th:if="${timerEnabled}" class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-6 py-4 text-center shadow-[4px_4px_0px_var(--light-brown)]">
+                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-6 py-4 text-center shadow-[4px_4px_0px_var(--light-brown)]">
                     <p class="text-sm uppercase font-bold text-[var(--espresso)]">Timer</p>
-                    <p id="timerLabel" class="kavoon text-3xl text-[var(--espresso)]">15:00</p>
+                    <p th:if="${timerEnabled}" id="timerLabel" class="kavoon text-3xl text-[var(--espresso)]">10:00</p>
+                    <p th:unless="${timerEnabled}" class="text-sm font-bold text-[var(--espresso)]">Off for this run</p>
                 </div>
+                <button type="button" id="quitQuizButton" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 text-center font-bold text-white shadow-[4px_4px_0px_var(--light-brown)]">
+                    Quit Quiz
+                </button>
             </div>
         </div>
     </section>
@@ -31,6 +42,7 @@
     <form th:action="@{/quiz/submit}" method="post" class="space-y-6" id="quizForm">
         <input type="hidden" name="selectedCategory" th:value="${selectedCategory}">
         <input type="hidden" name="selectedDifficulty" th:value="${selectedDifficulty}">
+        <input type="hidden" name="quizToken" th:value="${quizToken}">
 
         <section th:if="${#lists.isEmpty(questions)}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 text-center shadow-[6px_6px_0px_var(--light-brown)]">
             <h2 class="kavoon text-3xl text-[var(--espresso)]">No Questions Found</h2>
@@ -38,7 +50,7 @@
             <a th:href="@{/quizzes}" class="inline-block mt-6 rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-3 font-bold text-[var(--espresso)]">Back to Quizzes</a>
         </section>
 
-        <section th:each="question, stat : ${questions}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[6px_6px_0px_var(--light-brown)]">
+        <section th:each="question, stat : ${questions}" class="quiz-question rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[6px_6px_0px_var(--light-brown)]">
             <div class="flex items-center justify-between gap-4">
                 <span class="rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 font-bold text-[var(--espresso)]" th:text="'Question ' + ${stat.count}">Question 1</span>
                 <span class="rounded-full border-2 border-[var(--espresso)] bg-white px-4 py-2 text-sm font-bold text-[var(--espresso)]" th:text="${question.category}">Syntax</span>
@@ -47,19 +59,19 @@
             <h2 class="mt-5 text-2xl font-bold text-[var(--espresso)] leading-relaxed" th:text="${question.questionText}">Question text</h2>
 
             <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
                     <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="A" required>
                     <span th:text="${question.optionA}">Option A</span>
                 </label>
-                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
                     <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="B">
                     <span th:text="${question.optionB}">Option B</span>
                 </label>
-                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
                     <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="C">
                     <span th:text="${question.optionC}">Option C</span>
                 </label>
-                <label class="block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
                     <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="D">
                     <span th:text="${question.optionD}">Option D</span>
                 </label>
@@ -74,28 +86,135 @@
     </form>
 </main>
 
-<div th:replace="~{fragments/footer :: footer}"></div>
+<div id="leaveQuizModal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-[95] p-4">
+    <div class="max-w-lg w-full rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[10px_10px_0px_var(--yellow)]">
+        <p class="uppercase tracking-[0.3em] text-xs font-bold text-[var(--espresso)]">Quit Alert</p>
+        <h2 class="kavoon text-3xl text-[var(--espresso)] mt-2">Leave this quiz?</h2>
+        <p class="mt-4 text-lg text-[var(--light-text)]">You still have unanswered questions. Are you sure you want to abandon this run?</p>
+        <div class="mt-8 flex gap-4">
+            <button type="button" id="stayInQuiz" class="flex-1 rounded-2xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+                No, Stay
+            </button>
+            <button type="button" id="confirmLeaveQuiz" class="flex-1 rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+                Yes, Leave
+            </button>
+        </div>
+    </div>
+</div>
 
 <script th:inline="javascript">
   AOS.init({ once: true, duration: 700, easing: 'ease-out' });
-  const timerEnabled = /*[[${timerEnabled}]]*/ false;
-  if (timerEnabled) {
-    let secondsLeft = 15 * 60;
-    const label = document.getElementById('timerLabel');
-    const form = document.getElementById('quizForm');
-    const interval = setInterval(() => {
-      const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
-      const seconds = String(secondsLeft % 60).padStart(2, '0');
-      if (label) {
-        label.textContent = `${minutes}:${seconds}`;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const timerEnabled = /*[[${timerEnabled}]]*/ false;
+    const timerMinutes = /*[[${timerMinutes}]]*/ 10;
+    const form = document.getElementById("quizForm");
+    const label = document.getElementById("timerLabel");
+    const leaveModal = document.getElementById("leaveQuizModal");
+    const quitButton = document.getElementById("quitQuizButton");
+    const stayButton = document.getElementById("stayInQuiz");
+    const confirmLeaveButton = document.getElementById("confirmLeaveQuiz");
+    const quizzesUrl = /*[[@{/quizzes}]]*/ "/quizzes";
+
+    let hasSubmitted = false;
+    let pendingNavigation = null;
+    let timerWarningPlayed = false;
+
+    const answeredCount = () => form ? form.querySelectorAll('input[type="radio"]:checked').length : 0;
+    const totalQuestions = () => form ? form.querySelectorAll('.quiz-question').length : 0;
+    const isQuizComplete = () => answeredCount() === totalQuestions();
+
+    const openLeaveModal = () => {
+      leaveModal.classList.remove("hidden");
+      leaveModal.classList.add("flex");
+      if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("warning");
+    };
+
+    const closeLeaveModal = () => {
+      leaveModal.classList.add("hidden");
+      leaveModal.classList.remove("flex");
+      pendingNavigation = null;
+    };
+
+    document.querySelectorAll(".answer-option input").forEach(input => {
+      input.addEventListener("change", () => {
+        if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
+      });
+    });
+
+    form?.addEventListener("submit", (event) => {
+      if (!isQuizComplete()) {
+        event.preventDefault();
+        openLeaveModal();
+        return;
       }
-      if (secondsLeft <= 0) {
-        clearInterval(interval);
-        if (form) form.submit();
+      hasSubmitted = true;
+      if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
+    });
+
+    quitButton?.addEventListener("click", () => {
+      pendingNavigation = () => window.location.href = quizzesUrl;
+      openLeaveModal();
+    });
+
+    stayButton?.addEventListener("click", closeLeaveModal);
+
+    confirmLeaveButton?.addEventListener("click", () => {
+      hasSubmitted = true;
+      if (pendingNavigation) {
+        pendingNavigation();
+        return;
       }
-      secondsLeft -= 1;
-    }, 1000);
-  }
+      window.location.href = quizzesUrl;
+    });
+
+    document.querySelectorAll("a").forEach(link => {
+      if (link.closest("#leaveQuizModal")) return;
+      link.addEventListener("click", (event) => {
+        if (hasSubmitted || isQuizComplete()) return;
+        event.preventDefault();
+        const href = link.getAttribute("href");
+        pendingNavigation = () => window.location.href = href;
+        openLeaveModal();
+      });
+    });
+
+    history.pushState({ quizGuard: true }, "", window.location.href);
+    window.addEventListener("popstate", () => {
+      if (hasSubmitted || isQuizComplete()) return;
+      history.pushState({ quizGuard: true }, "", window.location.href);
+      pendingNavigation = () => history.go(-1);
+      openLeaveModal();
+    });
+
+    window.addEventListener("beforeunload", (event) => {
+      if (hasSubmitted || isQuizComplete()) return;
+      event.preventDefault();
+      event.returnValue = "";
+    });
+
+    if (timerEnabled) {
+      let secondsLeft = timerMinutes * 60;
+      const interval = setInterval(() => {
+        const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
+        const seconds = String(secondsLeft % 60).padStart(2, "0");
+        if (label) label.textContent = `${minutes}:${seconds}`;
+
+        if (secondsLeft <= 10 && !timerWarningPlayed) {
+          timerWarningPlayed = true;
+          if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("timer");
+        }
+
+        if (secondsLeft <= 0) {
+          clearInterval(interval);
+          hasSubmitted = true;
+          if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("timer");
+          form?.submit();
+        }
+        secondsLeft -= 1;
+      }, 1000);
+    }
+  });
 </script>
 </body>
 </html>

@@ -2,45 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head"></head>
 <body class="min-h-screen flex flex-col">
-
-
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="flex-grow flex items-center justify-center px-6 pt-6 pb-12">
   <div class="max-w-md w-full">
-    <!-- OTP Form -->
     <div class="bg-white rounded-2xl p-8 md:p-10 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-sm transition-all hover:-translate-y-1 active:translate-y-0.5 active:border-b-4 active:border-r-4" data-aos="zoom-in">
-    <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-black">Verify Your Code</h1>
-      <p class="text-gray-500 mt-2">Use the code sent to your email to continue.</p>
-    </div>
-
-    <div th:if="${info}" class="mb-6 rounded-xl bg-green-100 border border-green-200 p-4 text-sm text-green-500">
-      <p th:text="${info}"></p>
-    </div>
-
-    <div th:if="${error}" class="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
-      <p th:text="${error}"></p>
-    </div>
-
-    <form th:action="@{/auth/verify-otp}" method="POST" class="space-y-5">
-      <div>
-        <label class="block text-sm font-bold textblack mb-1.5">Verification Code</label>
-        <input type="text" name="code" placeholder="123456" required maxlength="6"
-               class="w-full px-4 py-3 rounded-xl border-2 border-[var(--espresso)] focus:ring-0 outline-none transition-all text-black">
+      <div class="flex items-center justify-between mb-6">
+        <button type="button" th:attr="onclick=|window.history.length > 1 ? history.back() : window.location.href='@{/auth/forgot-password}'|" class="rounded-xl border-2 border-[var(--espresso)] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--espresso)]">
+          Go Back
+        </button>
+        <a th:href="@{/auth/forgot-password}" class="text-xs font-bold uppercase tracking-[0.2em] text-[var(--light-brown)] hover:underline">Restart</a>
       </div>
 
-      <button type="submit" class="w-full bg-[var(--espresso)] text-white font-bold py-4 rounded-xl border-b-4 border-[#352521] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all mt-2">
-        Verify Code
-      </button>
-    </form>
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-black">Verify Your Code</h1>
+        <p class="text-gray-500 mt-2">Use the code sent to your email to continue.</p>
+      </div>
 
-    <p class="mt-8 text-center text-sm text-gray-600">
-     Didn't recieve any code? <a th:href="@{/auth/forgot-password}" class="text-blue-400 underline ">Resend code</a>
-    </p>
+      <div th:if="${info}" class="mb-6 rounded-xl bg-green-100 border border-green-200 p-4 text-sm text-green-500">
+        <p th:text="${info}"></p>
+      </div>
+
+      <div th:if="${error}" class="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+        <p th:text="${error}"></p>
+      </div>
+
+      <form th:action="@{/auth/verify-otp}" method="POST" class="space-y-5">
+        <div>
+          <label class="block text-sm font-bold text-black mb-1.5">Verification Code</label>
+          <input type="text" name="code" placeholder="123456" required maxlength="6" class="w-full px-4 py-3 rounded-xl border-2 border-[var(--espresso)] focus:ring-0 outline-none transition-all text-black">
+        </div>
+
+        <button type="submit" class="w-full bg-[var(--espresso)] text-white font-bold py-4 rounded-xl border-b-4 border-[#352521] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all mt-2">
+          Verify Code
+        </button>
+      </form>
+
+      <p class="mt-8 text-center text-sm text-gray-600">
+       Did not receive any code? <a th:href="@{/auth/forgot-password}" class="text-[var(--light-brown)] underline">Send a fresh one</a>
+      </p>
+    </div>
   </div>
 </main>
 
 <div th:replace="fragments/footer :: footer"></div>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script><script th:src="@{/js/password-toggle.js}"></script><script>AOS.init({ once: true, duration: 600 });</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({ once: true, duration: 600 });</script>
 </body>
 </html>

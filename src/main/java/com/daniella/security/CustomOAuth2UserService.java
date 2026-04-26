@@ -3,10 +3,13 @@ package com.daniella.security;
 import com.daniella.entity.User;
 import com.daniella.enums.Role;
 import com.daniella.repository.UserRepository;
+import com.daniella.util.AvatarCatalog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -16,11 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.UUID;
 
+import com.daniella.enums.UserStatus;
+
 @Service
 public class CustomOAuth2UserService extends OidcUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -41,11 +49,16 @@ public class CustomOAuth2UserService extends OidcUserService {
             newUser.setLastName(familyName != null ? familyName : "User");
 
             newUser.setRole(Role.ROLE_CLIENT);
-            newUser.setPassword(UUID.randomUUID().toString());
+            newUser.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
             newUser.setStatus(com.daniella.enums.UserStatus.ACTIVE);
-            newUser.setVerified(true); 
+            newUser.setVerified(true);
+            newUser.setAvatarPath(AvatarCatalog.defaultAvatarFor(email));
             return userRepository.save(newUser);
         });
+
+        if (user.getStatus() == UserStatus.SUSPENDED) {
+            throw new OAuth2AuthenticationException(new OAuth2Error("account_suspended"), "Account is suspended");
+        }
 
         return new DefaultOidcUser(
             Collections.singleton(new SimpleGrantedAuthority(user.getRole().name())),

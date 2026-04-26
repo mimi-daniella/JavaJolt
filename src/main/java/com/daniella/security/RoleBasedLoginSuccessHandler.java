@@ -2,7 +2,6 @@ package com.daniella.security;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,63 +29,29 @@ public class RoleBasedLoginSuccessHandler implements AuthenticationSuccessHandle
             throws IOException, ServletException {
 
         String contextPath = request.getContextPath();
-        String redirectUrl = contextPath + "/dashboard"; // Default fallback
-        
         Object principal = authentication.getPrincipal();
-        String status = "";
-        boolean isVerified = true; //default
-        String userEmail = "";
 
-        // Identify status based on login type
+        User user = null;
         if (principal instanceof CustomUserDetails userDetails) {
-            status = userDetails.getStatus();
-            isVerified = userDetails.isVerified();
-            userEmail = userDetails.getUsername();
+            user = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
         } else if (principal instanceof OAuth2User oauth2User) {
             String email = oauth2User.getAttribute("email");
-            Optional<User> userOpt = userRepository.findByEmail(email);
-            if (userOpt.isPresent()) {
-                status = userOpt.get().getStatus() != null ? userOpt.get().getStatus().name() : "ACTIVE";
-                isVerified = userOpt.get().isVerified();
+            if (email != null) {
+                user = userRepository.findByEmail(email).orElse(null);
             }
         }
 
-        // Suspension Check
-        if ("SUSPENDED".equalsIgnoreCase(status)) {
-            redirectUrl = contextPath + "/auth/suspended";
-        } 
-        // Email Verification Check 
-        else if (principal instanceof CustomUserDetails && !isVerified) {
-        	 
-            redirectUrl = contextPath + "/auth/login?unverified=true&email=" + userEmail;
-        } 
-        //Role-Based Redirection for Active & Verified Users
-        else {
-            if (principal instanceof OAuth2User oauth2User) {
-                String email = oauth2User.getAttribute("email");
-                User user = userRepository.findByEmail(email).orElse(null);
-                if (user != null && user.getRole() != null) {
-                    user.setLastLoginAt(LocalDateTime.now());
-                    userRepository.save(user);
-                    redirectUrl = contextPath + ("ROLE_ADMIN".equalsIgnoreCase(user.getRole().name()) ? "/admin/dashboard" : "/dashboard");
-                }
-            } else {
-                if (principal instanceof CustomUserDetails userDetails) {
-                    userRepository.findByEmail(userDetails.getUsername()).ifPresent(user -> {
-                        user.setLastLoginAt(LocalDateTime.now());
-                        userRepository.save(user);
-                    });
-                }
-                redirectUrl = contextPath + (authentication.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .anyMatch(a -> a.equals("ROLE_ADMIN") || a.equals("ADMIN"))
-                        ? "/admin/dashboard"
-                        : "/dashboard");
-            }
+        if (user != null) {
+            user.setLastLoginAt(LocalDateTime.now());
+            userRepository.save(user);
         }
+
+        String redirectUrl = contextPath + (authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(a -> a.equals("ROLE_ADMIN") || a.equals("ADMIN"))
+                ? "/admin/dashboard"
+                : "/dashboard");
 
         response.sendRedirect(redirectUrl);
     }
-    }
-
-
+}

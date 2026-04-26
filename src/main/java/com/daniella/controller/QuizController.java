@@ -3,10 +3,14 @@ package com.daniella.controller;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +34,9 @@ import com.daniella.service.SystemSettingService;
 @Controller
 @RequestMapping("/quiz")
 public class QuizController {
+
+    private static final String ACTIVE_QUIZ_IDS = "ACTIVE_QUIZ_IDS";
+    private static final String ACTIVE_QUIZ_TOKEN = "ACTIVE_QUIZ_TOKEN";
 
     private final QuestionRepository questionRepository;
     private final QuizResultRepository quizResultRepository;
@@ -56,6 +63,9 @@ public class QuizController {
     public String startQuiz(@RequestParam(required = false) String category,
                             @RequestParam(required = false) String difficulty,
                             @RequestParam(required = false, defaultValue = "false") boolean dailyChallenge,
+                            @RequestParam(required = false, defaultValue = "false") boolean timerEnabled,
+                            @RequestParam(required = false, defaultValue = "10") int timerMinutes,
+                            HttpSession session,
                             Model model,
                             Principal principal) {
         if (principal == null) {
@@ -75,6 +85,9 @@ public class QuizController {
                 model.addAttribute("error", "Retakes are currently disabled. Come back tomorrow for a fresh challenge.");
                 model.addAttribute("score", 0);
                 model.addAttribute("total", 0);
+                model.addAttribute("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
+                model.addAttribute("passed", false);
+                clearActiveQuiz(session);
                 return "user/result";
             }
         }
@@ -84,6 +97,7 @@ public class QuizController {
                 ? systemSettingService.get(SystemSettingService.DAILY_CHALLENGE_CATEGORY, "")
                 : normalizeFilter(category, systemSettingService.get(SystemSettingService.DEFAULT_CATEGORY, ""));
         String effectiveDifficulty = normalizeFilter(difficulty, systemSettingService.get(SystemSettingService.DEFAULT_DIFFICULTY, ""));
+        int safeTimerMinutes = Math.max(1, Math.min(timerMinutes, 30));
 
         List<Question> questions = questionRepository.findByStatus(QuestionStatus.ACTIVE);
         if (!effectiveCategory.isBlank()) {
@@ -99,8 +113,14 @@ public class QuizController {
         Collections.shuffle(questions);
         questions = questions.stream().limit(questionLimit).collect(Collectors.toList());
 
+        String quizToken = UUID.randomUUID().toString();
+        session.setAttribute(ACTIVE_QUIZ_TOKEN, quizToken);
+        session.setAttribute(ACTIVE_QUIZ_IDS, questions.stream().map(Question::getId).collect(Collectors.toList()));
+
         model.addAttribute("questions", questions);
-        model.addAttribute("timerEnabled", systemSettingService.getBoolean(SystemSettingService.TIMER_ENABLED, false));
+        model.addAttribute("quizToken", quizToken);
+        model.addAttribute("timerEnabled", timerEnabled);
+        model.addAttribute("timerMinutes", safeTimerMinutes);
         model.addAttribute("selectedCategory", effectiveCategory);
         model.addAttribute("selectedDifficulty", effectiveDifficulty);
         model.addAttribute("dailyChallenge", dailyChallenge);
@@ -112,15 +132,35 @@ public class QuizController {
     public String submitQuiz(@RequestParam Map<String, String> allParams,
                              @RequestParam(required = false) String selectedCategory,
                              @RequestParam(required = false) String selectedDifficulty,
+                             @RequestParam(required = false) String quizToken,
+                             HttpSession session,
                              Model model,
                              Principal principal) {
+        @SuppressWarnings("unchecked")
+        List<Long> expectedQuestionIds = (List<Long>) session.getAttribute(ACTIVE_QUIZ_IDS);
+        String expectedToken = (String) session.getAttribute(ACTIVE_QUIZ_TOKEN);
+
+        if (expectedQuestionIds == null || expectedQuestionIds.isEmpty() || expectedToken == null || !expectedToken.equals(quizToken)) {
+            buildInvalidQuizResponse(model, "Your quiz session is no longer valid. Please start a new quiz.");
+            clearActiveQuiz(session);
+            return "user/result";
+        }
+
         int score = 0;
         int total = 0;
+        List<Long> answeredQuestionIds = new ArrayList<>();
 
         for (Map.Entry<String, String> entry : allParams.entrySet()) {
             if (entry.getKey().startsWith("question_")) {
                 Long questionId = Long.parseLong(entry.getKey().replace("question_", ""));
+                if (!expectedQuestionIds.contains(questionId)) {
+                    buildInvalidQuizResponse(model, "Submitted quiz data did not match the active quiz.");
+                    clearActiveQuiz(session);
+                    return "user/result";
+                }
+
                 String submittedAnswer = entry.getValue();
+                answeredQuestionIds.add(questionId);
 
                 Question q = questionRepository.findById(questionId).orElse(null);
                 if (q != null) {
@@ -132,9 +172,27 @@ public class QuizController {
             }
         }
 
+        if (answeredQuestionIds.size() != expectedQuestionIds.size()) {
+            buildInvalidQuizResponse(model, "Please answer every question before submitting.");
+            model.addAttribute("total", expectedQuestionIds.size());
+            clearActiveQuiz(session);
+            return "user/result";
+        }
+
         if (principal != null) {
             User user = userRepository.findByEmail(principal.getName()).orElse(null);
             if (user != null) {
+                if (!systemSettingService.getBoolean(SystemSettingService.ALLOW_RETAKES, true)) {
+                    LocalDate today = LocalDate.now();
+                    boolean hasPlayedToday = !quizResultRepository.findByUserAndCompletedAtBetween(
+                            user, today.atStartOfDay(), today.plusDays(1).atStartOfDay()).isEmpty();
+                    if (hasPlayedToday) {
+                        buildInvalidQuizResponse(model, "Retakes are currently disabled. Come back tomorrow for a fresh challenge.");
+                        clearActiveQuiz(session);
+                        return "user/result";
+                    }
+                }
+
                 double percentage = total == 0 ? 0.0 : (score * 100.0) / total;
                 boolean passed = percentage >= systemSettingService.getInt(SystemSettingService.PASS_MARK, 60);
                 QuizResult result = new QuizResult();
@@ -178,6 +236,7 @@ public class QuizController {
                 model.addAttribute("streakCount", user.getStreakCount());
             });
         }
+        clearActiveQuiz(session);
         return "user/result";
     }
 
@@ -186,5 +245,18 @@ public class QuizController {
             return requested.trim();
         }
         return fallback == null ? "" : fallback.trim();
+    }
+
+    private void buildInvalidQuizResponse(Model model, String error) {
+        model.addAttribute("error", error);
+        model.addAttribute("score", 0);
+        model.addAttribute("total", 0);
+        model.addAttribute("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
+        model.addAttribute("passed", false);
+    }
+
+    private void clearActiveQuiz(HttpSession session) {
+        session.removeAttribute(ACTIVE_QUIZ_IDS);
+        session.removeAttribute(ACTIVE_QUIZ_TOKEN);
     }
 }

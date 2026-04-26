@@ -27,6 +27,7 @@ import com.daniella.entity.Question;
 import com.daniella.enums.Difficulty;
 import com.daniella.enums.QuestionStatus;
 import com.daniella.repository.QuestionRepository;
+import com.daniella.repository.UserAnswerRepository;
 import com.daniella.service.AdminAuditService;
 import com.daniella.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,15 +40,18 @@ public class AdminQuestionController {
     private final UserService userService;
     private final AdminAuditService adminAuditService;
     private final ObjectMapper objectMapper;
+    private final UserAnswerRepository userAnswerRepository;
 
     public AdminQuestionController(QuestionRepository questionRepository,
                                    UserService userService,
                                    AdminAuditService adminAuditService,
-                                   ObjectMapper objectMapper) {
+                                   ObjectMapper objectMapper,
+                                   UserAnswerRepository userAnswerRepository) {
         this.questionRepository = questionRepository;
         this.userService = userService;
         this.adminAuditService = adminAuditService;
         this.objectMapper = objectMapper;
+        this.userAnswerRepository = userAnswerRepository;
     }
 
     @GetMapping
@@ -153,7 +157,10 @@ public class AdminQuestionController {
 
     @PostMapping("/{id}/delete")
     public String deleteQuestion(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
-        questionRepository.deleteById(id);
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Question not found"));
+        userAnswerRepository.deleteByQuestion(question);
+        questionRepository.delete(question);
         adminAuditService.log(principal, "DELETE_QUESTION", "QUESTION", String.valueOf(id), "Question deleted");
         redirectAttributes.addFlashAttribute("success", "Question deleted successfully.");
         return "redirect:/admin/questions";

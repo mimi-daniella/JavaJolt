@@ -26,6 +26,7 @@ import com.daniella.repository.UserRepository;
 import com.daniella.service.GamificationService;
 import com.daniella.service.SystemSettingService;
 import com.daniella.service.UserService;
+import com.daniella.util.AvatarCatalog;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -69,12 +70,12 @@ public class DashboardController {
         model.addAttribute("profileForm", new UserUpdateDTO(user.firstName(), user.lastName(), user.email()));
         model.addAttribute("passwordForm", new PasswordChangeDTO("", "", ""));
         model.addAttribute("statCards", buildStatCards(userEntity));
-        model.addAttribute("quizModes", buildQuizModes());
         model.addAttribute("activities", buildActivities(userEntity));
-        model.addAttribute("quickLinks", buildQuickLinks());
         model.addAttribute("xp", userEntity.getXp());
         model.addAttribute("rankTitle", userEntity.getRankTitle());
         model.addAttribute("streakCount", userEntity.getStreakCount());
+        model.addAttribute("avatarPath", userService.resolveAvatarPath(userEntity.getEmail(), userEntity.getAvatarPath()));
+        model.addAttribute("avatarChoices", AvatarCatalog.all());
         model.addAttribute("progressPercent", gamificationService.progressToNextRank(userEntity.getXp()));
         model.addAttribute("xpToNextRank", gamificationService.xpToNextRank(userEntity.getXp()));
         model.addAttribute("announcement", systemSettingService.get(SystemSettingService.ANNOUNCEMENT, ""));
@@ -99,6 +100,7 @@ public class DashboardController {
         model.addAttribute("xp", user.getXp());
         model.addAttribute("rankTitle", user.getRankTitle());
         model.addAttribute("streakCount", user.getStreakCount());
+        model.addAttribute("avatarPath", userService.resolveAvatarPath(user.getEmail(), user.getAvatarPath()));
         return "user/settings";
     }
 
@@ -151,18 +153,8 @@ public class DashboardController {
                 Map.of("label", "Quiz Attempts", "value", String.valueOf(attempts), "accent", "yellow"));
     }
 
-    private List<Map<String, String>> buildQuizModes() {
-        return List.of(
-                Map.of("title", "Java Sprint", "copy", "Browse the quiz arena and launch a random challenge when ready.",
-                        "href", "/quizzes", "cta", "Open Quizzes"),
-                Map.of("title", "Daily Challenge", "copy", "Lock in a category-based challenge and protect your streak.",
-                        "href", "/quiz/start?dailyChallenge=true", "cta", "Play Challenge"),
-                Map.of("title", "Profile & Settings", "copy", "Manage your personal info and password in one place.",
-                        "href", "/dashboard/settings", "cta", "Open Settings"));
-    }
-
     private List<Map<String, String>> buildActivities(User user) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy • hh:mm a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy - hh:mm a");
 
         return quizResultRepository.findByUser(user).stream()
                 .sorted((a, b) -> {
@@ -174,15 +166,7 @@ public class DashboardController {
                 .map(result -> Map.of(
                         "title", "Quiz completed",
                         "meta", result.getCompletedAt() != null ? result.getCompletedAt().format(formatter) : "Recently",
-                        "score", result.getScore() + "/" + result.getTotalQuestions() + " • +" + result.getXpEarned() + " XP"))
+                        "score", result.getScore() + "/" + result.getTotalQuestions() + " - +" + result.getXpEarned() + " XP"))
                 .toList();
-    }
-
-    private List<Map<String, String>> buildQuickLinks() {
-        return List.of(
-                Map.of("title", "Home", "href", "/"),
-                Map.of("title", "About", "href", "/public/about"),
-                Map.of("title", "Contact", "href", "/public/contact"),
-                Map.of("title", "Settings", "href", "/dashboard/settings"));
     }
 }
