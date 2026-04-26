@@ -27,4 +27,5 @@ public interface UserService {
 	void deleteUser(Long id);
 	void suspendUser(Long id);
 	void reactivateUser(Long id);
+	void updateUserAvatar(String email, String avatarPath);
 }
