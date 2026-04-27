@@ -32,8 +32,11 @@
 	  Use other mail apps
 	</a>
     
-    <a th:href="@{/logout}" class="block w-full py-3 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition">
-      Logout
-    </a>
+    <form th:action="@{/logout}" method="post" class="block w-full">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+      <button type="submit" class="w-full py-3 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition">
+        Logout
+      </button>
+    </form>
   </div>
 </body>

@@ -26,6 +26,7 @@
           </p>
           <a th:unless="${loggedIn}" class="rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] shadow-lg" th:href="@{/auth/register}">register</a>
           <form th:if="${loggedIn}" th:action="@{/logout}" method="post" class="m-0">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <button class="rounded-sm bg-[var(--yellow)] transition-transform duration-300 hover:scale-105 px-5 py-2.5 text-sm font-medium text-[var(--espresso)] shadow-lg border-2 border-[var(--espresso)]">
               logout
             </button>
@@ -71,6 +72,7 @@
     <div class="p-6 space-y-3">
       <a th:unless="${loggedIn}" class="mobile-nav rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] w-full block text-center" th:href="@{/auth/register}">register</a>
       <form th:if="${loggedIn}" th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <button class="w-full rounded-sm bg-[var(--yellow)] transition-transform duration-300 hover:scale-105 px-5 py-2.5 text-sm font-medium text-[var(--espresso)] shadow-lg border-2 border-[var(--espresso)]">
           logout
         </button>
