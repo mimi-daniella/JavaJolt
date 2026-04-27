@@ -1,23 +1,44 @@
 <div th:fragment="cards">
-  <section class="mx-auto mt-16 max-w-6xl px-6" data-aos="fade-up" data-aos-duration="1000">
-    <div class="grid gap-6 md:grid-cols-3">
-      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-6 text-center shadow-[6px_6px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-        <img th:src="@{/images/quiz.png}" alt="Quiz doodle" class="mx-auto h-28 w-28 object-contain">
-        <p class="mt-4 text-xl font-bold text-[var(--espresso)]">Interactive Quests</p>
-        <p class="mt-2 text-sm text-[var(--light-text)]">Play Java quizzes that feel more like battles than boring tests.</p>
+  <div class="mt-[40px] flex flex-wrap justify-center items-center gap-4 md:w-[900px] md:justify-between md:m-auto md:mt-[42px]"
+  				data-aos="fade-up" data-aos-duration="1000"
+  	>
+    
+    <!-- Quizzes -->
+    <div class="flex flex-col items-center justify-center 
+                border-b border-black pb-4 
+                md:border-b-0 md:border-r md:pr-10 
+                transition-transform duration-300 ease-in-out hover:scale-105">
+      <div class="flex flex-row items-center justify-center">
+        <img th:src="@{/images/quiz.png}" alt="Quiz doodle" class="w-40 h-40">
       </div>
-
-      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-6 text-center shadow-[6px_6px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-        <img th:src="@{/images/graph.png}" alt="Progress doodle" class="mx-auto h-28 w-28 object-contain">
-        <p class="mt-4 text-xl font-bold text-[var(--espresso)]">Track Your Growth</p>
-        <p class="mt-2 text-sm text-[var(--light-text)]">Follow your scores, momentum, and improvement as you level up.</p>
-      </div>
-
-      <div class="rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-6 text-center shadow-[6px_6px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-        <img th:src="@{/images/earn.png}" alt="Rewards doodle" class="mx-auto h-28 w-28 object-contain">
-        <p class="mt-4 text-xl font-bold text-[var(--espresso)]">Rewards & Ranks</p>
-        <p class="mt-2 text-sm text-[var(--light-text)]">Earn XP, protect your streak, and rise through the JavaJolt ranks.</p>
-      </div>
+      <p class="mt-1 text-md">Interactive quizzes</p>
+      <p class="text-[var(--light-text)] text-center text-sm leading-tight">Enjoy fun <br/> challenging quizzes</p>
     </div>
-  </section>
+
+    <!-- Progress -->
+    <div class="flex flex-col items-center justify-center 
+                border-b border-black pb-4 
+                md:border-b-0 md:border-r md:pr-10 
+                transition-transform duration-300 ease-in-out hover:scale-105">
+      <div class="flex flex-row items-center justify-center">
+        <img th:src="@{/images/graph.png}" alt="Graph doodle" class="w-40 h-40 object-cover mx-auto">
+      </div>
+      <p class="mt-1 text-md">Track your progress</p>
+      <p class="text-[var(--light-text)] text-center text-sm leading-tight">Watch your knowledge<br/> grow</p>
+    </div>
+
+    <!-- Earn -->
+    <div class="flex flex-col items-center justify-center 
+                border-b border-black pb-4 
+                md:border-b-0 md:pr-0 
+                transition-transform duration-300 ease-in-out hover:scale-105 
+                last:md:border-r-0">
+      <div class="flex flex-row items-center justify-center">
+        <img th:src="@{/images/earn.png}" alt="Study doodle" class="w-40 h-40">
+      </div>
+      <p class="mt-1 text-md">Learn & Earn</p>
+      <p class="text-[var(--light-text)] text-center text-sm leading-tight">Gain rewards as you<br/> play</p>
+    </div>
+
+  </div>
 </div>

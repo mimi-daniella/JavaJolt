@@ -5,14 +5,13 @@
   <div class="flex-1 flex flex-col md:ml-64">
     <header class="flex items-center justify-between bg-white shadow px-6 py-4">
       <div class="flex items-center space-x-4">
-        <button id="menuBtn" class="md:hidden text-[var(--espresso)] focus:outline-none">
+        <button id="menuBtn" class="md:hidden text-[v	ar(--espresso)] focus:outline-none">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
         <div>
-          <h1 class="text-2xl font-bold text-black">JavaJolt Command Center</h1>
-          <p class="text-sm text-gray-500">Operational overview for the full quiz experience.</p>
+          <h1 class="text-xl font-bold text-black">Control Center</h1>
         </div>
       </div>
 
@@ -113,27 +112,7 @@
         </section>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-8">
-        <section class="bg-white rounded-xl p-8 shadow border">
-          <h3 class="text-2xl font-bold text-black mb-4">Operations</h3>
-          <div class="grid sm:grid-cols-2 gap-4">
-            <a th:href="@{/admin/users}" class="rounded-xl bg-[var(--espresso)] text-white font-bold py-4 px-5 text-center">Manage Users</a>
-            <a th:href="@{/admin/questions}" class="rounded-xl bg-[var(--light-brown)] text-white font-bold py-4 px-5 text-center">Question Bank</a>
-            <a th:href="@{/admin/messaging}" class="rounded-xl border border-gray-200 font-bold py-4 px-5 text-center">Feedback Inbox</a>
-            <a th:href="@{/admin/settings}" class="rounded-xl border border-gray-200 font-bold py-4 px-5 text-center">System Settings</a>
-          </div>
-        </section>
-
-        <section class="bg-white rounded-xl p-8 shadow border">
-          <h3 class="text-2xl font-bold text-black mb-4">Quick Wins</h3>
-          <ul class="space-y-3 text-sm text-gray-700">
-            <li>Review new student messages and resolve them from Messaging.</li>
-            <li>Use System Settings to tune quiz size, pass mark, timer, and announcements.</li>
-            <li>Open Question Bank to add draft questions before publishing them live.</li>
-            <li>Check analytics to spot weak categories and hard questions.</li>
-          </ul>
-        </section>
-      </div>
+    
     </main>
   </div>
 </body>
