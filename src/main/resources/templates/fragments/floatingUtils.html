@@ -1,171 +1,210 @@
 <div th:fragment="utils">
-  <audio th:src="@{/sounds/theme_music.mp3}" loop id="jj-theme-audio" preload="auto"></audio>
-  <audio th:src="@{/sounds/button_press.mp3}" id="jj-button-audio" preload="auto"></audio>
-  <audio th:src="@{/sounds/correct.mp3}" id="jj-praise-audio" preload="auto"></audio>
-  <audio th:src="@{/sounds/game_successful.mp3}" id="jj-victory-audio" preload="auto"></audio>
-  <audio th:src="@{/sounds/wrong.mp3}" id="jj-warning-audio" preload="auto"></audio>
-  <audio th:src="@{/sounds/timer.mp3}" id="jj-timer-audio" preload="auto"></audio>
+	<!-- Audio Elements -->
+	<audio th:src="@{/sounds/theme_music.mp3}" loop id="jj-theme-audio" preload="auto"></audio>
+	<audio th:src="@{/sounds/button_press.mp3}" id="jj-button-audio" preload="auto"></audio>
+	<audio th:src="@{/sounds/correct.mp3}" id="jj-praise-audio" preload="auto"></audio>
+	<audio th:src="@{/sounds/game_successful.mp3}" id="jj-victory-audio" preload="auto"></audio>
+	<audio th:src="@{/sounds/wrong.mp3}" id="jj-warning-audio" preload="auto"></audio>
+	<audio th:src="@{/sounds/timer.mp3}" id="jj-timer-audio" preload="auto"></audio>
 
-  <div class="fixed bottom-6 right-4 flex flex-col gap-3 z-50">
-    <button id="jj-theme-toggle" type="button" class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-4 py-3 text-xs font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-      Music: Off
-    </button>
-    <button id="jj-effects-toggle" type="button" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-3 text-xs font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-      Effects: On
-    </button>
-    <a th:href="@{/dashboard/settings}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-4 py-3 text-center text-xs font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-      Settings
-    </a>
-  </div>
+	<div class="fixed bottom-6 right-4 flex flex-col gap-3 z-50">
+		<!-- Music Toggle -->
+		<button id="jj-theme-toggle" type="button"
+			class="group rounded-2xl  bg-white p-3 border-2 border-black transition hover:translate-y-1 hover:shadow-none">
+			<svg id="music-on" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+				<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+				<g id="SVGRepo_iconCarrier">
+					<path
+						d="M15 1H4V9H3C1.34315 9 0 10.3431 0 12C0 13.6569 1.34315 15 3 15C4.65685 15 6 13.6569 6 12V5H13V9H12C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12V1Z"
+						fill="#000000"></path>
+				</g>
+			</svg>
+			<svg fill="#000000" viewBox="0 -0.91 122.88 122.88" version="1.1" id="music-off"
+				xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+				style="enable-background:new 0 0 122.88 121.06" xml:space="preserve" stroke="#000000"
+				stroke-width="0.0012288">
+				<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+				<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+				<g id="SVGRepo_iconCarrier">
+					<g>
+						<path
+							d="M7.6,22.7c-2.91-2.12-3.56-6.2-1.44-9.12s6.2-3.56,9.11-1.44L120.2,88.64c2.91,2.12,3.55,6.2,1.43,9.12 c-2.12,2.91-6.2,3.56-9.11,1.44L7.6,22.7L7.6,22.7z M88.85,51.97V23.09l-28.42,8.16l-24.01-17.5L96.79,0v57.76L88.85,51.97 L88.85,51.97z M36.33,57.46v45.08c0.03,0.32,0.05,0.64,0.05,0.96v0.01c0,7.76-8.14,15.46-18.19,17.2C8.15,122.44,0,117.55,0,109.79 c0-7.76,8.15-15.46,18.19-17.19c3.78-0.65,7.29-0.36,10.21,0.66V51.68L36.33,57.46L36.33,57.46z M92.87,98.69 c-2.77,2.77-6.71,4.88-11.09,5.63c-8.39,1.45-15.19-2.63-15.19-9.12c-0.01-4.03,2.62-8.04,6.62-10.84L92.87,98.69L92.87,98.69z">
+						</path>
+					</g>
+				</g>
+			</svg>
+		</button>
 
-  <script>
-    (function () {
-      if (window.JavaJoltAudio) {
-        return;
-      }
+		<!-- Effects Toggle -->
+		<button id="jj-effects-toggle" type="button"
+			class="group rounded-2xl border-2 border-black p-3  transition hover:translate-y-1 hover:shadow-none">
+			<svg id="effects-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+				stroke="currentColor" class="size-6">
+				<path stroke-linecap="round" stroke-linejoin="round"
+					d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+			</svg>
 
-      const STORAGE = {
-        theme: "javajolt.theme.enabled",
-        effects: "javajolt.effects.enabled",
-        position: "javajolt.theme.position"
-      };
+			<svg id="effects-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+				stroke="currentColor" class="size-6">
+				<path stroke-linecap="round" stroke-linejoin="round"
+					d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+			</svg>
 
-      const state = {
-        themeEnabled: localStorage.getItem(STORAGE.theme) === "true",
-        effectsEnabled: localStorage.getItem(STORAGE.effects) !== "false",
-        unlocked: false
-      };
+		</button>
 
-      const ids = {
-        theme: "jj-theme-audio",
-        button: "jj-button-audio",
-        praise: "jj-praise-audio",
-        victory: "jj-victory-audio",
-        warning: "jj-warning-audio",
-        timer: "jj-timer-audio"
-      };
+		<!-- Settings Gear -->
+		<a th:href="@{/dashboard/settings}"
+			class="rounded-2xl border-2 border-black p-3  transition hover:translate-y-1 hover:shadow-none">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+				stroke="currentColor" class="size-6">
+				<path stroke-linecap="round" stroke-linejoin="round"
+					d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+				<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+			</svg>
 
-      function get(id) {
-        return document.getElementById(id);
-      }
+		</a>
+	</div>
 
-      function updateButtons() {
-        const themeBtn = document.getElementById("jj-theme-toggle");
-        const effectsBtn = document.getElementById("jj-effects-toggle");
-        if (themeBtn) themeBtn.textContent = `Music: ${state.themeEnabled ? "On" : "Off"}`;
-        if (effectsBtn) effectsBtn.textContent = `Effects: ${state.effectsEnabled ? "On" : "Off"}`;
-      }
+	<script>
+		(function () {
+			if (window.JavaJoltAudio) return;
 
-      function unlockAudio() {
-        if (state.unlocked) return;
-        state.unlocked = true;
-        const themeAudio = get(ids.theme);
-        if (!themeAudio) return;
-        const savedPosition = localStorage.getItem(STORAGE.position);
-        if (savedPosition) {
-          themeAudio.currentTime = parseFloat(savedPosition);
-        }
-        if (state.themeEnabled) {
-          themeAudio.play().catch(() => {});
-        }
-      }
+			const STORAGE = {
+				theme: "javajolt.theme.enabled",
+				effects: "javajolt.effects.enabled",
+				position: "javajolt.theme.position"
+			};
 
-      function safePlay(audio) {
-        if (!audio) return;
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-      }
+			const state = {
+				themeEnabled: localStorage.getItem(STORAGE.theme) === "true",
+				effectsEnabled: localStorage.getItem(STORAGE.effects) !== "false",
+				unlocked: false
+			};
 
-      function toggleThemeMusic(forceValue) {
-        state.themeEnabled = typeof forceValue === "boolean" ? forceValue : !state.themeEnabled;
-        localStorage.setItem(STORAGE.theme, String(state.themeEnabled));
-        const themeAudio = get(ids.theme);
-        if (themeAudio) {
-          if (state.themeEnabled && state.unlocked) {
-            themeAudio.play().catch(() => {});
-          } else {
-            localStorage.setItem(STORAGE.position, String(themeAudio.currentTime || 0));
-            themeAudio.pause();
-          }
-        }
-        updateButtons();
-      }
+			const ids = {
+				theme: "jj-theme-audio",
+				button: "jj-button-audio",
+				praise: "jj-praise-audio",
+				victory: "jj-victory-audio",
+				warning: "jj-warning-audio",
+				timer: "jj-timer-audio"
+			};
 
-      function toggleSoundEffects(forceValue) {
-        state.effectsEnabled = typeof forceValue === "boolean" ? forceValue : !state.effectsEnabled;
-        localStorage.setItem(STORAGE.effects, String(state.effectsEnabled));
-        updateButtons();
-      }
+			const get = (id) => document.getElementById(id);
 
-      function playEffect(type) {
-        if (!state.effectsEnabled) return;
-        unlockAudio();
-        const map = {
-          button: ids.button,
-          praise: ids.praise,
-          victory: ids.victory,
-          warning: ids.warning,
-          timer: ids.timer
-        };
-        safePlay(get(map[type] || ids.button));
-      }
+			function updateButtons() {
+				document.getElementById("music-on")?.classList.toggle("hidden", !state.themeEnabled);
+				document.getElementById("music-off")?.classList.toggle("hidden", state.themeEnabled);
+				document.getElementById("effects-on")?.classList.toggle("hidden", !state.effectsEnabled);
+				document.getElementById("effects-off")?.classList.toggle("hidden", state.effectsEnabled);
+			}
 
-      function playResultTier(tier) {
-        if (tier === "victory") {
-          playEffect("victory");
-          return;
-        }
-        if (tier === "praise") {
-          playEffect("praise");
-          return;
-        }
-        playEffect("warning");
-      }
+			// Saves current music timestamp to localStorage
+			function saveCurrentTime() {
+				const themeAudio = get(ids.theme);
+				if (themeAudio && themeAudio.currentTime > 0) {
+					localStorage.setItem(STORAGE.position, String(themeAudio.currentTime));
+				}
+			}
 
-      document.addEventListener("DOMContentLoaded", () => {
-        updateButtons();
-        const themeBtn = document.getElementById("jj-theme-toggle");
-        const effectsBtn = document.getElementById("jj-effects-toggle");
-        const themeAudio = get(ids.theme);
+			function unlockAudio() {
+				if (state.unlocked) return;
+				state.unlocked = true;
 
-        themeBtn?.addEventListener("click", () => {
-          unlockAudio();
-          toggleThemeMusic();
-        });
+				const themeAudio = get(ids.theme);
+				if (!themeAudio) return;
 
-        effectsBtn?.addEventListener("click", () => {
-          unlockAudio();
-          toggleSoundEffects();
-          playEffect("button");
-        });
+				const savedPosition = localStorage.getItem(STORAGE.position);
+				if (savedPosition) {
+					themeAudio.currentTime = parseFloat(savedPosition);
+				}
 
-        themeAudio?.addEventListener("timeupdate", () => {
-          if (state.themeEnabled) {
-            localStorage.setItem(STORAGE.position, String(themeAudio.currentTime));
-          }
-        });
+				if (state.themeEnabled) {
+					themeAudio.play().catch(() => {
+						// If autoplay fails, we wait for the next interaction
+						state.unlocked = false;
+					});
+				}
+			}
 
-        document.addEventListener("pointerdown", unlockAudio, { once: true });
+			function toggleThemeMusic() {
+				state.themeEnabled = !state.themeEnabled;
+				localStorage.setItem(STORAGE.theme, String(state.themeEnabled));
+				const themeAudio = get(ids.theme);
+				if (themeAudio) {
+					if (state.themeEnabled) {
+						unlockAudio();
+						themeAudio.play().catch(() => { });
+					} else {
+						saveCurrentTime();
+						themeAudio.pause();
+					}
+				}
+				updateButtons();
+			}
 
-        document.querySelectorAll("a, button").forEach(element => {
-          if (element.id === "jj-theme-toggle" || element.id === "jj-effects-toggle") return;
-          element.addEventListener("click", () => {
-            if (state.effectsEnabled) {
-              playEffect("button");
-            }
-          });
-        });
-      });
+			function toggleSoundEffects() {
+				state.effectsEnabled = !state.effectsEnabled;
+				localStorage.setItem(STORAGE.effects, String(state.effectsEnabled));
+				updateButtons();
+			}
 
-      window.JavaJoltAudio = {
-        unlockAudio,
-        toggleThemeMusic,
-        toggleSoundEffects,
-        playEffect,
-        playResultTier,
-        isEffectsEnabled: () => state.effectsEnabled,
-        isThemeEnabled: () => state.themeEnabled
-      };
-    })();
-  </script>
+			function playEffect(type) {
+				if (!state.effectsEnabled) return;
+				const audio = get(ids[type] || ids.button);
+				if (audio) {
+					audio.currentTime = 0;
+					audio.play().catch(() => { });
+				}
+			}
+
+			document.addEventListener("DOMContentLoaded", () => {
+				updateButtons();
+
+				// 1. Resume music position immediately on load
+				const themeAudio = get(ids.theme);
+				const savedPos = localStorage.getItem(STORAGE.position);
+				if (themeAudio && savedPos) {
+					themeAudio.currentTime = parseFloat(savedPos);
+				}
+
+				// 2. Click listeners for toggles
+				get("jj-theme-toggle")?.addEventListener("click", (e) => {
+					e.stopPropagation();
+					toggleThemeMusic();
+				});
+
+				get("jj-effects-toggle")?.addEventListener("click", (e) => {
+					e.stopPropagation();
+					toggleSoundEffects();
+					playEffect("button");
+				});
+
+				// 3. CRITICAL: Save timestamp before user leaves the page
+				window.addEventListener("beforeunload", saveCurrentTime);
+
+				// 4. Save timestamp when clicking any link (extra safety)
+				document.addEventListener("click", (e) => {
+					if (e.target.closest("a")) saveCurrentTime();
+					unlockAudio(); // Unlock audio context on any click
+				});
+
+				// 5. Global click handler for effects
+				document.querySelectorAll("a, button").forEach(el => {
+					if (el.id === "jj-theme-toggle" || el.id === "jj-effects-toggle") return;
+					el.addEventListener("click", () => playEffect("button"));
+				});
+
+				// 6. Frequent sync (every 2 seconds) just in case of crash
+				setInterval(saveCurrentTime, 2000);
+			});
+
+			window.JavaJoltAudio = {
+				toggleThemeMusic, toggleSoundEffects, playEffect,
+				playResultTier: (tier) => playEffect(tier === "victory" ? "victory" : (tier === "praise" ? "praise" : "warning"))
+			};
+		})();
+	</script>
+
 </div>
