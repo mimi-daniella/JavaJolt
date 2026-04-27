@@ -7,12 +7,7 @@
 <main class="flex-grow flex items-center justify-center px-6 pt-6 pb-12">
   <div class="max-w-md w-full">
     <div class="bg-white rounded-2xl p-8 md:p-10 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-sm transition-all hover:-translate-y-1 active:translate-y-0.5 active:border-b-4 active:border-r-4" data-aos="zoom-in">
-      <div class="flex items-center justify-between mb-6">
-        <button type="button" th:attr="onclick=|window.history.length > 1 ? history.back() : window.location.href='@{/auth/forgot-password}'|" class="rounded-xl border-2 border-[var(--espresso)] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--espresso)]">
-          Go Back
-        </button>
-        <a th:href="@{/auth/forgot-password}" class="text-xs font-bold uppercase tracking-[0.2em] text-[var(--light-brown)] hover:underline">Restart</a>
-      </div>
+
 
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-black">Verify Your Code</h1>

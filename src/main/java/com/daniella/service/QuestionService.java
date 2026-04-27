@@ -1,36 +1,35 @@
 package com.daniella.service;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.daniella.entity.Question;
 import com.daniella.enums.Difficulty;
 import com.daniella.repository.QuestionRepository;
 
 @Service
+@Transactional(readOnly = true)
 public class QuestionService {
 
-@Autowired
-private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
 
-public List<Question> getEasyQuestions(){
-	return questionRepository.findByDifficulty(Difficulty.EASY);
-}
+    public QuestionService(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
 
-	
-public List<Question> getMediumQuestions(){
-	return questionRepository.findByDifficulty(Difficulty.MEDIUM);
-}
+    public List<Question> getEasyQuestions() {
+        return questionRepository.findByDifficulty(Difficulty.EASY);
+    }
 
+    public List<Question> getMediumQuestions() {
+        return questionRepository.findByDifficulty(Difficulty.MEDIUM);
+    }
 
-public List<Question> getHardQuestions(){
-	return questionRepository.findByDifficulty(Difficulty.HARD);
-}
+    public List<Question> getHardQuestions() {
+        return questionRepository.findByDifficulty(Difficulty.HARD);
+    }
 
-public long getTotalQuestions() {
-	return questionRepository.count();
-}
-
+    public long getTotalQuestions() {
+        return questionRepository.count();
+    }
 }

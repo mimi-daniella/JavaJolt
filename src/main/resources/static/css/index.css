@@ -14,10 +14,7 @@ html {
 body {
 	font-family: "Jua", sans-serif;
 	color:black;
-	background:
-		radial-gradient(circle at top left, rgba(255, 207, 34, 0.16), transparent 32%),
-		radial-gradient(circle at bottom right, rgba(178, 57, 24, 0.08), transparent 30%),
-		#FFFFFF;
+	background-color: #ffffff;
 }
 
 .kavoon{

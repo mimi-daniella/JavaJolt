@@ -17,21 +17,6 @@
     <div th:if="${success}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)]" th:text="${success}"></div>
     <div th:if="${error}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#ffd4cb] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)]" th:text="${error}"></div>
 
-    <section class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="rounded-3xl border-4 border-[var(--espresso)] bg-[var(--yellow)] p-6 shadow-[6px_6px_0px_var(--espresso)] text-center">
-            <p class="text-xs uppercase font-bold text-[var(--espresso)]">Rank</p>
-            <p class="kavoon text-3xl text-[var(--espresso)] mt-2" th:text="${rankTitle}">ROOKIE</p>
-        </div>
-        <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--yellow)] text-center">
-            <p class="text-xs uppercase font-bold text-[var(--espresso)]">XP</p>
-            <p class="kavoon text-3xl text-[var(--espresso)] mt-2" th:text="${xp}">0</p>
-        </div>
-        <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-6 shadow-[6px_6px_0px_var(--light-brown)] text-center">
-            <p class="text-xs uppercase font-bold text-[var(--espresso)]">Streak</p>
-            <p class="kavoon text-3xl text-[var(--espresso)] mt-2" th:text="${streakCount} + ' day(s)'">0 day(s)</p>
-        </div>
-    </section>
-
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]" data-aos="fade-right">
             <h2 class="kavoon text-3xl text-[var(--espresso)]">Profile Details</h2>

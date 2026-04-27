@@ -1,135 +1,122 @@
-<nav th:fragment="navbar" class="sticky top-0 z-50">
-  <div class="border-b-4 border-[var(--espresso)] bg-[var(--cream)]/95 backdrop-blur-sm shadow-[0_6px_0_rgba(178,57,24,0.08)]">
-    <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-      <div class="flex min-h-[82px] items-center justify-between gap-4 py-3">
-        <a class="block shrink-0" th:href="@{/}">
-          <img th:src="@{/images/fullLogo.png}" class="h-14 w-auto sm:h-16" alt="JavaJolt Logo">
-        </a>
+<nav th:fragment="navbar">
+  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 mt-2" data-aos="fade-in">
+    <div class="flex h-16 items-center justify-between">
+      <!-- Shared navbar polished for both guests and logged-in users. -->
+      <a class="block" th:href="@{/}">
+        <img th:src="@{/images/fullLogo.png}" class="w-40 h-35" alt="JavaJolt Logo">
+      </a>
 
-        <div class="hidden md:flex md:flex-1 md:items-center md:justify-between md:gap-8">
-          <ul class="flex items-center gap-6 lg:gap-8 text-base lg:text-lg font-bold text-[var(--espresso)]">
-            <li><a class="nav-link" th:href="@{/}">Home</a></li>
-            <li><a class="nav-link" th:href="@{/public/about}">About</a></li>
-            <li><a class="nav-link" th:href="@{/public/contact}">Contact</a></li>
-            <li><a class="nav-link" th:href="@{/quizzes}">Play</a></li>
-            <li th:if="${loggedIn}"><a class="nav-link" th:href="@{/dashboard}">Dashboard</a></li>
+      <div class="hidden md:flex md:items-center md:gap-12">
+        <nav aria-label="Global">
+          <ul class="flex items-center gap-9 text-xl">
+            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/about}">about</a></li>
+            <li><a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/contact}">contact us</a></li>
+            <li th:if="${loggedIn}">
+              <a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/dashboard}">dashboard</a>
+            </li>
+            <li th:unless="${loggedIn}">
+              <a class="text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/auth/login}">login</a>
+            </li>
           </ul>
+        </nav>
 
-          <div class="flex items-center gap-3">
-            <div th:if="${loggedIn}" class="hidden lg:flex items-center gap-3 rounded-2xl border-4 border-[var(--espresso)] bg-white px-4 py-2 shadow-[4px_4px_0px_var(--yellow)]">
-              <img th:src="@{${currentUserAvatarPath}}" alt="Player Avatar" class="h-10 w-10 rounded-full object-cover border-2 border-[var(--espresso)]">
-              <div class="text-sm font-bold text-[var(--espresso)]">
-                Player
-                <span th:text="${currentUserFirstName}">Hero</span>
-              </div>
-            </div>
-            <a th:unless="${loggedIn}" class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-5 py-2.5 text-sm font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none" th:href="@{/auth/login}">Login</a>
-            <a th:unless="${loggedIn}" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-5 py-2.5 text-sm font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none" th:href="@{/auth/register}">Register</a>
-            <form th:if="${loggedIn}" th:action="@{/logout}" method="post" class="m-0">
-              <button class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-5 py-2.5 text-sm font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-                Logout
-              </button>
-            </form>
-          </div>
+        <div class="flex items-center gap-3">
+          <p th:if="${loggedIn}" class="hidden lg:block text-sm font-bold text-[var(--espresso)]">
+            <span th:text="${currentUserFirstName}">Hero</span>
+          </p>
+          <a th:unless="${loggedIn}" class="rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] shadow-lg" th:href="@{/auth/register}">register</a>
+          <form th:if="${loggedIn}" th:action="@{/logout}" method="post" class="m-0">
+            <button class="rounded-sm bg-[var(--yellow)] transition-transform duration-300 hover:scale-105 px-5 py-2.5 text-sm font-medium text-[var(--espresso)] shadow-lg border-2 border-[var(--espresso)]">
+              logout
+            </button>
+          </form>
         </div>
+      </div>
 
-        <div class="block md:hidden">
-          <button id="menu-btn" type="button" class="rounded-xl border-2 border-[var(--espresso)] bg-white p-2 text-[var(--espresso)] shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
+      <div class="block md:hidden">
+        <button id="menu-btn" type="button" class="p-2 text-[var(--espresso)] relative z-10">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mt-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
 
-  <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 max-w-[86vw] border-l-4 border-[var(--espresso)] bg-[var(--cream)] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out md:hidden z-50">
-    <div class="flex items-center justify-between border-b-2 border-[var(--espresso)] px-5 py-4">
-      <span class="font-bold text-xl text-[var(--espresso)]">Menu</span>
-      <button id="close-btn" type="button" class="rounded-xl border-2 border-[var(--espresso)] bg-white p-2 text-[var(--espresso)]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <div id="mobile-menu"
+       style="background-color: white;"
+       class="fixed top-0 right-0 w-64 h-[82vh] border-l-4 border-b-none border-[var(--espresso)] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out md:hidden z-50 torn-paper">
+
+    <div class="flex justify-between items-center p-4 border-b border-[var(--espresso)]/20">
+      <span class="font-bold text-xl ">Menu</span>
+      <button id="close-btn" type="button" class="p-2 text-[var(--espresso)]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
 
-    <div th:if="${loggedIn}" class="px-6 pt-5">
-      <div class="flex items-center gap-3 rounded-2xl border-4 border-[var(--espresso)] bg-white px-4 py-3 shadow-[4px_4px_0px_var(--yellow)]">
-        <img th:src="@{${currentUserAvatarPath}}" alt="Player Avatar" class="h-12 w-12 rounded-full object-cover border-2 border-[var(--espresso)]">
-        <div class="text-sm font-bold text-[var(--espresso)]">
-          Signed in as
-          <span th:text="${currentUserFirstName}">Hero</span>
-        </div>
-      </div>
+    <div th:if="${loggedIn}" class="px-6 pt-4 text-sm font-bold text-[var(--espresso)]">
+      Signed in as <span th:text="${currentUserFirstName}">Hero</span>
     </div>
 
-    <ul class="flex flex-col gap-4 px-6 py-6 text-lg font-bold text-[var(--espresso)]">
-      <li><a class="mobile-nav block rounded-xl border-2 border-transparent px-4 py-3 hover:border-[var(--espresso)] hover:bg-white" th:href="@{/}">Home</a></li>
-      <li><a class="mobile-nav block rounded-xl border-2 border-transparent px-4 py-3 hover:border-[var(--espresso)] hover:bg-white" th:href="@{/public/about}">About</a></li>
-      <li><a class="mobile-nav block rounded-xl border-2 border-transparent px-4 py-3 hover:border-[var(--espresso)] hover:bg-white" th:href="@{/quizzes}">Play</a></li>
-      <li><a class="mobile-nav block rounded-xl border-2 border-transparent px-4 py-3 hover:border-[var(--espresso)] hover:bg-white" th:href="@{/public/contact}">Contact</a></li>
-      <li th:if="${loggedIn}"><a class="mobile-nav block rounded-xl border-2 border-transparent px-4 py-3 hover:border-[var(--espresso)] hover:bg-white" th:href="@{/dashboard}">Dashboard</a></li>
-      <li th:unless="${loggedIn}"><a class="mobile-nav block rounded-xl border-2 border-transparent px-4 py-3 hover:border-[var(--espresso)] hover:bg-white" th:href="@{/auth/login}">Login</a></li>
+    <ul class="flex flex-col gap-6 p-6 text-lg">
+      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/about}">about</a></li>
+      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/quizzes}">quizzes</a></li>
+      <li><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/public/contact}">contact us</a></li>
+      <li th:if="${loggedIn}"><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/dashboard}">dashboard</a></li>
+      <li th:unless="${loggedIn}"><a class="mobile-nav text-black transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-0 after:h-[4px] after:rounded-md after:bg-[var(--espresso)] after:transition-all after:duration-300 hover:after:w-full" th:href="@{/auth/login}">login</a></li>
     </ul>
 
-    <div class="px-6 pb-6 space-y-3">
-      <a th:unless="${loggedIn}" class="mobile-nav block rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-5 py-3 text-center text-sm font-bold text-white shadow-[4px_4px_0px_var(--light-brown)]" th:href="@{/auth/register}">Register</a>
+    <div class="p-6 space-y-3">
+      <a th:unless="${loggedIn}" class="mobile-nav rounded-sm bg-[var(--espresso)] transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-[var(--light-brown)] hover:to-[var(--espresso)] px-5 py-2.5 text-sm font-medium text-white [-webkit-text-stroke:0.5px_white] w-full block text-center" th:href="@{/auth/register}">register</a>
       <form th:if="${loggedIn}" th:action="@{/logout}" method="post">
-        <button class="w-full rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-5 py-3 text-sm font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)]">
-          Logout
+        <button class="w-full rounded-sm bg-[var(--yellow)] transition-transform duration-300 hover:scale-105 px-5 py-2.5 text-sm font-medium text-[var(--espresso)] shadow-lg border-2 border-[var(--espresso)]">
+          logout
         </button>
       </form>
     </div>
   </div>
 
-  <div id="backdrop" class="fixed inset-0 bg-black/50 hidden md:hidden z-40"></div>
+  <div id="backdrop" class="fixed inset-0 bg-black/60 hidden md:hidden z-40"></div>
 
   <style>
-    .nav-link {
-      position: relative;
-      transition: color 0.2s ease;
-    }
-
-    .nav-link::after {
+    .torn-paper::after {
       content: "";
       position: absolute;
-      left: 0;
-      bottom: -0.45rem;
-      width: 100%;
-      height: 0.25rem;
-      border-radius: 999px;
-      background: var(--yellow);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.25s ease;
-    }
-
-    .nav-link:hover::after {
-      transform: scaleX(1);
+      bottom: -18px;
+      left: -4px;
+      width: calc(100% + 4px);
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L2 4 L4 0 L6 4 L8 1 L10 4 L12 0 L14 4 L16 1 L18 4 L20 0 Z' fill='%23F5F5DC'/%3E%3C/svg%3E");
+      background-size: 30px 20px;
+      background-repeat: repeat-x;
     }
   </style>
 
   <script>
-    (function () {
+    (function() {
       document.addEventListener("DOMContentLoaded", () => {
-        const menuBtn = document.getElementById("menu-btn");
-        const closeBtn = document.getElementById("close-btn");
-        const mobileMenu = document.getElementById("mobile-menu");
-        const backdrop = document.getElementById("backdrop");
-        const mobileLinks = document.querySelectorAll(".mobile-nav");
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const backdrop = document.getElementById('backdrop');
+        const mobileLinks = document.querySelectorAll('.mobile-nav');
 
         const toggleMenu = (show) => {
           if (!mobileMenu || !backdrop) return;
-          mobileMenu.classList.toggle("translate-x-full", !show);
-          backdrop.classList.toggle("hidden", !show);
-          document.body.style.overflow = show ? "hidden" : "";
+          mobileMenu.classList.toggle('translate-x-full', !show);
+          backdrop.classList.toggle('hidden', !show);
+          document.body.style.overflow = show ? 'hidden' : '';
         };
 
         if (menuBtn) menuBtn.onclick = () => toggleMenu(true);
         if (closeBtn) closeBtn.onclick = () => toggleMenu(false);
         if (backdrop) backdrop.onclick = () => toggleMenu(false);
-        mobileLinks.forEach(link => link.onclick = () => toggleMenu(false));
+
+        mobileLinks.forEach(link => {
+          link.onclick = () => toggleMenu(false);
+        });
       });
     })();
   </script>

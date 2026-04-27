@@ -1,110 +1,59 @@
 <footer th:fragment="footer" class="mt-20 relative overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-br from-[#432e29] via-[#2d1e1a] to-[var(--espresso)] -z-10"></div>
-  <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
 
-  <div class="max-w-screen-xl mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-3 gap-10 text-white">
+  <div class="absolute inset-0 bg-gradient-to-br from-[#432e29] via-[#2d1e1a] to-[var(--espresso)] -z-10"></div>
+
+
+  <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+  <div class="max-w-screen-xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-white">
+    
+    <!-- Logo / Brand -->
     <div class="flex flex-col items-center md:items-start space-y-4">
-      <img th:src="@{/images/fullLogo.png}" alt="JavaJolt Logo" class="w-36 brightness-110 drop-shadow-lg">
-      <p class="text-sm text-white/70 leading-relaxed text-center md:text-left max-w-xs">
-        JavaJolt turns Java practice into a playful game world with quizzes, progression, and a coffee-powered vibe.
+      <img th:src="@{/images/fullLogo.png}" alt="Logo" class="w-32 brightness-110 drop-shadow-lg">
+      <p class="text-sm text-white/60 leading-relaxed text-center md:text-left max-w-xs">
+        Empowering learning through fun quizzes, progress tracking, and rewards.
       </p>
     </div>
 
+    <!-- Quick Links -->
     <div class="flex flex-col items-center md:items-start">
-      <h3 class="text-lg font-bold mb-4 text-[var(--yellow)] tracking-wide">Explore</h3>
-      <ul class="space-y-3 text-sm text-white/80 font-medium">
-        <li><a th:href="@{/}" class="hover:text-[var(--yellow)] transition-all">Home</a></li>
-        <li><a th:href="@{/public/about}" class="hover:text-[var(--yellow)] transition-all">About JavaJolt</a></li>
-        <li><a th:href="@{/quizzes}" class="hover:text-[var(--yellow)] transition-all">Play Quizzes</a></li>
-        <li><a th:href="@{/public/contact}" class="hover:text-[var(--yellow)] transition-all">Contact Support</a></li>
+      <h3 class="text-lg font-bold mb-4 text-[var(--yellow)] tracking-wide">Quick Links</h3>
+      <ul class="space-y-2 text-sm text-white/70 font-medium">
+        <li><a th:href="@{/public/about}" class="hover:text-[var(--yellow)] transition-all flex items-center gap-2 group">
+          <span class="w-1 h-1 bg-[var(--yellow)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>About</a>
+        </li>
+        <li><a href="#" class="hover:text-[var(--yellow)] transition-all flex items-center gap-2 group">
+          <span class="w-1 h-1 bg-[var(--yellow)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>Quizzes</a>
+        </li>
+        <li><a th:href="@{/public/contact}" class="hover:text-[var(--yellow)] transition-all flex items-center gap-2 group">
+          <span class="w-1 h-1 bg-[var(--yellow)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>Contact Us</a>
+        </li>
       </ul>
     </div>
 
+    <!-- Social / Newsletter -->
     <div class="flex flex-col items-center md:items-start">
       <h3 class="text-lg font-bold mb-4 text-[var(--yellow)] tracking-wide">Stay Connected</h3>
-      <p class="text-sm text-white/70 mb-4 text-center md:text-left">
-        Join the mailing list for platform updates, featured challenges, and new quiz drops.
-      </p>
-
-      <form id="subscribeForm" class="flex flex-col sm:flex-row w-full gap-2">
-        <input
-          id="subscriberEmail"
-          name="email"
-          type="email"
-          placeholder="Your email"
-          required
-          class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[var(--yellow)] transition-all"
-        >
-        <button
-          type="submit"
-          class="bg-[var(--yellow)] text-[var(--espresso)] px-6 py-3 rounded-xl font-bold hover:bg-white transition-all shadow-md"
-        >
+      <div class="flex gap-5 mb-6 text-sm">
+        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Facebook</a>
+        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Twitter</a>
+        <a href="#" class="text-white/80 hover:text-[var(--light-brown)] transition-colors">Instagram</a>
+      </div>
+      
+      <form class="flex flex-col sm:flex-row w-full gap-2">
+        <input type="email" placeholder="Your email"
+               class="flex-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--light-brown)] transition-all">
+        <button class="bg-[var(--light-brown)] px-6 py-2 rounded-xl font-bold hover:bg-[var(--yellow)] transition-all shadow-md">
           Subscribe
         </button>
       </form>
-
-      <p id="subscribeMessage" class="mt-3 text-sm text-white/90"></p>
     </div>
   </div>
 
-  <div class="border-t border-white/10 py-6 text-center px-6">
-    <p class="text-xs uppercase tracking-[0.24em] text-white/50">
-      © 2026 JavaJolt • Brew your Java skills, one quiz at a time.
+
+  <div class="border-t border-white/5 py-8 text-center">
+    <p class="text-[10px] uppercase tracking-[0.2em] text-white/30 italic">
+      © 2026 JavaJolt • v1.0 
     </p>
   </div>
-
-  <script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("subscribeForm");
-      const emailInput = document.getElementById("subscriberEmail");
-      const messageBox = document.getElementById("subscribeMessage");
-      const subscribeUrl = /*[[@{/api/subscribe}]]*/ '/api/subscribe';
-
-      let messageTimeout;
-
-      function showMessage(message, isError) {
-        if (messageTimeout) clearTimeout(messageTimeout);
-        messageBox.textContent = message;
-        messageBox.style.color = isError ? "#fecaca" : "#fef3c7";
-        messageTimeout = setTimeout(() => {
-          messageBox.textContent = "";
-        }, 4000);
-      }
-
-      if (!form) return;
-
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const email = emailInput.value.trim();
-
-        if (!email) {
-          showMessage("Please enter your email.", true);
-          return;
-        }
-
-        try {
-          const formData = new URLSearchParams();
-          formData.append("email", email);
-
-          const response = await fetch(subscribeUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: formData.toString()
-          });
-
-          const result = await response.text();
-          if (response.ok) {
-            showMessage(result, false);
-            emailInput.value = "";
-          } else {
-            showMessage(result || "Subscription failed.", true);
-          }
-        } catch (error) {
-          showMessage("Unable to subscribe right now. Please try again.", true);
-        }
-      });
-    });
-  </script>
 </footer>
