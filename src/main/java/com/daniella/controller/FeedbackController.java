@@ -27,10 +27,6 @@ public class FeedbackController {
 	// ✅ FIXED: correct endpoint + proper form binding
 	@PostMapping("/submit")
 	public String submitFeedback(@ModelAttribute Feedback feedback) {
-        if (feedback.getEmail() == null || feedback.getEmail().isBlank()
-                || feedback.getMessage() == null || feedback.getMessage().isBlank()) {
-            return "Email and message are required.";
-        }
 
 		feedback.setCreatedAt(LocalDateTime.now());
 
@@ -41,17 +37,7 @@ public class FeedbackController {
 
 	@GetMapping("/all")
 	public List<Feedback> getAllFeedback() {
-		return feedbackRepository.findAll().stream().sorted((a, b) -> {
-            if (a.getCreatedAt() == null && b.getCreatedAt() == null) {
-                return 0;
-            }
-            if (a.getCreatedAt() == null) {
-                return 1;
-            }
-            if (b.getCreatedAt() == null) {
-                return -1;
-            }
-            return b.getCreatedAt().compareTo(a.getCreatedAt());
-        }).toList();
+		return feedbackRepository.findAll().stream().sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
+				.toList();
 	}
 }
