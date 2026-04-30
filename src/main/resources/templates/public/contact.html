@@ -17,12 +17,22 @@
       Need help, feedback, or just want to say hi? Our friendly assistant <strong>Daniella</strong> is here to listen.
     </p>
 
+    <!-- ✅ ADDED BUTTONS -->
+    <div th:if="${loggedIn}" class="mt-6 flex flex-wrap justify-center gap-4">
+      <a th:href="@{/dashboard}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+        Back to Dashboard
+      </a>
+      <a th:href="@{/quizzes}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-5 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
+        Open Quizzes
+      </a>
+    </div>
+
   </section>
 
   <!-- Split Layout -->
   <section class="px-6 md:px-20 bg-[var(--cream)]">
 
-    <!-- ONLY SUCCESS MESSAGE -->
+    <!-- SUCCESS MESSAGE -->
     <div th:if="${success}"
          class="mb-8 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)]"
          th:text="${success}">
@@ -30,7 +40,7 @@
 
     <div class="grid md:grid-cols-2 gap-12 items-start">
 
-      <!-- Contact Info Bubble -->
+      <!-- Contact Info -->
       <div class="p-8 bg-white border-2 border-black border-dashed rounded-xl shadow-lg relative"
            data-aos="fade-right">
         <h2 class="text-3xl font-bold mb-6">Reach Us</h2>
@@ -50,55 +60,60 @@
       <div class="p-2 px-6 border-2 border-black border-dashed rounded-xl shadow-lg relative"
            data-aos="fade-left">
         <h2 class="text-3xl font-bold mb-6">Send Feedback</h2>
-		<form id="feedbackForm" class="space-y-1">
 
-		  <div>
-		    <label class="block font-semibold mb-2">Your Email</label>
-		    <input type="email" name="email"
-		           class="w-full px-4 py-2 border-2 rounded-lg focus:outline-none focus:border-[var(--espresso)]"
-		           required>
-		  </div>
+        <form id="feedbackForm" class="space-y-1">
 
-		  <div>
-		    <label class="block font-semibold mb-2">Message</label>
-		    <textarea name="message" rows="5"
-		              class="w-full px-4 py-2 border-2 rounded-lg focus:outline-none focus:border-[var(--espresso)]"
-		              required></textarea>
-		  </div>
+          <div>
+            <label class="block font-semibold mb-2">Your Email</label>
+            <input type="email" name="email"
+                   class="w-full px-4 py-2 border-2 rounded-lg focus:outline-none focus:border-[var(--espresso)]"
+                   required>
+          </div>
 
-		  <div class="text-center">
-		    <button type="submit"
-		            class="bg-[var(--espresso)] text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[var(--light-brown)] transition">
-		      Submit
-		    </button>
-		  </div>
+          <div>
+            <label class="block font-semibold mb-2">Message</label>
+            <textarea name="message" rows="5"
+                      class="w-full px-4 py-2 border-2 rounded-lg focus:outline-none focus:border-[var(--espresso)]"
+                      required></textarea>
+          </div>
 
-		</form>
+          <div class="text-center">
+            <button type="submit"
+                    class="bg-[var(--espresso)] text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[var(--light-brown)] transition">
+              Submit
+            </button>
+          </div>
 
-		<div id="responseMsg" class="mt-4 font-bold text-[var(--espresso)]"></div>
+        </form>
 
-		<script>
-		document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
-		    e.preventDefault();
+        <!-- ✅ RESPONSE MESSAGE -->
+        <div id="responseMsg" class="mt-4 font-bold text-[var(--espresso)]"></div>
 
-		    const formData = new URLSearchParams();
-		    formData.append("email", this.email.value);
-		    formData.append("message", this.message.value);
+        <!-- ✅ UPDATED SCRIPT (merged properly) -->
+        <script>
+        document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
 
-		    const res = await fetch("/api/feedback/submit", {
-		        method: "POST",
-		        headers: {
-		            "Content-Type": "application/x-www-form-urlencoded"
-		        },
-		        body: formData
-		    });
+            const formData = new FormData();
+            formData.append("email", this.email.value);
+            formData.append("message", this.message.value);
 
-		    const text = await res.text();
-		    document.getElementById("responseMsg").innerText = text;
+            const res = await fetch("/quiz-app/api/feedback/submit", {
+                method: "POST",
+                body: formData
+            });
 
-		    this.reset();
-		});
-		</script>
+            const text = await res.text();
+
+            const msgBox = document.getElementById("responseMsg");
+            msgBox.innerText = text;
+
+            setTimeout(() => {
+                msgBox.innerText = "";
+                this.reset();
+            }, 1000);
+        });
+        </script>
 
         <div class="absolute -bottom-6 right-10 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[20px] border-l-transparent border-r-transparent border-t-[var(--espresso)]"></div>
       </div>
