@@ -1,6 +1,8 @@
 package com.daniella.service;
 
 import java.util.List;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.daniella.entity.Question;
@@ -29,6 +31,10 @@ public class QuestionService {
         return questionRepository.findByDifficulty(Difficulty.HARD);
     }
 
+    public List<Question> getRandomQuestions(int limit) {
+        return questionRepository.findRandomQuestions(PageRequest.of(0, limit));
+    }
+    
     public long getTotalQuestions() {
         return questionRepository.count();
     }
