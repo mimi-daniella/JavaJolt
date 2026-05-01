@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head"></head>
+<head th:replace="~{fragments/head :: head}"></head>
 <body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div th:replace="~{fragments/floatingUtils :: utils}"></div>
-<div th:replace="~{fragments/backToTop :: backToTop}"></div>
+
 
 <main class="max-w-4xl mx-auto pt-10 pb-12 px-6">
     <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 text-center shadow-[8px_8px_0px_var(--yellow)]">
