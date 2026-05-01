@@ -17,4 +17,4 @@ RUN mvn clean install -DskipTests
 EXPOSE 8080
 
 # Run the JAR
-CMD ["java", "-jar", "target/quiz-app.jar"]
+CMD ["java", "-jar", "target/quiz-app-0.0.1-SNAPSHOT.jar"]
