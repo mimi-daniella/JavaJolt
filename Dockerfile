@@ -7,8 +7,11 @@ WORKDIR /app
 # Copy Maven wrapper and source code
 COPY . .
 
-# Build the app (skip tests for faster builds)
-RUN ./mvnw clean install -DskipTests
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
+# Build the app
+RUN mvn clean install -DskipTests
 
 # Expose port (Render maps automatically)
 EXPOSE 8080
