@@ -1,5 +1,5 @@
 package com.daniella.service;
-
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -19,6 +19,7 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String fromAddress;
 
+    @Async
     public void sendOtpEmail(String to, String otp) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");

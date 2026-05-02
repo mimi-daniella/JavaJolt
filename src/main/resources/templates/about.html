@@ -1,10 +1,9 @@
 <html>
-<head th:replace="fragments/head :: head"></head>
+<head th:replace="~{fragments/head :: head}"></head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
-<div th:replace="fragments/backToTop :: backToTop"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/backToTop :: backToTop}"></div>
 
-<!-- Hero Section (Lightened from solid Yellow to Cream with Yellow accent) -->
 <section class="mt-4 flex flex-col items-center justify-center min-h-[45vh] px-6 text-center 
                  bg-[var(--cream)] border-b-2 border-[var(--yellow)] shadow-sm" data-aos="fade-up">
 	<h1 class="text-5xl md:text-7xl font-bold kavoon text-[var(--espresso)] mb-4 drop-shadow-sm">
@@ -61,7 +60,7 @@
 	</a>
 </section>
 
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 <script>
 	AOS.init({once: true, duration: 1000, easing: 'ease-out'});
 </script>

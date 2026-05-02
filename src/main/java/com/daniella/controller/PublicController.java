@@ -13,7 +13,6 @@ import com.daniella.entity.Feedback;
 import com.daniella.repository.FeedbackRepository;
 
 @Controller
-@RequestMapping("/public")
 public class PublicController{
 
 	private final FeedbackRepository feedbackRepository;
@@ -24,15 +23,14 @@ public class PublicController{
 	
 	@GetMapping("/about")
 	public String about() {
-		return "/public/about";
+		return "about";
 	}
 	
 	@GetMapping("/contact")
 	public String contact() {
-		return "/public/contact";
+		return "contact";
 	}
 
-	// Simple public feedback handler added so the contact page no longer posts to a dead route.
 	@PostMapping("/contact")
 	public String submitContact(@RequestParam String email,
 	                            @RequestParam String message,
@@ -44,7 +42,7 @@ public class PublicController{
 		feedbackRepository.save(feedback);
 
 		redirectAttributes.addFlashAttribute("success", "Thanks for reaching out. Your message has been received.");
-		return "redirect:/public/contact";
+		return "redirect:/contact";
 	}
 	
 }
