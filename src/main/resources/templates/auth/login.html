@@ -11,6 +11,9 @@
 
 
   <main class="flex-grow flex items-center justify-center px-6 pt-6 pb-12">
+	<!--  -->
+	<div th:replace="~{fragments/backToHome :: backToHome}"></div>
+	
     <div class="max-w-md w-full">
       <!-- Login Form -->
       <div class="bg-white max-w-md w-full rounded-2xl p-8 md:p-10 border-2 border-r-8 border-b-8 border-[var(--espresso)] shadow-sm transition-all hover:-translate-y-1 active:translate-y-0.5 active:border-b-4 active:border-r-4" data-aos="zoom-in">
@@ -82,7 +85,7 @@
 
           <button type="submit" 
                   class="w-full bg-[var(--espresso)] text-white font-bold py-4 rounded-xl border-b-4 border-[#352521] shadow-lg hover:brightness-110 active:border-b-0 active:translate-y-1 transition-all mt-2">
-            Login to Dashboard
+            Login 
           </button>
         </form>
 

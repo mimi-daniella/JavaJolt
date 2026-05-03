@@ -1,0 +1,16 @@
+<!-- fragments/home-button.html -->
+<div th:fragment="backToHome">
+  <a th:href="@{/}"
+     class="fixed top-4 left-4 z-50 flex items-center justify-center
+            w-10 h-10 rounded-full bg-gray-100 shadow-md
+            text-gray-700 hover:bg-[var(--yellow)] hover:text-white
+            transform transition duration-300 ease-in-out
+            hover:scale-110">
+ 
+    <!-- Home SVG icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75v-5.25H9.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z"/>
+    </svg>
+  </a>
+</div>

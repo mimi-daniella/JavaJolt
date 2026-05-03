@@ -8,41 +8,42 @@
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 	<div th:replace="~{fragments/floatingUtils :: utils}"></div>
 
-	<main class="max-w-6xl mx-auto pt-6 pb-12 px-6 space-y-6">
-		<section class="bg-white p-8 ">
-			<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-				<div class="flex items-center gap-5">
+	<main class="max-w-6xl mx-auto pt-2 pb-12 px-6 space-y-6">
+		<section class="bg-white p-8">
+		  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+		    <div class="flex flex-col sm:flex-row sm:items-center sm:gap-5">
+		      
+		      <div class="relative group w-24 aspect-square">
+		        <!-- Avatar Image -->
+		        <img th:src="@{${avatarPath}}" alt="Current Avatar"
+		             class="w-full h-full rounded-full object-cover border-4 border-black transition group-hover:translate-y-1 group-hover:shadow-none">
 
-					<div class="relative group w-24 h-24">
-						<!-- Avatar Image -->
-						<img th:src="@{${avatarPath}}" alt="Current Avatar"
-							class="w-24 h-24 rounded-full object-cover border-4 border-black  transition group-hover:translate-y-1 group-hover:shadow-none">
+		        <!-- Pencil Icon Overlay -->
+		        <button type="button" id="openAvatarForge"
+		                class="absolute bottom-0 right-2 bg-white border-2 border-black rounded-full p-1 shadow-md cursor-pointer transition hover:bg-[var(--yellow)]">
+		          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black" fill="none"
+		               viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+		            <path stroke-linecap="round" stroke-linejoin="round"
+		                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+		          </svg>
+		        </button>
+		      </div>
 
-						<!-- Pencil Icon Overlay -->
-						<button type="button" id="openAvatarForge"
-							class="absolute bottom-0 right-2 bg-white border-2 border-black rounded-full p-1 shadow-md cursor-pointer transition hover:bg-[var(--yellow)]">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black" fill="none"
-								viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-								<path stroke-linecap="round" stroke-linejoin="round"
-									d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-							</svg>
-						</button>
-					</div>
-
-
-					<div>
-						<h1 class="text-3xl kavoon text-[var(--espresso)]">
-							<span id="timeGreeting">Hello</span>, <span th:text="${user.firstName}">Java
-								Enthusiast</span>!
-						</h1>
-						<p class="mt-3 text-lg">Your JavaJolt progress now tracks points, streaks, rank, and leaderboard
-							momentum.</p>
-					</div>
-				</div>
-			</div>
+		      <div class="mt-4 sm:mt-0">
+		        <h1 class="text-2xl sm:text-3xl kavoon text-[var(--espresso)]">
+		          <span id="timeGreeting">Hello</span>, 
+		          <span th:text="${user.firstName}">Java Enthusiast</span>!
+		        </h1>
+		        <p class="mt-2 sm:mt-3 text-base sm:text-lg">
+		          Your JavaJolt progress now tracks points, streaks, rank, and leaderboard momentum.
+		        </p>
+		      </div>
+		    </div>
+		  </div>
 		</section>
 
-		<section class="grid lg:grid-cols-[1.4fr_1fr] gap-8">
+
+		<section class="grid lg:grid-cols-[1.4fr_1fr] gap-8 mt-[-20px]">
 			<div
 				class="rounded-[2rem] border-4 border-[var(--espresso)] bg-gradient-to-r from-[var(--yellow)] to-[#ffe7a6] p-8 shadow-[8px_8px_0px_var(--espresso)]">
 				<p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Main Mission</p>
