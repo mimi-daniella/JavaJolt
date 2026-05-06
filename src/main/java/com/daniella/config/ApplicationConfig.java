@@ -26,18 +26,6 @@ public class ApplicationConfig {
 			CustomAuthenticationFailureHandler failureHandler, UserDetailsService userDetailsService,
 			CustomOAuth2UserService oauth2UserService) throws Exception {
 		http
-//	        .csrf(csrf -> csrf
-//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                .ignoringRequestMatchers("/api/feedback/submit")
-//            )
-//	        .authorizeHttpRequests(auth -> auth
-//	            .requestMatchers("/", "/public/**", "/auth/**", "/css/**", "/js/**", "/images/**", "/error/**").permitAll()
-//	            .requestMatchers("/api/feedback/submit").permitAll()
-//	            .requestMatchers("/api/feedback/all").hasRole("ADMIN")
-//	            .requestMatchers("/admin/**").hasRole("ADMIN")
-//	            .requestMatchers("/dashboard", "/dashboard/**", "/quiz/**", "/quizzes").authenticated()
-//	            .anyRequest().permitAll()
-//	        )
 
 				.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 						.ignoringRequestMatchers("/api/feedback/submit", "/api/subscribe"))

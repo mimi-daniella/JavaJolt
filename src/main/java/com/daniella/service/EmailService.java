@@ -1,39 +1,37 @@
 package com.daniella.service;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.*;
 
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    @Value("${brevo.api.key}")
+    private String apiKey;
 
-    @Value("${spring.mail.username}")
+    @Value("${brevo.sender.email}")
     private String fromAddress;
 
-    @Async
-    public void sendOtpEmail(String to, String otp) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+    @Value("${brevo.logo.url}")
+    private String logoUrl; 
 
-        helper.setFrom(fromAddress);
-        helper.setTo(to);
-        helper.setSubject("JavaJolt - Your Verification Code");
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @Async
+    public void sendOtpEmail(String to, String otp) {
+        String url = "https://api.brevo.com/v3/smtp/email";
 
         String htmlContent = String.format("""
         <html>
         <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
           <div style="max-width: 500px; margin: auto; background: #ffffff; border-radius: 8px; padding: 30px; border: 1px solid #ddd;">
             <div style="text-align: center; margin-bottom: 25px;">
-              <img src="cid:logoImage" alt="JavaJolt Logo" style="height: 50px;">
+              <img src="%s" alt="JavaJolt Logo" style="height: 50px;">
             </div>
             
             <h2 style="color: #333; text-align: center;">Verify Your Account</h2>
@@ -54,14 +52,25 @@ public class EmailService {
           </div>
         </body>
         </html>
-        """, otp);
+        """, logoUrl, otp);
 
-        //text adding inline resources
-        helper.setText(htmlContent, true);
+        Map<String, Object> body = new HashMap<>();
+        body.put("sender", Map.of("email", fromAddress));
+        body.put("to", List.of(Map.of("email", to)));
+        body.put("subject", "JavaJolt - Your Verification Code");
+        body.put("htmlContent", htmlContent);
 
-        ClassPathResource logo = new ClassPathResource("static/images/fullLogo.png");
-        helper.addInline("logoImage", logo);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("api-key", apiKey);
 
-        mailSender.send(mimeMessage);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+            System.out.println("Brevo response: " + response.getBody());
+        } catch (Exception e) {
+            System.err.println("Error sending email via Brevo: " + e.getMessage());
+        }
     }
 }

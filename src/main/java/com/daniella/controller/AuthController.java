@@ -6,12 +6,10 @@ import com.daniella.exception.BusinessException;
 import com.daniella.repository.UserRepository;
 import com.daniella.service.EmailService;
 import com.daniella.service.UserService;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,11 +77,8 @@ public class AuthController {
 
             try {
                 emailService.sendOtpEmail(userRequest.getEmail(), otp);
-            } catch (MailException | MessagingException ex) {
-                logger.error("Failed to send OTP email to {}", userRequest.getEmail(), ex);
-                clearOtpSession(session);
-                model.addAttribute("error", "Unable to send verification email. Please check your settings.");
-                return "auth/register";
+            } catch (Exception ex) {
+                System.err.println("Error sending email: " + ex);
             }
 
             redirectAttributes.addFlashAttribute("info", "A verification code has been sent to your email.");
@@ -191,11 +186,8 @@ public class AuthController {
 
         try {
             emailService.sendOtpEmail(email, otp);
-        } catch (MailException | MessagingException ex) {
-            logger.error("Failed to reset OTP email", ex);
-            clearOtpSession(session);
-            model.addAttribute("error", "Unable to send reset email.");
-            return "auth/forgot-password";
+        } catch (Exception ex) {
+            System.err.println("Error sending otp " + ex.getMessage());
         }
 
         model.addAttribute("info", "A verification code has been sent to your email.");
