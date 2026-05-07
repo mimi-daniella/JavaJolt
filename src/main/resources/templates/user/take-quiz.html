@@ -151,152 +151,162 @@
 			</div>
 		</div>
 	</div>
+	
+	<style>
+	    @keyframes pulse-red {
+	        0%, 100% { transform: scale(1); opacity: 1; }
+	        50% { transform: scale(1.1); opacity: 0.8; }
+	    }
+	    .timer-alert {
+	        color: #ef4444 !important; /* Bright Red */
+	        animation: pulse-red 0.8s infinite;
+	        display: inline-block;
+	    }
+	</style>
+
 
 
 	<script th:inline="javascript">
-		document.addEventListener("DOMContentLoaded", () => {
-			const timerEnabled = /*[[${timerEnabled}]]*/ false;
-			const timerMinutes = /*[[${timerMinutes}]]*/ 10;
-			const quizzesUrl = /*[[@{/quizzes}]]*/ "/quizzes";
-			const submitModal = document.getElementById("submitConfirmModal");
-			const confirmSubmitBtn = document.getElementById("confirmSubmit");
-			const cancelSubmitBtn = document.getElementById("cancelSubmit");
+	    document.addEventListener("DOMContentLoaded", () => {
+	        const timerEnabled = /*[[${timerEnabled}]]*/ false;
+	        const timerMinutes = /*[[${timerMinutes}]]*/ 10;
+	        const quizzesUrl = /*[[@{/quizzes}]]*/ "/quizzes";
+	        const submitModal = document.getElementById("submitConfirmModal");
+	        const confirmSubmitBtn = document.getElementById("confirmSubmit");
+	        const cancelSubmitBtn = document.getElementById("cancelSubmit");
 
+	        let currentStep = 1;
+	        let hasSubmitted = false;
+	        let pendingNavigation = null;
+	        let timerWarningPlayed = false;
 
-			let currentStep = 1;
-			let hasSubmitted = false;
-			let pendingNavigation = null;
-			let timerWarningPlayed = false;
+	        const form = document.getElementById("quizForm");
+	        const steps = document.querySelectorAll(".quiz-step");
+	        const totalSteps = steps.length;
 
-			const form = document.getElementById("quizForm");
-			const steps = document.querySelectorAll(".quiz-step");
-			const totalSteps = steps.length;
+	        const nextBtn = document.getElementById("nextBtn");
+	        const prevBtn = document.getElementById("prevBtn");
+	        const submitBtn = document.getElementById("submitBtn");
+	        const progressBar = document.getElementById("progressBar");
+	        const stepText = document.getElementById("currentStepText");
+	        
+	        // --- Form Submission Logic ---
+	        form?.addEventListener("submit", (e) => {
+	            if (!hasSubmitted) {
+	                e.preventDefault(); 
+	                submitModal.classList.replace("hidden", "flex");
+	                if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("praise");
+	            }
+	        });
+	           
+	        confirmSubmitBtn?.addEventListener("click", () => {
+	            hasSubmitted = true;
+	            submitModal.classList.replace("flex", "hidden");
+	            if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
+	            form.submit(); 
+	        });
+	            
+	        cancelSubmitBtn?.addEventListener("click", () => {
+	            submitModal.classList.replace("flex", "hidden");
+	        });
 
-			const nextBtn = document.getElementById("nextBtn");
-			const prevBtn = document.getElementById("prevBtn");
-			const submitBtn = document.getElementById("submitBtn");
-			const progressBar = document.getElementById("progressBar");
-			const stepText = document.getElementById("currentStepText");
-			
-			// Intercept Form Submission
-			   form?.addEventListener("submit", (e) => {
-			       if (!hasSubmitted) {
-			           e.preventDefault(); // Stop the form from submitting immediately
-			           submitModal.classList.replace("hidden", "flex");
-			           if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("praise");
-			       }
-			   });
-			   
-			   // Handle "Yes, Submit!" click
-			    confirmSubmitBtn?.addEventListener("click", () => {
-			        hasSubmitted = true;
-			        submitModal.classList.replace("flex", "hidden");
-			        if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
-			        form.submit(); // Manually trigger the form submission
-			    });
-				
-				// Handle "Wait, Check Again" click
-				  cancelSubmitBtn?.addEventListener("click", () => {
-				      submitModal.classList.replace("flex", "hidden");
-				  });
+	        // --- Pagination Logic ---
+	        function updateUI() {
+	            steps.forEach(s => s.classList.add("hidden"));
+	            const current = document.querySelector(`[data-step="${currentStep}"]`);
+	            if (current) current.classList.remove("hidden");
 
+	            const percent = (currentStep / totalSteps) * 100;
+	            progressBar.style.width = `${percent}%`;
+	            stepText.textContent = currentStep;
 
-			// --- Pagination Logic ---
-			function updateUI() {
-				steps.forEach(s => s.classList.add("hidden"));
-				const current = document.querySelector(`[data-step="${currentStep}"]`);
-				if (current) current.classList.remove("hidden");
+	            prevBtn.disabled = currentStep === 1;
+	            if (currentStep === totalSteps) {
+	                nextBtn.classList.add("hidden");
+	                submitBtn.classList.remove("hidden");
+	            } else {
+	                nextBtn.classList.remove("hidden");
+	                submitBtn.classList.add("hidden");
+	            }
+	        }
 
-				// Progress bar & Text
-				const percent = (currentStep / totalSteps) * 100;
-				progressBar.style.width = `${percent}%`;
-				stepText.textContent = currentStep;
+	        nextBtn?.addEventListener("click", () => {
+	            const currentInput = steps[currentStep - 1].querySelector('input[type="radio"]:checked');
+	            if (!currentInput) {
+	                alert("Please select an answer!");
+	                return;
+	            }
+	            currentStep++;
+	            updateUI();
+	            window.scrollTo({top: 0, behavior: 'smooth'});
+	            if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
+	        });
 
-				// Buttons
-				prevBtn.disabled = currentStep === 1;
-				if (currentStep === totalSteps) {
-					nextBtn.classList.add("hidden");
-					submitBtn.classList.remove("hidden");
-				} else {
-					nextBtn.classList.remove("hidden");
-					submitBtn.classList.add("hidden");
-				}
-			}
+	        prevBtn?.addEventListener("click", () => {
+	            if (currentStep > 1) {
+	                currentStep--;
+	                updateUI();
+	            }
+	        });
 
-			nextBtn?.addEventListener("click", () => {
-				// Validate current step before moving
-				const currentInput = steps[currentStep - 1].querySelector('input[type="radio"]:checked');
-				if (!currentInput) {
-					alert("Please select an answer!");
-					return;
-				}
-				currentStep++;
-				updateUI();
-				window.scrollTo({top: 0, behavior: 'smooth'});
-				if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
-			});
+	        // --- Modal Logic ---
+	        const leaveModal = document.getElementById("leaveQuizModal");
+	        const openModal = () => leaveModal.classList.replace("hidden", "flex");
+	        const closeModal = () => leaveModal.classList.replace("flex", "hidden");
 
-			prevBtn?.addEventListener("click", () => {
-				if (currentStep > 1) {
-					currentStep--;
-					updateUI();
-				}
-			});
+	        document.getElementById("quitQuizButton")?.addEventListener("click", () => {
+	            pendingNavigation = () => window.location.href = quizzesUrl;
+	            openModal();
+	        });
 
-			// --- Modal Logic ---
-			const leaveModal = document.getElementById("leaveQuizModal");
-			const openModal = () => leaveModal.classList.replace("hidden", "flex");
-			const closeModal = () => leaveModal.classList.replace("flex", "hidden");
+	        document.getElementById("stayInQuiz")?.addEventListener("click", closeModal);
+	        document.getElementById("confirmLeaveQuiz")?.addEventListener("click", () => {
+	            hasSubmitted = true;
+	            if (pendingNavigation) pendingNavigation();
+	            else window.location.href = quizzesUrl;
+	        });
 
-			document.getElementById("quitQuizButton")?.addEventListener("click", () => {
-				pendingNavigation = () => window.location.href = quizzesUrl;
-				openModal();
-			});
+	        // --- Timer Logic (Updated for Sound & Pulse) ---
+	        if (timerEnabled) {
+	            const label = document.getElementById("timerLabel");
+	            let secondsLeft = timerMinutes * 60;
+	            
+	            const interval = setInterval(() => {
+	                const m = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
+	                const s = String(secondsLeft % 60).padStart(2, "0");
+	                if (label) label.textContent = `${m}:${s}`;
 
-			document.getElementById("stayInQuiz")?.addEventListener("click", closeModal);
-			document.getElementById("confirmLeaveQuiz")?.addEventListener("click", () => {
-				hasSubmitted = true;
-				if (pendingNavigation) pendingNavigation();
-				else window.location.href = quizzesUrl;
-			});
+	                // Trigger 10-second warning
+	                if (secondsLeft <= 10 && secondsLeft > 0) {
+	                    if (!timerWarningPlayed) {
+	                        timerWarningPlayed = true;
+	                        if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("timer");
+	                    }
+	                    label?.classList.add("timer-alert");
+	                }
 
-			// --- Timer Logic ---
-			if (timerEnabled) {
-				const label = document.getElementById("timerLabel");
-				let secondsLeft = timerMinutes * 60;
-				const interval = setInterval(() => {
-					const m = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
-					const s = String(secondsLeft % 60).padStart(2, "0");
-					if (label) label.textContent = `${m}:${s}`;
+	                if (secondsLeft <= 0) {
+	                    clearInterval(interval);
+	                    label?.classList.remove("timer-alert");
+	                    hasSubmitted = true;
+	                    form?.submit();
+	                }
+	                secondsLeft--;
+	            }, 1000);
+	        }
 
-					if (secondsLeft <= 10 && !timerWarningPlayed) {
-						timerWarningPlayed = true;
-						if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("timer");
-					}
+	        // --- Navigation Guards ---
+	        window.addEventListener("beforeunload", (e) => {
+	            if (!hasSubmitted) {
+	                e.preventDefault();
+	                e.returnValue = "";
+	            }
+	        });
 
-					if (secondsLeft <= 0) {
-						clearInterval(interval);
-						hasSubmitted = true;
-						form?.submit();
-					}
-					secondsLeft--;
-				}, 1000);
-			}
-
-			// --- Navigation Guards ---
-			form?.addEventListener("submit", () => hasSubmitted = true);
-
-			window.addEventListener("beforeunload", (e) => {
-				if (!hasSubmitted) {
-					e.preventDefault();
-					e.returnValue = "";
-				}
-			});
-
-			// Init UI
-			updateUI();
-		});
+	        updateUI();
+	    });
 	</script>
+
 </body>
 
 </html>

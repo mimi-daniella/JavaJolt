@@ -1,124 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head}"></head>
-<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
+
+<body class="min-h-screen bg-[#faf9f6] font-['Jua'] text-[var(--light-text)]">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div th:replace="~{fragments/floatingUtils :: utils}"></div>
 
+<main class="max-w-3xl mx-auto pt-10 pb-20 px-6">
+    <!-- Minimal Score Card -->
+    <section class="rounded-3xl border-2 border-gray-100 bg-white p-10 text-center shadow-sm overflow-hidden relative">
+        <div th:class="${passed} ? 'absolute top-0 left-0 w-full h-1.5 bg-green-500' : 'absolute top-0 left-0 w-full h-1.5 bg-red-500'"></div>
+        
+        <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Quiz Complete</p>
+        <h1 th:class="${passed} ? 'kavoon text-4xl text-green-600' : 'kavoon text-4xl text-red-600'" 
+            th:text="${passed} ? 'Victory!' : 'Fail...'">Result</h1>
 
-<main class="max-w-4xl mx-auto pt-10 pb-12 px-6">
-    <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 text-center shadow-[8px_8px_0px_var(--yellow)]">
-        <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Result</p>
-        <h1 class="kavoon mt-4 text-5xl text-[var(--espresso)]" th:text="${passed} ? 'Victory Brew!' : 'Almost there!'">Nice run!</h1>
-        <p class="mt-4 text-lg" th:if="${error}" th:text="${error}">Retakes are currently disabled.</p>
-        <p class="mt-4 text-lg" th:unless="${error}">Your latest JavaJolt score has been calculated and saved to your activity history.</p>
-
-        <div class="mt-10 inline-flex flex-col items-center justify-center rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-12 py-10 shadow-[6px_6px_0px_var(--espresso)]">
-            <span class="text-sm uppercase font-bold text-[var(--espresso)]">Your Score</span>
-            <span class="kavoon mt-2 text-6xl text-[var(--espresso)]" th:text="${score + ' / ' + total}">0 / 0</span>
-        </div>
-
-        <div class="mt-8 grid sm:grid-cols-3 gap-4">
-            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
-                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Pass Mark</p>
-                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${passMark} + '%'">60%</p>
-            </div>
-            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
-                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Rank</p>
-                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${rankTitle ?: 'ROOKIE'}">ROOKIE</p>
-            </div>
-            <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white p-5">
-                <p class="text-xs uppercase font-bold text-[var(--espresso)]">Current Streak</p>
-                <p class="text-2xl kavoon text-[var(--espresso)]" th:text="${streakCount ?: 0} + ' day(s)'">0 day(s)</p>
+        <!-- Ultra-Minimal Score Circle -->
+        <div class="mt-8 flex justify-center">
+            <div th:class="${passed} ? 'relative flex h-40 w-40 items-center justify-center rounded-full border-4 border-green-50' : 'relative flex h-40 w-40 items-center justify-center rounded-full border-4 border-red-50'">
+                <div class="text-center">
+                    <span th:class="${passed} ? 'block text-5xl font-bold text-green-600' : 'block text-5xl font-bold text-red-600'" th:text="${score}">0</span>
+                    <span class="block text-xs uppercase tracking-widest text-gray-400 font-bold" th:text="'out of ' + ${total}"></span>
+                </div>
             </div>
         </div>
 
-        <p class="mt-6 text-lg font-bold text-[var(--espresso)]" th:if="${xp != null}" th:text="'Total XP: ' + ${xp}">Total XP: 0</p>
+        <!-- Mini Stat Bar -->
+        <div class="mt-10 flex justify-center gap-8 border-t border-gray-50 pt-8">
+            <div class="text-center">
+                <p class="text-[10px] uppercase text-gray-400 font-bold">Rank</p>
+                <p class="text-lg text-[var(--espresso)]" th:text="${rankTitle ?: 'ROOKIE'}"></p>
+            </div>
+            <div class="text-center">
+                <p class="text-[10px] uppercase text-gray-400 font-bold">Streak</p>
+                <p class="text-lg text-[var(--espresso)]" th:text="${streakCount ?: 0}"></p>
+            </div>
+            <div class="text-center">
+                <p class="text-[10px] uppercase text-gray-400 font-bold">XP</p>
+                <p class="text-lg text-orange-500" th:text="'+' + ${xp ?: 0}"></p>
+            </div>
+        </div>
 
-        <div class="mt-10 flex flex-wrap justify-center gap-4">
-            <a th:href="@{/quizzes}" class="rounded-xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-                Set Up Another Quiz
-            </a>
-            <a th:href="@{/dashboard}" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-                Back to Dashboard
-            </a>
+        <div class="mt-10 flex flex-wrap justify-center gap-3">
+            <a th:href="@{/quizzes}" class="rounded-xl border-2 border-gray-100 px-6 py-3 text-sm font-bold text-gray-500 transition hover:bg-gray-50">New Run</a>
+            <a th:href="@{/dashboard}" class="rounded-xl bg-[var(--espresso)] px-8 py-3 text-sm font-bold text-white transition hover:opacity-90">Dashboard</a>
         </div>
     </section>
 </main>
 
-<div id="resultPopup" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-[95] p-4">
-    <div class="result-popup-card max-w-xl w-full rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 text-center shadow-[10px_10px_0px_var(--yellow)]">
-        <p id="resultPopupBadge" class="uppercase tracking-[0.3em] text-xs font-bold text-[var(--espresso)]">Round Complete</p>
-        <h2 id="resultPopupTitle" class="kavoon text-4xl text-[var(--espresso)] mt-3">Nice run!</h2>
-        <p id="resultPopupText" class="mt-4 text-lg text-[var(--light-text)]">You handled that round well.</p>
-        <button type="button" id="closeResultPopup" class="mt-8 rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-8 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)]">
-            Continue
+<!-- Minimal Modal -->
+<div id="resultPopup" class="fixed inset-0 hidden items-center justify-center bg-black/30 backdrop-blur-sm z-50 p-4">
+    <div class="popup-anim max-w-sm w-full rounded-3xl bg-white p-8 text-center shadow-2xl">
+        <div id="popupIcon" class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full"></div>
+        <h2 id="resultPopupTitle" class="kavoon text-2xl text-[var(--espresso)]"></h2>
+        <p id="resultPopupText" class="mt-2 text-sm text-gray-500"></p>
+        <button type="button" id="closeResultPopup" class="mt-8 w-full rounded-xl py-3 text-sm font-bold transition-all">
+            Review Answers
         </button>
     </div>
 </div>
 
 <style>
-  .result-popup-card {
-    animation: result-pop 0.45s ease-out;
-  }
-
-  @keyframes result-pop {
-    0% {
-      opacity: 0;
-      transform: scale(0.86) translateY(18px);
-    }
-
-    100% {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
+  .popup-anim { animation: pop 0.3s ease-out; }
+  @keyframes pop { 0% { opacity:0; transform:scale(0.95); } 100% { opacity:1; transform:scale(1); } }
 </style>
 
 <script th:inline="javascript">
-  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
-
   document.addEventListener("DOMContentLoaded", () => {
-    const score = /*[[${score}]]*/ 0;
-    const total = /*[[${total}]]*/ 0;
+    const passed = /*[[${passed}]]*/ false;
+    
     const popup = document.getElementById("resultPopup");
-    const title = document.getElementById("resultPopupTitle");
-    const text = document.getElementById("resultPopupText");
-    const badge = document.getElementById("resultPopupBadge");
-    const closeButton = document.getElementById("closeResultPopup");
+    const closeBtn = document.getElementById("closeResultPopup");
+    const icon = document.getElementById("popupIcon");
 
-    let tier = "warning";
-    if (total > 0 && score === total) {
-      tier = "victory";
-      badge.textContent = "Perfect Score";
-      title.textContent = "Legendary!";
-      text.textContent = "All 10 right? That was a full-power JavaJolt run. Congratulations!";
-    } else if (score >= 6) {
-      tier = "praise";
-      badge.textContent = "Strong Finish";
-      title.textContent = "Well Played!";
-      text.textContent = "You brewed a solid result. Keep that momentum rolling.";
-    } else if (score <= 4) {
-      tier = "warning";
-      badge.textContent = "Training Mode";
-      title.textContent = "Oof... Try Again!";
-      text.textContent = "That round was rough, but real players bounce back stronger.";
+    if (passed) {
+      icon.innerHTML = `<svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg>`;
+      icon.classList.add("bg-green-100");
+      document.getElementById("resultPopupTitle").textContent = "Passed!";
+      document.getElementById("resultPopupText").textContent = "Great job on completing this challenge.";
+      closeBtn.classList.add("bg-green-600", "text-white");
     } else {
-      tier = "warning";
-      badge.textContent = "Warm-Up Round";
-      title.textContent = "You're Warming Up";
-      text.textContent = "Halfway there. Tune your setup and come back sharper.";
+      icon.innerHTML = `<svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>`;
+      icon.classList.add("bg-red-100");
+      document.getElementById("resultPopupTitle").textContent = "Failed";
+      document.getElementById("resultPopupText").textContent = "You missed the pass mark. Review and retry!";
+      closeBtn.classList.add("bg-red-600", "text-white");
     }
 
-    popup.classList.remove("hidden");
-    popup.classList.add("flex");
-    if (window.JavaJoltAudio) window.JavaJoltAudio.playResultTier(tier);
+    popup.classList.replace("hidden", "flex");
+    if (window.JavaJoltAudio) window.JavaJoltAudio.playResultTier(passed ? "praise" : "warning");
 
-    closeButton?.addEventListener("click", () => {
-      popup.classList.add("hidden");
-      popup.classList.remove("flex");
-    });
+    closeBtn.onclick = () => popup.classList.replace("flex", "hidden");
   });
 </script>
 </body>
