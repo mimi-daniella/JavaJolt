@@ -42,21 +42,45 @@
             </div>
         </div>
 
+        <!-- NEW FEATURE: Quick Breakdown -->
+        <div th:if="${reviewItems != null}" class="mt-10 text-left border-t border-gray-50 pt-8">
+            <h3 class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-4 text-center">Quick Breakdown</h3>
+            <div class="space-y-3">
+                <div th:each="item : ${reviewItems}" 
+                     class="flex items-center gap-3 p-4 rounded-2xl border-2"
+                     th:classappend="${item.correct} ? 'border-green-50 bg-green-50/30' : 'border-red-50 bg-red-50/30'">
+                    
+                    <div th:class="${item.correct} ? 'text-green-600' : 'text-red-600'">
+                        <svg th:if="${item.correct}" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                        <svg th:if="${!item.correct}" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </div>
+
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-sm font-bold text-[var(--espresso)] truncate" th:text="${item.questionText}"></p>
+                        <p class="text-[11px] text-gray-500 mt-0.5">
+                            You chose: <span class="font-bold" th:text="${item.selectedAnswerText}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="mt-10 flex flex-wrap justify-center gap-3">
             <a th:href="@{/quizzes}" class="rounded-xl border-2 border-gray-100 px-6 py-3 text-sm font-bold text-gray-500 transition hover:bg-gray-50">New Run</a>
+            <a th:href="@{/quiz/review}" class="rounded-xl bg-[var(--yellow)] px-8 py-3 text-sm font-bold text-[var(--espresso)] transition hover:opacity-90">Review Details</a>
             <a th:href="@{/dashboard}" class="rounded-xl bg-[var(--espresso)] px-8 py-3 text-sm font-bold text-white transition hover:opacity-90">Dashboard</a>
         </div>
     </section>
 </main>
 
-<!-- Minimal Modal -->
+<!-- ... (Rest of modal and script remains exactly the same) ... -->
 <div id="resultPopup" class="fixed inset-0 hidden items-center justify-center bg-black/30 backdrop-blur-sm z-50 p-4">
     <div class="popup-anim max-w-sm w-full rounded-3xl bg-white p-8 text-center shadow-2xl">
         <div id="popupIcon" class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full"></div>
         <h2 id="resultPopupTitle" class="kavoon text-2xl text-[var(--espresso)]"></h2>
         <p id="resultPopupText" class="mt-2 text-sm text-gray-500"></p>
         <button type="button" id="closeResultPopup" class="mt-8 w-full rounded-xl py-3 text-sm font-bold transition-all">
-            Review Answers
+            View Results
         </button>
     </div>
 </div>
@@ -69,7 +93,6 @@
 <script th:inline="javascript">
   document.addEventListener("DOMContentLoaded", () => {
     const passed = /*[[${passed}]]*/ false;
-    
     const popup = document.getElementById("resultPopup");
     const closeBtn = document.getElementById("closeResultPopup");
     const icon = document.getElementById("popupIcon");
@@ -89,8 +112,6 @@
     }
 
     popup.classList.replace("hidden", "flex");
-    if (window.JavaJoltAudio) window.JavaJoltAudio.playResultTier(passed ? "praise" : "warning");
-
     closeBtn.onclick = () => popup.classList.replace("flex", "hidden");
   });
 </script>

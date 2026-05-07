@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -37,6 +38,8 @@ public class QuizController {
 
     private static final String ACTIVE_QUIZ_IDS = "ACTIVE_QUIZ_IDS";
     private static final String ACTIVE_QUIZ_TOKEN = "ACTIVE_QUIZ_TOKEN";
+    private static final String LAST_QUIZ_REVIEW_ITEMS = "LAST_QUIZ_REVIEW_ITEMS";
+    private static final String LAST_QUIZ_REVIEW_SUMMARY = "LAST_QUIZ_REVIEW_SUMMARY";
 
     private final QuestionRepository questionRepository;
     private final QuizResultRepository quizResultRepository;
@@ -149,6 +152,7 @@ public class QuizController {
         int score = 0;
         int total = 0;
         List<Long> answeredQuestionIds = new ArrayList<>();
+        List<Map<String, Object>> reviewItems = new ArrayList<>();
 
         for (Map.Entry<String, String> entry : allParams.entrySet()) {
             if (entry.getKey().startsWith("question_")) {
@@ -165,9 +169,19 @@ public class QuizController {
                 Question q = questionRepository.findById(questionId).orElse(null);
                 if (q != null) {
                     total++;
-                    if (q.getCorrectOption().equals(submittedAnswer)) {
+                    boolean correct = q.getCorrectOption().equals(submittedAnswer);
+                    if (correct) {
                         score++;
                     }
+
+                    Map<String, Object> reviewItem = new HashMap<>();
+                    reviewItem.put("questionText", q.getQuestionText());
+                    reviewItem.put("selectedAnswerKey", submittedAnswer);
+                    reviewItem.put("selectedAnswerText", resolveAnswerText(q, submittedAnswer));
+                    reviewItem.put("correctAnswerKey", q.getCorrectOption());
+                    reviewItem.put("correctAnswerText", resolveAnswerText(q, q.getCorrectOption()));
+                    reviewItem.put("correct", correct);
+                    reviewItems.add(reviewItem);
                 }
             }
         }
@@ -182,19 +196,9 @@ public class QuizController {
         if (principal != null) {
             User user = userRepository.findByEmail(principal.getName()).orElse(null);
             if (user != null) {
-                if (!systemSettingService.getBoolean(SystemSettingService.ALLOW_RETAKES, true)) {
-                    LocalDate today = LocalDate.now();
-                    boolean hasPlayedToday = !quizResultRepository.findByUserAndCompletedAtBetween(
-                            user, today.atStartOfDay(), today.plusDays(1).atStartOfDay()).isEmpty();
-                    if (hasPlayedToday) {
-                        buildInvalidQuizResponse(model, "Retakes are currently disabled. Come back tomorrow for a fresh challenge.");
-                        clearActiveQuiz(session);
-                        return "user/result";
-                    }
-                }
-
                 double percentage = total == 0 ? 0.0 : (score * 100.0) / total;
                 boolean passed = percentage >= systemSettingService.getInt(SystemSettingService.PASS_MARK, 60);
+                
                 QuizResult result = new QuizResult();
                 result.setUser(user);
                 result.setScore(score);
@@ -208,18 +212,16 @@ public class QuizController {
                 result.setXpEarned(xpEarned);
                 quizResultRepository.save(result);
 
-                for (Map.Entry<String, String> entry : allParams.entrySet()) {
-                    if (entry.getKey().startsWith("question_")) {
-                        Long questionId = Long.parseLong(entry.getKey().replace("question_", ""));
-                        Question question = questionRepository.findById(questionId).orElse(null);
-                        if (question != null) {
-                            UserAnswer answer = new UserAnswer();
-                            answer.setUser(user);
-                            answer.setQuestion(question);
-                            answer.setSelectedAnswer(entry.getValue());
-                            answer.setAnsweredAt(LocalDateTime.now());
-                            userAnswerRepository.save(answer);
-                        }
+                // Re-save individual answers for history
+                for (Long qId : answeredQuestionIds) {
+                    Question question = questionRepository.findById(qId).orElse(null);
+                    if (question != null) {
+                        UserAnswer answer = new UserAnswer();
+                        answer.setUser(user);
+                        answer.setQuestion(question);
+                        answer.setSelectedAnswer(allParams.get("question_" + qId));
+                        answer.setAnsweredAt(LocalDateTime.now());
+                        userAnswerRepository.save(answer);
                     }
                 }
             }
@@ -229,15 +231,73 @@ public class QuizController {
         model.addAttribute("total", total);
         model.addAttribute("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
         model.addAttribute("passed", total > 0 && ((score * 100.0) / total) >= systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
+        model.addAttribute("reviewItems", reviewItems);
+
+        Map<String, Object> reviewSummary = new HashMap<>();
+        reviewSummary.put("score", score);
+        reviewSummary.put("total", total);
+        reviewSummary.put("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
+        reviewSummary.put("passed", model.getAttribute("passed"));
+        reviewSummary.put("selectedCategory", selectedCategory == null || selectedCategory.isBlank() ? "Mixed" : selectedCategory);
+        reviewSummary.put("selectedDifficulty", selectedDifficulty == null || selectedDifficulty.isBlank() ? "Mixed" : selectedDifficulty);
+        reviewSummary.put("correctCount", (int) reviewItems.stream().filter(item -> Boolean.TRUE.equals(item.get("correct"))).count());
+        reviewSummary.put("incorrectCount", total - (int) reviewSummary.get("correctCount"));
+
+        session.setAttribute(LAST_QUIZ_REVIEW_ITEMS, reviewItems);
+        session.setAttribute(LAST_QUIZ_REVIEW_SUMMARY, reviewSummary);
+
         if (principal != null) {
             userRepository.findByEmail(principal.getName()).ifPresent(user -> {
                 model.addAttribute("xp", user.getXp());
                 model.addAttribute("rankTitle", user.getRankTitle());
                 model.addAttribute("streakCount", user.getStreakCount());
+                reviewSummary.put("xp", user.getXp());
+                reviewSummary.put("rankTitle", user.getRankTitle());
+                reviewSummary.put("streakCount", user.getStreakCount());
             });
         }
+
         clearActiveQuiz(session);
         return "user/result";
+    }
+
+    @GetMapping("/review")
+    public String reviewQuiz(HttpSession session, Model model) {
+        List<Map<String, Object>> reviewItems = (List<Map<String, Object>>) session.getAttribute(LAST_QUIZ_REVIEW_ITEMS);
+        Map<String, Object> reviewSummary = (Map<String, Object>) session.getAttribute(LAST_QUIZ_REVIEW_SUMMARY);
+
+        if (reviewItems == null || reviewSummary == null) {
+            return "redirect:/dashboard";
+        }
+
+        model.addAllAttributes(reviewSummary);
+        model.addAttribute("reviewItems", reviewItems);
+        return "user/quiz-review";
+    }
+
+    @GetMapping("/result")
+    public String lastQuizResult(HttpSession session, Model model) {
+        Map<String, Object> reviewSummary = (Map<String, Object>) session.getAttribute(LAST_QUIZ_REVIEW_SUMMARY);
+        List<Map<String, Object>> reviewItems = (List<Map<String, Object>>) session.getAttribute(LAST_QUIZ_REVIEW_ITEMS);
+
+        if (reviewSummary == null) {
+            return "redirect:/dashboard";
+        }
+
+        model.addAllAttributes(reviewSummary);
+        model.addAttribute("reviewItems", reviewItems);
+        return "user/result";
+    }
+
+    private String resolveAnswerText(Question question, String optionKey) {
+        if (question == null || optionKey == null) return "";
+        return switch (optionKey.toUpperCase()) {
+            case "A" -> question.getOptionA();
+            case "B" -> question.getOptionB();
+            case "C" -> question.getOptionC();
+            case "D" -> question.getOptionD();
+            default -> optionKey;
+        };
     }
 
     private String normalizeFilter(String requested, String fallback) {
