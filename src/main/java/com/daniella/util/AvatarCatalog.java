@@ -6,11 +6,13 @@ public final class AvatarCatalog {
 
     private static final List<String> AVATARS = List.of(
             "/images/avatars/orangehead.png",
+            "/images/avatars/pinkgirl.png",
             "/images/avatars/bobgirl.png",
-            "/images/avatars/boy1.png",
-            "/images/avatars/man2.png",
             "/images/avatars/afrogirl.png",
-            "/images/avatars/animal.png");
+            "/images/avatars/boy1.png",
+            "/images/avatars/graduate.png",
+            "/images/avatars/man2.png"
+            );
 
     private AvatarCatalog() {
     }

@@ -125,13 +125,7 @@ public class AuthController {
     }
 
     @GetMapping("/verify-email")
-    public String sendVerificationEmail(HttpSession session, RedirectAttributes ra) {
-        String email = (String) session.getAttribute(OtpEmailKey);
-
-        if (email == null) {
-            ra.addFlashAttribute("error", "No email found in session.");
-            return "redirect:/auth/login";
-        }
+    public String sendVerificationEmail(@RequestParam String email, HttpSession session, RedirectAttributes ra) {
 
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
@@ -146,6 +140,7 @@ public class AuthController {
 
         String otp = generateOtp();
         session.setAttribute(OtpKey, otp);
+        session.setAttribute(OtpEmailKey, email); // now store it for later
         session.setAttribute(OtpVerifiedKey, false);
         session.setAttribute("OTP_SENT_AT", Instant.now());
         session.setAttribute("IS_REGISTRATION", true);
@@ -160,6 +155,7 @@ public class AuthController {
             return "redirect:/auth/login";
         }
     }
+
 
 
     @GetMapping("/forgot-password")
