@@ -10,30 +10,23 @@
 <main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
     <section class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-10 shadow-[8px_8px_0px_var(--yellow)]">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div class="lg:max-w-xl">
+            <div>
                 <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Review</p>
                 <h1 class="kavoon mt-4 text-5xl text-[var(--espresso)]">Your Quiz Breakdown</h1>
                 <p class="mt-4 text-lg text-gray-600">Review each question, compare your answer with the correct answer, and see where you passed or missed points.</p>
             </div>
-            
-            <div class="flex flex-wrap sm:flex-nowrap gap-4 w-full lg:w-auto">
-                <div class="flex-1 min-w-0 rounded-3xl border-4 border-[var(--espresso)] bg-[var(--yellow)] p-5 text-center">
-                    <p class="text-xs uppercase tracking-[0.3em] font-bold text-[var(--espresso)] truncate">Score</p>
-                    <p class="kavoon text-4xl text-[var(--espresso)] mt-3 whitespace-nowrap" th:text="${score} + ' / ' + ${total}">0 / 0</p>
+            <div class="grid gap-4 sm:grid-cols-3">
+                <div class="rounded-3xl border-4 border-[var(--espresso)] bg-[var(--yellow)] p-5 text-center">
+                    <p class="text-xs uppercase tracking-[0.3em] font-bold text-[var(--espresso)]">Score</p>
+                    <p class="kavoon text-4xl text-[var(--espresso)] mt-3" th:text="${score} + ' / ' + ${total}">0 / 0</p>
                 </div>
-
-                <div class="flex-1 min-w-0 rounded-3xl border-4 border-[var(--espresso)] bg-white p-5 text-center">
-                    <p class="text-xs uppercase tracking-[0.3em] font-bold text-[var(--espresso)] truncate">Result</p>
-                    <p class="kavoon text-4xl mt-3 whitespace-nowrap" 
-                       th:classappend="${passed} ? 'text-green-600' : 'text-red-600'"
-                       th:text="${passed} ? 'Passed' : 'Failed'">Passed</p>
+                <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-5 text-center">
+                    <p class="text-xs uppercase tracking-[0.3em] font-bold text-[var(--espresso)]">Result</p>
+                    <p class="kavoon text-4xl mt-3" th:text="${passed} ? 'Passed' : 'Failed'">Passed</p>
                 </div>
-
-                <div class="flex-1 min-w-0 rounded-3xl border-4 border-[var(--espresso)] bg-white p-5 text-center">
-                    <p class="text-xs uppercase tracking-[0.3em] font-bold text-[var(--espresso)] truncate">Your Grade</p>
-                    <p class="kavoon text-4xl mt-3 whitespace-nowrap" 
-                       th:classappend="${passed} ? 'text-green-600' : 'text-red-600'"
-                       th:text="${userPercentage ?: (score * 100 / (total > 0 ? total : 1))} + '%'">0%</p>
+                <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-5 text-center">
+                    <p class="text-xs uppercase tracking-[0.3em] font-bold text-[var(--espresso)]">Pass Mark</p>
+                    <p class="kavoon text-4xl text-[var(--espresso)] mt-3" th:text="${passMark} + '%'">60%</p>
                 </div>
             </div>
         </div>
@@ -59,13 +52,11 @@
                 <div class="mt-6 grid gap-4 lg:grid-cols-2">
                     <div class="rounded-3xl border border-gray-200 bg-white p-5">
                         <p class="text-sm uppercase tracking-[0.2em] text-gray-400 font-bold">Your Answer</p>
-                        <p class="mt-3 text-lg font-semibold" 
-                           th:classappend="${item.correct} ? 'text-green-600' : 'text-red-600'"
-                           th:text="${item.selectedAnswerKey} + '. ' + ${item.selectedAnswerText}">A. Option</p>
+                        <p class="mt-3 text-lg font-semibold text-[var(--espresso)]" th:text="${item.selectedAnswerKey} + '. ' + ${item.selectedAnswerText}">A. Option</p>
                     </div>
                     <div class="rounded-3xl border border-gray-200 bg-white p-5">
                         <p class="text-sm uppercase tracking-[0.2em] text-gray-400 font-bold">Correct Answer</p>
-                        <p class="mt-3 text-lg font-bold text-green-600" th:text="${item.correctAnswerKey} + '. ' + ${item.correctAnswerText}">B. Correct Option</p>
+                        <p class="mt-3 text-lg font-semibold text-[var(--espresso)]" th:text="${item.correctAnswerKey} + '. ' + ${item.correctAnswerText}">B. Correct Option</p>
                     </div>
                 </div>
             </div>
