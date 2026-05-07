@@ -45,7 +45,7 @@
 
 		<section class="grid lg:grid-cols-[1.4fr_1fr] gap-8 mt-[-20px]">
 			<div
-				class="rounded-[2rem] border-4 border-[var(--espresso)] bg-gradient-to-r from-[var(--yellow)] to-[#ffe7a6] p-8 shadow-[8px_8px_0px_var(--espresso)]">
+				class="rounded-[2rem] border-4 border-[var(--espresso)] bg-gradient-to-r from-[var(--yellow)] to-[#ffe7a6] p-8 ">
 				<p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Main Mission</p>
 				<h2 class="kavoon text-4xl text-[var(--espresso)] mt-3">Ready for another Java run?</h2>
 				<p class="mt-4 text-lg">Pick your mode, timer, and category before jumping in. One clean launch path, no
@@ -53,7 +53,7 @@
 				<div class="mt-6 flex flex-wrap gap-4">
 					<a th:href="@{/quizzes}"
 						class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-8 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
-						Open Quiz Setup
+						Take a Quiz
 					</a>
 					<a th:if="${dailyChallengeEnabled}" th:href="@{/quiz/start(dailyChallenge=true)}"
 						class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-8 py-4 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
