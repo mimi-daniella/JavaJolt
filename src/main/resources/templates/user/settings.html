@@ -1,70 +1,158 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head"></head>
-<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="min-h-screen bg-[#faf9f6] font-['Jua'] text-[var(--light-text)]">
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div th:replace="~{fragments/floatingUtils :: utils}"></div>
 
 <main class="max-w-5xl mx-auto pt-10 pb-12 px-6">
-    <!-- Settings page added on the real /dashboard/settings route. -->
-    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]" data-aos="fade-down">
-        <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Dashboard Settings</p>
-        <h1 class="kavoon mt-3 text-4xl text-[var(--espresso)]">Manage your profile</h1>
-        <p class="mt-4 text-lg">Update your account details and password from one place without leaving the dashboard flow.</p>
+    <!-- Header Section -->
+    <section class="mb-10 rounded-3xl border border-gray-100 bg-white p-8 shadow-sm" data-aos="fade-down">
+        <p class="uppercase tracking-widest text-[10px] text-gray-400 font-bold">Account Settings</p>
+        <h1 class="kavoon mt-2 text-4xl text-[var(--espresso)]">Profile & Security</h1>
+        <p class="mt-2 text-gray-500">Manage your identity and keep your account secure.</p>
     </section>
 
-    <div th:if="${success}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#fff5cd] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)]" th:text="${success}"></div>
-    <div th:if="${error}" class="mb-6 rounded-xl border-4 border-[var(--espresso)] bg-[#ffd4cb] px-5 py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--light-brown)]" th:text="${error}"></div>
+    <!-- Feedback Alerts -->
+    <div th:if="${success}" class="mb-6 rounded-xl border border-green-100 bg-green-50 px-5 py-4 text-sm font-bold text-green-700 shadow-sm" th:text="${success}"></div>
+    <div th:if="${error}" class="mb-6 rounded-xl border border-red-100 bg-red-50 px-5 py-4 text-sm font-bold text-red-700 shadow-sm" th:text="${error}"></div>
 
-    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--light-brown)]" data-aos="fade-right">
-            <h2 class="kavoon text-3xl text-[var(--espresso)]">Profile Details</h2>
-            <form th:action="@{/dashboard/profile}" th:object="${profileForm}" method="post" class="mt-6 space-y-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Personal Info Card -->
+        <section class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm" data-aos="fade-right">
+            <h2 class="kavoon text-2xl text-[var(--espresso)] mb-6">Personal Info</h2>
+            <form id="profileForm" th:action="@{/dashboard/profile}" th:object="${profileForm}" method="post" class="space-y-5">
                 <div>
-                    <label class="block mb-2 font-bold text-[var(--espresso)]">First Name</label>
-                    <input type="text" th:field="*{firstName}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                    <label class="block mb-1 text-[10px] uppercase font-bold text-gray-400">First Name</label>
+                    <input type="text" th:field="*{firstName}" id="firstNameInput" 
+                           class="w-full rounded-xl border-2 border-gray-50 bg-white px-4 py-3 focus:border-[var(--yellow)] focus:outline-none transition-all">
                 </div>
                 <div>
-                    <label class="block mb-2 font-bold text-[var(--espresso)]">Last Name</label>
-                    <input type="text" th:field="*{lastName}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                    <label class="block mb-1 text-[10px] uppercase font-bold text-gray-400">Last Name</label>
+                    <input type="text" th:field="*{lastName}" id="lastNameInput" 
+                           class="w-full rounded-xl border-2 border-gray-50 bg-white px-4 py-3 focus:border-[var(--yellow)] focus:outline-none transition-all">
                 </div>
                 <div>
-                    <label class="block mb-2 font-bold text-[var(--espresso)]">Email</label>
-                    <input type="email" th:field="*{email}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+                    <label class="block mb-1 text-[10px] uppercase font-bold text-gray-400">Email Address (Locked)</label>
+                    <input type="email" th:field="*{email}" readonly 
+                           class="w-full rounded-xl border-2 border-gray-50 bg-gray-50/50 px-4 py-3 text-gray-400 cursor-not-allowed italic">
+                    <p class="mt-2 text-[10px] text-gray-400">Primary email cannot be changed through the dashboard.</p>
                 </div>
-                <button type="submit" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
-                    Save Profile
-                </button>
+                
+                <div class="pt-4">
+                    <button type="button" id="profileSubmitTrigger" disabled 
+                            class="w-full rounded-xl bg-[var(--yellow)] py-4 font-bold text-[var(--espresso)] shadow-sm transition-all opacity-50 cursor-not-allowed enabled:opacity-100 enabled:cursor-pointer enabled:shadow-md">
+                        Update Details
+                    </button>
+                </div>
             </form>
-        </div>
+        </section>
 
-        <div class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]" data-aos="fade-left">
-            <h2 class="kavoon text-3xl text-[var(--espresso)]">Password</h2>
-            <form th:action="@{/dashboard/password}" th:object="${passwordForm}" method="post" class="mt-6 space-y-5">
-                <div>
-                    <label class="block mb-2 font-bold text-[var(--espresso)]">Current Password</label>
-                    <input type="password" th:field="*{oldPassword}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
+        <!-- Security Card -->
+        <section class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm" data-aos="fade-left">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="kavoon text-2xl text-[var(--espresso)]">Password & Security</h2>
+                <span class="rounded-full bg-green-50 px-3 py-1 text-[10px] font-bold text-green-600 uppercase tracking-wider">Active</span>
+            </div>
+
+            <!-- Initial Action State -->
+            <div id="passwordActionState" class="text-center py-6">
+                <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 text-gray-400">
+                    <svg xmlns="http://w3.org" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
                 </div>
-                <div>
-                    <label class="block mb-2 font-bold text-[var(--espresso)]">New Password</label>
-                    <input type="password" th:field="*{newPassword}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold text-[var(--espresso)]">Confirm Password</label>
-                    <input type="password" th:field="*{confirmPassword}" class="w-full rounded-xl border-4 border-[var(--espresso)] px-4 py-3 focus:outline-none">
-                </div>
-                <button type="submit" class="rounded-xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-                    Update Password
+                <p class="text-sm text-gray-500 mb-6">Last changed: Recently</p>
+                <button type="button" id="revealPasswordForm" class="w-full rounded-xl border border-[var(--espresso)] py-3 text-sm font-bold text-[var(--espresso)] transition hover:bg-[var(--espresso)] hover:text-white">
+                    Change Password
                 </button>
+            </div>
+
+            <!-- Hidden Form State -->
+            <form id="passwordForm" th:action="@{/dashboard/password}" th:object="${passwordForm}" method="post" class="hidden space-y-5 animate-fade-in">
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase font-bold text-gray-400">Current Password</label>
+                    <input type="password" th:field="*{oldPassword}" required class="w-full rounded-xl border-2 border-gray-50 px-4 py-3 focus:border-[var(--espresso)] focus:outline-none">
+                </div>
+                <div class="pt-4 border-t border-gray-50">
+                    <label class="block mb-1 text-[10px] uppercase font-bold text-gray-400">New Password</label>
+                    <input type="password" th:field="*{newPassword}" required class="w-full rounded-xl border-2 border-gray-50 px-4 py-3 focus:border-[var(--espresso)] focus:outline-none">
+                </div>
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase font-bold text-gray-400">Confirm Password</label>
+                    <input type="password" th:field="*{confirmPassword}" required class="w-full rounded-xl border-2 border-gray-50 px-4 py-3 focus:border-[var(--espresso)] focus:outline-none">
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" id="hidePasswordForm" class="flex-1 rounded-xl bg-gray-100 py-4 text-sm font-bold text-gray-500">Cancel</button>
+                    <button type="submit" class="flex-1 rounded-xl bg-[var(--espresso)] py-4 font-bold text-white shadow-md transition hover:opacity-90">Update</button>
+                </div>
             </form>
-        </div>
-    </section>
+        </section>
+    </div>
 </main>
 
+<!-- Verification Modal -->
+<div id="verifyModal" class="fixed inset-0 hidden items-center justify-center bg-black/30 backdrop-blur-sm z-50 p-4">
+    <div class="max-w-sm w-full rounded-3xl bg-white p-8 text-center shadow-2xl animate-pop">
+        <h3 class="kavoon text-2xl text-[var(--espresso)]">Save Changes?</h3>
+        <p class="mt-2 text-gray-500 text-sm">Are you sure you want to update your profile name?</p>
+        <div class="mt-8 flex gap-3">
+            <button type="button" id="cancelVerify" class="flex-1 rounded-xl bg-gray-100 py-3 text-sm font-bold text-gray-500">Cancel</button>
+            <button type="button" id="confirmVerify" class="flex-1 rounded-xl bg-[var(--yellow)] py-3 text-sm font-bold text-[var(--espresso)] shadow-sm">Yes, Save</button>
+        </div>
+    </div>
+</div>
 
-<script>
-  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+<style>
+    .animate-pop { animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+    @keyframes pop { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<script th:inline="javascript">
+  document.addEventListener("DOMContentLoaded", () => {
+    AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+
+    // --- Profile Form Logic ---
+    const profileForm = document.getElementById('profileForm');
+    const triggerBtn = document.getElementById('profileSubmitTrigger');
+    const modal = document.getElementById('verifyModal');
+    const initialFirst = /*[[${profileForm.firstName}]]*/ '';
+    const initialLast = /*[[${profileForm.lastName}]]*/ '';
+    const firstInput = document.getElementById('firstNameInput');
+    const lastInput = document.getElementById('lastNameInput');
+
+    const checkChanges = () => {
+        const hasChanged = firstInput.value.trim() !== initialFirst || lastInput.value.trim() !== initialLast;
+        triggerBtn.disabled = !hasChanged || firstInput.value.trim() === '' || lastInput.value.trim() === '';
+    };
+
+    firstInput.addEventListener('input', checkChanges);
+    lastInput.addEventListener('input', checkChanges);
+    triggerBtn.onclick = () => modal.classList.replace('hidden', 'flex');
+    document.getElementById('cancelVerify').onclick = () => modal.classList.replace('flex', 'hidden');
+    document.getElementById('confirmVerify').onclick = () => profileForm.submit();
+
+    // --- Security Form Toggle ---
+    const revealBtn = document.getElementById('revealPasswordForm');
+    const hideBtn = document.getElementById('hidePasswordForm');
+    const actionState = document.getElementById('passwordActionState');
+    const passwordForm = document.getElementById('passwordForm');
+
+    revealBtn.onclick = () => {
+        actionState.classList.add('hidden');
+        passwordForm.classList.remove('hidden');
+    };
+
+    hideBtn.onclick = () => {
+        passwordForm.classList.add('hidden');
+        actionState.classList.remove('hidden');
+    };
+  });
 </script>
+
 </body>
 </html>
