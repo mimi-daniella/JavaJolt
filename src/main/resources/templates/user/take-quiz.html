@@ -1,219 +1,302 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org">
+
 <head th:replace="~{fragments/head :: head}"></head>
-<body class="min-h-screen bg-white font-['Jua'] text-[var(--light-text)]">
 
-<div th:replace="~{fragments/navbar :: navbar}"></div>
-<div th:replace="~{fragments/floatingUtils :: utils}"></div>
+<body class="min-h-screen bg-[#faf9f6] font-['Jua'] text-[var(--light-text)]">
+	<div th:replace="~{fragments/floatingUtils :: utils}"></div>
 
-<main class="max-w-6xl mx-auto pt-10 pb-12 px-6">
-    <section class="mb-10 rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[8px_8px_0px_var(--yellow)]">
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-                <p class="uppercase tracking-[0.3em] text-sm text-[var(--espresso)] font-bold">Quiz Arena</p>
-                <h1 class="kavoon mt-3 text-4xl md:text-5xl text-[var(--espresso)]" th:text="${featuredTitle}">JavaJolt Challenge</h1>
-                <p class="mt-4 text-lg max-w-2xl">Answer each question once, submit at the end, and your score will be saved with XP and streak progress.</p>
-                <p class="mt-2 text-sm text-gray-600">
-                    Category:
-                    <span class="font-bold" th:text="${selectedCategory != null and !selectedCategory.isBlank() ? selectedCategory : 'Mixed'}">Mixed</span>
-                    |
-                    Difficulty:
-                    <span class="font-bold" th:text="${selectedDifficulty != null and !selectedDifficulty.isBlank() ? selectedDifficulty : 'Mixed'}">Mixed</span>
-                </p>
-            </div>
-            <div class="flex flex-col gap-3">
-                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-4 text-center shadow-[4px_4px_0px_var(--espresso)]">
-                    <p class="text-sm uppercase font-bold text-[var(--espresso)]">Questions Loaded</p>
-                    <p class="kavoon text-4xl text-[var(--espresso)]" th:text="${#lists.size(questions)}">10</p>
-                </div>
-                <div class="rounded-2xl border-4 border-[var(--espresso)] bg-white px-6 py-4 text-center shadow-[4px_4px_0px_var(--light-brown)]">
-                    <p class="text-sm uppercase font-bold text-[var(--espresso)]">Timer</p>
-                    <p th:if="${timerEnabled}" id="timerLabel" class="kavoon text-3xl text-[var(--espresso)]">10:00</p>
-                    <p th:unless="${timerEnabled}" class="text-sm font-bold text-[var(--espresso)]">Off for this run</p>
-                </div>
-                <button type="button" id="quitQuizButton" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 text-center font-bold text-white shadow-[4px_4px_0px_var(--light-brown)]">
-                    Quit Quiz
-                </button>
-            </div>
-        </div>
-    </section>
+	<!-- Sticky Header for Stats & Timer -->
+	<div class="sticky top-0 z-40 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md shadow-sm">
+		<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+			<div class="flex items-center gap-4">
+				<div class="hidden sm:block">
+					<p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Progress</p>
+					<div class="mt-1 flex items-center gap-2">
+						<span id="currentStepText" class="text-lg text-[var(--espresso)]">1</span>
+						<div class="h-2 w-32 rounded-full bg-gray-100 overflow-hidden">
+							<div id="progressBar" class="h-full bg-[var(--yellow)] transition-all duration-300"
+								style="width: 0%"></div>
+						</div>
+						<span class="text-sm text-gray-400" th:text="${#lists.size(questions)}">10</span>
+					</div>
+				</div>
+			</div>
 
-    <form th:action="@{/quiz/submit}" method="post" class="space-y-6" id="quizForm">
-        <input type="hidden" name="selectedCategory" th:value="${selectedCategory}">
-        <input type="hidden" name="selectedDifficulty" th:value="${selectedDifficulty}">
-        <input type="hidden" name="quizToken" th:value="${quizToken}">
+			<div class="flex items-center gap-6">
+				<div class="text-right">
+					<p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Time Remaining</p>
+					<p th:if="${timerEnabled}" id="timerLabel" class="text-2xl text-[var(--espresso)] tabular-nums">
+						00:00</p>
+					<p th:unless="${timerEnabled}" class="text-sm text-gray-400">No Timer</p>
+				</div>
+				<button type="button" id="quitQuizButton"
+					class="rounded-xl border-2 border-[var(--espresso)] px-4 py-2 text-xs font-bold uppercase text-[var(--espresso)] transition hover:bg-gray-50">
+					Quit
+				</button>
+			</div>
+		</div>
+	</div>
 
-        <section th:if="${#lists.isEmpty(questions)}" class="rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 text-center shadow-[6px_6px_0px_var(--light-brown)]">
-            <h2 class="kavoon text-3xl text-[var(--espresso)]">No Questions Found</h2>
-            <p class="mt-3 text-lg">The current filters do not have enough active questions yet.</p>
-            <a th:href="@{/quizzes}" class="inline-block mt-6 rounded-xl border-4 border-[var(--espresso)] bg-[var(--yellow)] px-6 py-3 font-bold text-[var(--espresso)]">Back to Quizzes</a>
-        </section>
+	<main class="mx-auto max-w-4xl pt-10 pb-24 px-6 mt-[-10px]">
+		<!-- Header Info -->
+		<header class="mb-2 text-center">
+			<!-- <h1 class="kavoon text-3xl text-[var(--espresso)]" th:text="${featuredTitle}">JavaJolt Challenge</h1>-->
+			<div class="flex justify-center gap-3 text-xs font-bold text-gray-500 uppercase tracking-tighter">
+				<span
+					th:text="${selectedCategory != null and !selectedCategory.isBlank() ? selectedCategory : 'Mixed'}">Mixed</span>
+				<span>•</span>
+				<span
+					th:text="${selectedDifficulty != null and !selectedDifficulty.isBlank() ? selectedDifficulty : 'Mixed'}">Mixed</span>
+			</div>
+		</header>
 
-        <section th:each="question, stat : ${questions}" class="quiz-question rounded-3xl border-4 border-[var(--espresso)] bg-white p-8 shadow-[6px_6px_0px_var(--light-brown)]">
-            <div class="flex items-center justify-between gap-4">
-                <span class="rounded-full border-4 border-[var(--espresso)] bg-[var(--yellow)] px-4 py-2 font-bold text-[var(--espresso)]" th:text="'Question ' + ${stat.count}">Question 1</span>
-                <span class="rounded-full border-2 border-[var(--espresso)] bg-white px-4 py-2 text-sm font-bold text-[var(--espresso)]" th:text="${question.category}">Syntax</span>
-            </div>
+		<form th:action="@{/quiz/submit}" method="post" id="quizForm">
+			<input type="hidden" name="selectedCategory" th:value="${selectedCategory}">
+			<input type="hidden" name="selectedDifficulty" th:value="${selectedDifficulty}">
+			<input type="hidden" name="quizToken" th:value="${quizToken}">
 
-            <h2 class="mt-5 text-2xl font-bold text-[var(--espresso)] leading-relaxed" th:text="${question.questionText}">Question text</h2>
+			<!-- Empty State -->
+			<section th:if="${#lists.isEmpty(questions)}"
+				class="rounded-3xl border-2 border-dashed border-gray-300 bg-white p-12 text-center">
+				<h2 class="kavoon text-2xl text-[var(--espresso)]">No Questions Found</h2>
+				<p class="mt-2 text-gray-500">Try adjusting your filters.</p>
+				<a th:href="@{/quizzes}"
+					class="mt-6 inline-block rounded-xl bg-[var(--espresso)] px-8 py-3 font-bold text-white">Return</a>
+			</section>
 
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="A" required>
-                    <span th:text="${question.optionA}">Option A</span>
-                </label>
-                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="B">
-                    <span th:text="${question.optionB}">Option B</span>
-                </label>
-                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="C">
-                    <span th:text="${question.optionC}">Option C</span>
-                </label>
-                <label class="answer-option block cursor-pointer rounded-2xl border-4 border-[var(--espresso)] bg-[#fffaf0] p-4 shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-                    <input class="mr-3" type="radio" th:name="${'question_' + question.id}" value="D">
-                    <span th:text="${question.optionD}">Option D</span>
-                </label>
-            </div>
-        </section>
+			<!-- Question Slides -->
+			<div th:each="question, stat : ${questions}" class="quiz-step hidden" th:data-step="${stat.count}">
 
-        <div th:unless="${#lists.isEmpty(questions)}" class="sticky bottom-5 flex justify-center">
-            <button type="submit" class="rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-10 py-4 text-xl font-bold text-white shadow-[6px_6px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-                Submit Quiz
-            </button>
-        </div>
-    </form>
-</main>
+				<div class="rounded-3xl border-2 border-gray-100 bg-white p-8 shadow-sm transition-all">
+					<div class="flex items-center gap-2 mb-6">
+						<span class="rounded-lg bg-gray-100 px-3 py-1 text-xs font-bold text-gray-500"
+							th:text="'Q' + ${stat.count}">Q1</span>
+						<span
+							class="rounded-lg bg-[var(--yellow)]/20 px-3 py-1 text-xs font-bold text-[var(--espresso)]"
+							th:text="${question.category}">Category</span>
+					</div>
 
-<div id="leaveQuizModal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-[95] p-4">
-    <div class="max-w-lg w-full rounded-[2rem] border-4 border-[var(--espresso)] bg-white p-8 shadow-[10px_10px_0px_var(--yellow)]">
-        <p class="uppercase tracking-[0.3em] text-xs font-bold text-[var(--espresso)]">Quit Alert</p>
-        <h2 class="kavoon text-3xl text-[var(--espresso)] mt-2">Leave this quiz?</h2>
-        <p class="mt-4 text-lg text-[var(--light-text)]">You still have unanswered questions. Are you sure you want to abandon this run?</p>
-        <div class="mt-8 flex gap-4">
-            <button type="button" id="stayInQuiz" class="flex-1 rounded-2xl border-4 border-[var(--espresso)] bg-white px-6 py-3 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--yellow)] transition hover:translate-y-1 hover:shadow-none">
-                No, Stay
-            </button>
-            <button type="button" id="confirmLeaveQuiz" class="flex-1 rounded-2xl border-4 border-[var(--espresso)] bg-[var(--espresso)] px-6 py-3 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
-                Yes, Leave
-            </button>
-        </div>
-    </div>
-</div>
+					<h2 class="text-xl md:text-2xl font-bold text-[var(--espresso)] leading-snug mb-8"
+						th:text="${question.questionText}">Question text</h2>
 
-<script th:inline="javascript">
-  AOS.init({ once: true, duration: 700, easing: 'ease-out' });
+					<div class="grid gap-3">
+						<label th:each="opt : ${ {'A','B','C','D'} }"
+							class="answer-option flex cursor-pointer items-center rounded-2xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[var(--yellow)] hover:bg-orange-50/30 group">
+							<input type="radio" th:name="${'question_' + question.id}" th:value="${opt}" required
+								class="h-5 w-5 border-2 border-gray-300 text-[var(--espresso)] focus:ring-[var(--yellow)]">
+							<span class="ml-4 text-lg text-gray-700 group-hover:text-[var(--espresso)]"
+								th:text="${opt == 'A' ? question.optionA : (opt == 'B' ? question.optionB : (opt == 'C' ? question.optionC : question.optionD))}">Option</span>
+						</label>
+					</div>
+				</div>
+			</div>
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const timerEnabled = /*[[${timerEnabled}]]*/ false;
-    const timerMinutes = /*[[${timerMinutes}]]*/ 10;
-    const form = document.getElementById("quizForm");
-    const label = document.getElementById("timerLabel");
-    const leaveModal = document.getElementById("leaveQuizModal");
-    const quitButton = document.getElementById("quitQuizButton");
-    const stayButton = document.getElementById("stayInQuiz");
-    const confirmLeaveButton = document.getElementById("confirmLeaveQuiz");
-    const quizzesUrl = /*[[@{/quizzes}]]*/ "/quizzes";
+			<!-- Navigation Controls -->
+			<div th:unless="${#lists.isEmpty(questions)}" class="mt-8 flex items-center justify-between gap-4">
+				<button type="button" id="prevBtn"
+					class="flex-1 rounded-2xl border-2 border-gray-200 bg-white py-4 font-bold text-gray-400 transition hover:bg-gray-50 disabled:opacity-0">
+					Previous
+				</button>
+				<button type="button" id="nextBtn"
+					class="flex-1 rounded-2xl border-2 border-[var(--espresso)] bg-[var(--yellow)] py-4 font-bold text-[var(--espresso)] shadow-[4px_4px_0px_var(--espresso)] transition hover:translate-y-1 hover:shadow-none">
+					Next Question
+				</button>
+				<button type="submit" id="submitBtn"
+					class="hidden flex-1 rounded-2xl border-2 border-[var(--espresso)] bg-[var(--espresso)] py-4 font-bold text-white shadow-[4px_4px_0px_var(--light-brown)] transition hover:translate-y-1 hover:shadow-none">
+					Finish & Submit
+				</button>
+			</div>
+		</form>
+	</main>
 
-    let hasSubmitted = false;
-    let pendingNavigation = null;
-    let timerWarningPlayed = false;
+	<!-- Quit Modal -->
+	<div id="leaveQuizModal"
+		class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-[95] p-4">
+		<div class="max-w-md w-full rounded-3xl border-2 border-[var(--espresso)] bg-white p-8 shadow-xl">
+			<h2 class="kavoon text-2xl text-[var(--espresso)]">Abandon Quiz?</h2>
+			<p class="mt-4 text-gray-500">Your progress for this run will be lost. Are you sure?</p>
+			<div class="mt-8 flex gap-3">
+				<button type="button" id="stayInQuiz"
+					class="flex-1 rounded-xl bg-gray-100 py-3 font-bold text-gray-600">Cancel</button>
+				<button type="button" id="confirmLeaveQuiz"
+					class="flex-1 rounded-xl bg-[var(--espresso)] py-3 font-bold text-white">Yes, Quit</button>
+			</div>
+		</div>
+	</div>
 
-    const answeredCount = () => form ? form.querySelectorAll('input[type="radio"]:checked').length : 0;
-    const totalQuestions = () => form ? form.querySelectorAll('.quiz-question').length : 0;
-    const isQuizComplete = () => answeredCount() === totalQuestions();
+	<!-- Submit Confirmation Modal -->
+	<div id="submitConfirmModal"
+		class="fixed inset-0 hidden items-center justify-center bg-black/40 backdrop-blur-sm z-[100] p-4">
+		<div class="max-w-md w-full rounded-3xl border-2 border-[var(--espresso)] bg-white p-8 shadow-xl">
+			<div class="flex justify-center mb-4">
+				<div class="rounded-full bg-green-50 p-3">
+					<svg xmlns="http://w3.org" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24"
+						stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+					</svg>
+				</div>
+			</div>
+			<h2 class="kavoon text-2xl text-center text-[var(--espresso)]">Final Submission?</h2>
+			<p class="mt-4 text-center text-gray-500">You've reached the end! Ready to see your results and claim your
+				XP?</p>
+			<div class="mt-8 flex gap-3">
+				<button type="button" id="cancelSubmit"
+					class="flex-1 rounded-xl bg-gray-100 py-3 font-bold text-gray-600 transition hover:bg-gray-200">Wait,
+					Check Again</button>
+				<button type="button" id="confirmSubmit"
+					class="flex-1 rounded-xl bg-green-600 py-3 font-bold text-white shadow-[4px_4px_0px_#14532d] transition hover:translate-y-1 hover:shadow-none">Yes,
+					Submit!</button>
+			</div>
+		</div>
+	</div>
 
-    const openLeaveModal = () => {
-      leaveModal.classList.remove("hidden");
-      leaveModal.classList.add("flex");
-      if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("warning");
-    };
 
-    const closeLeaveModal = () => {
-      leaveModal.classList.add("hidden");
-      leaveModal.classList.remove("flex");
-      pendingNavigation = null;
-    };
+	<script th:inline="javascript">
+		document.addEventListener("DOMContentLoaded", () => {
+			const timerEnabled = /*[[${timerEnabled}]]*/ false;
+			const timerMinutes = /*[[${timerMinutes}]]*/ 10;
+			const quizzesUrl = /*[[@{/quizzes}]]*/ "/quizzes";
+			const submitModal = document.getElementById("submitConfirmModal");
+			const confirmSubmitBtn = document.getElementById("confirmSubmit");
+			const cancelSubmitBtn = document.getElementById("cancelSubmit");
 
-    document.querySelectorAll(".answer-option input").forEach(input => {
-      input.addEventListener("change", () => {
-        if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
-      });
-    });
 
-    form?.addEventListener("submit", (event) => {
-      if (!isQuizComplete()) {
-        event.preventDefault();
-        openLeaveModal();
-        return;
-      }
-      hasSubmitted = true;
-      if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
-    });
+			let currentStep = 1;
+			let hasSubmitted = false;
+			let pendingNavigation = null;
+			let timerWarningPlayed = false;
 
-    quitButton?.addEventListener("click", () => {
-      pendingNavigation = () => window.location.href = quizzesUrl;
-      openLeaveModal();
-    });
+			const form = document.getElementById("quizForm");
+			const steps = document.querySelectorAll(".quiz-step");
+			const totalSteps = steps.length;
 
-    stayButton?.addEventListener("click", closeLeaveModal);
+			const nextBtn = document.getElementById("nextBtn");
+			const prevBtn = document.getElementById("prevBtn");
+			const submitBtn = document.getElementById("submitBtn");
+			const progressBar = document.getElementById("progressBar");
+			const stepText = document.getElementById("currentStepText");
+			
+			// Intercept Form Submission
+			   form?.addEventListener("submit", (e) => {
+			       if (!hasSubmitted) {
+			           e.preventDefault(); // Stop the form from submitting immediately
+			           submitModal.classList.replace("hidden", "flex");
+			           if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("praise");
+			       }
+			   });
+			   
+			   // Handle "Yes, Submit!" click
+			    confirmSubmitBtn?.addEventListener("click", () => {
+			        hasSubmitted = true;
+			        submitModal.classList.replace("flex", "hidden");
+			        if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
+			        form.submit(); // Manually trigger the form submission
+			    });
+				
+				// Handle "Wait, Check Again" click
+				  cancelSubmitBtn?.addEventListener("click", () => {
+				      submitModal.classList.replace("flex", "hidden");
+				  });
 
-    confirmLeaveButton?.addEventListener("click", () => {
-      hasSubmitted = true;
-      if (pendingNavigation) {
-        pendingNavigation();
-        return;
-      }
-      window.location.href = quizzesUrl;
-    });
 
-    document.querySelectorAll("a").forEach(link => {
-      if (link.closest("#leaveQuizModal")) return;
-      link.addEventListener("click", (event) => {
-        if (hasSubmitted || isQuizComplete()) return;
-        event.preventDefault();
-        const href = link.getAttribute("href");
-        pendingNavigation = () => window.location.href = href;
-        openLeaveModal();
-      });
-    });
+			// --- Pagination Logic ---
+			function updateUI() {
+				steps.forEach(s => s.classList.add("hidden"));
+				const current = document.querySelector(`[data-step="${currentStep}"]`);
+				if (current) current.classList.remove("hidden");
 
-    history.pushState({ quizGuard: true }, "", window.location.href);
-    window.addEventListener("popstate", () => {
-      if (hasSubmitted || isQuizComplete()) return;
-      history.pushState({ quizGuard: true }, "", window.location.href);
-      pendingNavigation = () => history.go(-1);
-      openLeaveModal();
-    });
+				// Progress bar & Text
+				const percent = (currentStep / totalSteps) * 100;
+				progressBar.style.width = `${percent}%`;
+				stepText.textContent = currentStep;
 
-    window.addEventListener("beforeunload", (event) => {
-      if (hasSubmitted || isQuizComplete()) return;
-      event.preventDefault();
-      event.returnValue = "";
-    });
+				// Buttons
+				prevBtn.disabled = currentStep === 1;
+				if (currentStep === totalSteps) {
+					nextBtn.classList.add("hidden");
+					submitBtn.classList.remove("hidden");
+				} else {
+					nextBtn.classList.remove("hidden");
+					submitBtn.classList.add("hidden");
+				}
+			}
 
-    if (timerEnabled) {
-      let secondsLeft = timerMinutes * 60;
-      const interval = setInterval(() => {
-        const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
-        const seconds = String(secondsLeft % 60).padStart(2, "0");
-        if (label) label.textContent = `${minutes}:${seconds}`;
+			nextBtn?.addEventListener("click", () => {
+				// Validate current step before moving
+				const currentInput = steps[currentStep - 1].querySelector('input[type="radio"]:checked');
+				if (!currentInput) {
+					alert("Please select an answer!");
+					return;
+				}
+				currentStep++;
+				updateUI();
+				window.scrollTo({top: 0, behavior: 'smooth'});
+				if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("button");
+			});
 
-        if (secondsLeft <= 10 && !timerWarningPlayed) {
-          timerWarningPlayed = true;
-          if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("timer");
-        }
+			prevBtn?.addEventListener("click", () => {
+				if (currentStep > 1) {
+					currentStep--;
+					updateUI();
+				}
+			});
 
-        if (secondsLeft <= 0) {
-          clearInterval(interval);
-          hasSubmitted = true;
-          if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("timer");
-          form?.submit();
-        }
-        secondsLeft -= 1;
-      }, 1000);
-    }
-  });
-</script>
+			// --- Modal Logic ---
+			const leaveModal = document.getElementById("leaveQuizModal");
+			const openModal = () => leaveModal.classList.replace("hidden", "flex");
+			const closeModal = () => leaveModal.classList.replace("flex", "hidden");
+
+			document.getElementById("quitQuizButton")?.addEventListener("click", () => {
+				pendingNavigation = () => window.location.href = quizzesUrl;
+				openModal();
+			});
+
+			document.getElementById("stayInQuiz")?.addEventListener("click", closeModal);
+			document.getElementById("confirmLeaveQuiz")?.addEventListener("click", () => {
+				hasSubmitted = true;
+				if (pendingNavigation) pendingNavigation();
+				else window.location.href = quizzesUrl;
+			});
+
+			// --- Timer Logic ---
+			if (timerEnabled) {
+				const label = document.getElementById("timerLabel");
+				let secondsLeft = timerMinutes * 60;
+				const interval = setInterval(() => {
+					const m = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
+					const s = String(secondsLeft % 60).padStart(2, "0");
+					if (label) label.textContent = `${m}:${s}`;
+
+					if (secondsLeft <= 10 && !timerWarningPlayed) {
+						timerWarningPlayed = true;
+						if (window.JavaJoltAudio) window.JavaJoltAudio.playEffect("timer");
+					}
+
+					if (secondsLeft <= 0) {
+						clearInterval(interval);
+						hasSubmitted = true;
+						form?.submit();
+					}
+					secondsLeft--;
+				}, 1000);
+			}
+
+			// --- Navigation Guards ---
+			form?.addEventListener("submit", () => hasSubmitted = true);
+
+			window.addEventListener("beforeunload", (e) => {
+				if (!hasSubmitted) {
+					e.preventDefault();
+					e.returnValue = "";
+				}
+			});
+
+			// Init UI
+			updateUI();
+		});
+	</script>
 </body>
+
 </html>
