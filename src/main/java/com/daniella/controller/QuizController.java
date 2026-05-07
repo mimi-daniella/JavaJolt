@@ -71,17 +71,25 @@ public class QuizController {
                             HttpSession session,
                             Model model,
                             Principal principal) {
-        if (principal == null) return "redirect:/auth/login";
+        if (principal == null) {
+            return "redirect:/auth/login";
+        }
 
         User user = userRepository.findByEmail(principal.getName()).orElse(null);
-        if (user == null) return "redirect:/auth/login";
+        if (user == null) {
+            return "redirect:/auth/login";
+        }
 
         if (!systemSettingService.getBoolean(SystemSettingService.ALLOW_RETAKES, true)) {
             LocalDate today = LocalDate.now();
             boolean hasPlayedToday = !quizResultRepository.findByUserAndCompletedAtBetween(
                     user, today.atStartOfDay(), today.plusDays(1).atStartOfDay()).isEmpty();
             if (hasPlayedToday) {
-                buildInvalidQuizResponse(model, "Retakes are currently disabled. Come back tomorrow!");
+                model.addAttribute("error", "Retakes are currently disabled. Come back tomorrow for a fresh challenge.");
+                model.addAttribute("score", 0);
+                model.addAttribute("total", 0);
+                model.addAttribute("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
+                model.addAttribute("passed", false);
                 clearActiveQuiz(session);
                 return "user/result";
             }
@@ -92,16 +100,17 @@ public class QuizController {
                 ? systemSettingService.get(SystemSettingService.DAILY_CHALLENGE_CATEGORY, "")
                 : normalizeFilter(category, systemSettingService.get(SystemSettingService.DEFAULT_CATEGORY, ""));
         String effectiveDifficulty = normalizeFilter(difficulty, systemSettingService.get(SystemSettingService.DEFAULT_DIFFICULTY, ""));
+        int safeTimerMinutes = Math.max(1, Math.min(timerMinutes, 30));
 
         List<Question> questions = questionRepository.findByStatus(QuestionStatus.ACTIVE);
         if (!effectiveCategory.isBlank()) {
             questions = questions.stream()
-                    .filter(q -> q.getCategory() != null && q.getCategory().equalsIgnoreCase(effectiveCategory))
+                    .filter(question -> question.getCategory() != null && question.getCategory().equalsIgnoreCase(effectiveCategory))
                     .collect(Collectors.toList());
         }
         if (!effectiveDifficulty.isBlank()) {
             questions = questions.stream()
-                    .filter(q -> q.getDifficulty() != null && q.getDifficulty().name().equalsIgnoreCase(effectiveDifficulty))
+                    .filter(question -> question.getDifficulty() != null && question.getDifficulty().name().equalsIgnoreCase(effectiveDifficulty))
                     .collect(Collectors.toList());
         }
         Collections.shuffle(questions);
@@ -114,9 +123,11 @@ public class QuizController {
         model.addAttribute("questions", questions);
         model.addAttribute("quizToken", quizToken);
         model.addAttribute("timerEnabled", timerEnabled);
-        model.addAttribute("timerMinutes", Math.max(1, Math.min(timerMinutes, 30)));
+        model.addAttribute("timerMinutes", safeTimerMinutes);
         model.addAttribute("selectedCategory", effectiveCategory);
         model.addAttribute("selectedDifficulty", effectiveDifficulty);
+        model.addAttribute("dailyChallenge", dailyChallenge);
+        model.addAttribute("featuredTitle", systemSettingService.get(SystemSettingService.FEATURED_CHALLENGE_TITLE, "JavaJolt Challenge"));
         return "user/take-quiz";
     }
 
@@ -128,79 +139,123 @@ public class QuizController {
                              HttpSession session,
                              Model model,
                              Principal principal) {
-        
+        @SuppressWarnings("unchecked")
         List<Long> expectedQuestionIds = (List<Long>) session.getAttribute(ACTIVE_QUIZ_IDS);
         String expectedToken = (String) session.getAttribute(ACTIVE_QUIZ_TOKEN);
 
-        if (expectedQuestionIds == null || expectedToken == null || !expectedToken.equals(quizToken)) {
-            buildInvalidQuizResponse(model, "Your quiz session is no longer valid.");
+        if (expectedQuestionIds == null || expectedQuestionIds.isEmpty() || expectedToken == null || !expectedToken.equals(quizToken)) {
+            buildInvalidQuizResponse(model, "Your quiz session is no longer valid. Please start a new quiz.");
             clearActiveQuiz(session);
             return "user/result";
         }
 
         int score = 0;
         int total = 0;
+        List<Long> answeredQuestionIds = new ArrayList<>();
         List<Map<String, Object>> reviewItems = new ArrayList<>();
 
-        for (Long qId : expectedQuestionIds) {
-            Question q = questionRepository.findById(qId).orElse(null);
-            if (q != null) {
-                total++;
-                String submittedAnswer = allParams.get("question_" + qId);
-                boolean correct = q.getCorrectOption().equals(submittedAnswer);
-                if (correct) score++;
+        for (Map.Entry<String, String> entry : allParams.entrySet()) {
+            if (entry.getKey().startsWith("question_")) {
+                Long questionId = Long.parseLong(entry.getKey().replace("question_", ""));
+                if (!expectedQuestionIds.contains(questionId)) {
+                    buildInvalidQuizResponse(model, "Submitted quiz data did not match the active quiz.");
+                    clearActiveQuiz(session);
+                    return "user/result";
+                }
 
-                Map<String, Object> reviewItem = new HashMap<>();
-                reviewItem.put("questionText", q.getQuestionText());
-                reviewItem.put("selectedAnswerKey", submittedAnswer);
-                reviewItem.put("selectedAnswerText", resolveAnswerText(q, submittedAnswer));
-                reviewItem.put("correctAnswerKey", q.getCorrectOption());
-                reviewItem.put("correctAnswerText", resolveAnswerText(q, q.getCorrectOption()));
-                reviewItem.put("correct", correct);
-                reviewItems.add(reviewItem);
+                String submittedAnswer = entry.getValue();
+                answeredQuestionIds.add(questionId);
+
+                Question q = questionRepository.findById(questionId).orElse(null);
+                if (q != null) {
+                    total++;
+                    boolean correct = q.getCorrectOption().equals(submittedAnswer);
+                    if (correct) {
+                        score++;
+                    }
+
+                    Map<String, Object> reviewItem = new HashMap<>();
+                    reviewItem.put("questionText", q.getQuestionText());
+                    reviewItem.put("selectedAnswerKey", submittedAnswer);
+                    reviewItem.put("selectedAnswerText", resolveAnswerText(q, submittedAnswer));
+                    reviewItem.put("correctAnswerKey", q.getCorrectOption());
+                    reviewItem.put("correctAnswerText", resolveAnswerText(q, q.getCorrectOption()));
+                    reviewItem.put("correct", correct);
+                    reviewItems.add(reviewItem);
+                }
             }
         }
 
-        // Calculation: (Correct / Total) * 100
-        int userPercentage = total > 0 ? (int) Math.round((score * 100.0) / total) : 0;
-        boolean passed = userPercentage >= systemSettingService.getInt(SystemSettingService.PASS_MARK, 60);
+        if (answeredQuestionIds.size() != expectedQuestionIds.size()) {
+            buildInvalidQuizResponse(model, "Please answer every question before submitting.");
+            model.addAttribute("total", expectedQuestionIds.size());
+            clearActiveQuiz(session);
+            return "user/result";
+        }
 
         if (principal != null) {
-            userRepository.findByEmail(principal.getName()).ifPresent(user -> {
+            User user = userRepository.findByEmail(principal.getName()).orElse(null);
+            if (user != null) {
+                double percentage = total == 0 ? 0.0 : (score * 100.0) / total;
+                boolean passed = percentage >= systemSettingService.getInt(SystemSettingService.PASS_MARK, 60);
+                
                 QuizResult result = new QuizResult();
                 result.setUser(user);
                 result.setScore(score);
                 result.setTotalQuestions(total);
-                result.setPercentageScore((double) userPercentage);
+                result.setPercentageScore(percentage);
                 result.setPassed(passed);
+                result.setCategoryFocus(selectedCategory);
+                result.setDifficultyFocus(selectedDifficulty);
                 result.setCompletedAt(LocalDateTime.now());
-                gamificationService.rewardUser(user, score, total, LocalDate.now());
+                int xpEarned = gamificationService.rewardUser(user, score, total, LocalDate.now());
+                result.setXpEarned(xpEarned);
                 quizResultRepository.save(result);
-                
-                model.addAttribute("xp", user.getXp());
-                model.addAttribute("rankTitle", user.getRankTitle());
-                model.addAttribute("streakCount", user.getStreakCount());
-            });
+
+                // Re-save individual answers for history
+                for (Long qId : answeredQuestionIds) {
+                    Question question = questionRepository.findById(qId).orElse(null);
+                    if (question != null) {
+                        UserAnswer answer = new UserAnswer();
+                        answer.setUser(user);
+                        answer.setQuestion(question);
+                        answer.setSelectedAnswer(allParams.get("question_" + qId));
+                        answer.setAnsweredAt(LocalDateTime.now());
+                        userAnswerRepository.save(answer);
+                    }
+                }
+            }
         }
 
         model.addAttribute("score", score);
         model.addAttribute("total", total);
-        model.addAttribute("passed", passed);
-        model.addAttribute("userPercentage", userPercentage);
+        model.addAttribute("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
+        model.addAttribute("passed", total > 0 && ((score * 100.0) / total) >= systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
         model.addAttribute("reviewItems", reviewItems);
 
         Map<String, Object> reviewSummary = new HashMap<>();
         reviewSummary.put("score", score);
         reviewSummary.put("total", total);
-        reviewSummary.put("passed", passed);
-        reviewSummary.put("userPercentage", userPercentage);
+        reviewSummary.put("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
+        reviewSummary.put("passed", model.getAttribute("passed"));
         reviewSummary.put("selectedCategory", selectedCategory == null || selectedCategory.isBlank() ? "Mixed" : selectedCategory);
         reviewSummary.put("selectedDifficulty", selectedDifficulty == null || selectedDifficulty.isBlank() ? "Mixed" : selectedDifficulty);
-        reviewSummary.put("correctCount", score);
-        reviewSummary.put("incorrectCount", total - score);
+        reviewSummary.put("correctCount", (int) reviewItems.stream().filter(item -> Boolean.TRUE.equals(item.get("correct"))).count());
+        reviewSummary.put("incorrectCount", total - (int) reviewSummary.get("correctCount"));
 
         session.setAttribute(LAST_QUIZ_REVIEW_ITEMS, reviewItems);
         session.setAttribute(LAST_QUIZ_REVIEW_SUMMARY, reviewSummary);
+
+        if (principal != null) {
+            userRepository.findByEmail(principal.getName()).ifPresent(user -> {
+                model.addAttribute("xp", user.getXp());
+                model.addAttribute("rankTitle", user.getRankTitle());
+                model.addAttribute("streakCount", user.getStreakCount());
+                reviewSummary.put("xp", user.getXp());
+                reviewSummary.put("rankTitle", user.getRankTitle());
+                reviewSummary.put("streakCount", user.getStreakCount());
+            });
+        }
 
         clearActiveQuiz(session);
         return "user/result";
@@ -211,7 +266,9 @@ public class QuizController {
         List<Map<String, Object>> reviewItems = (List<Map<String, Object>>) session.getAttribute(LAST_QUIZ_REVIEW_ITEMS);
         Map<String, Object> reviewSummary = (Map<String, Object>) session.getAttribute(LAST_QUIZ_REVIEW_SUMMARY);
 
-        if (reviewItems == null || reviewSummary == null) return "redirect:/dashboard";
+        if (reviewItems == null || reviewSummary == null) {
+            return "redirect:/dashboard";
+        }
 
         model.addAllAttributes(reviewSummary);
         model.addAttribute("reviewItems", reviewItems);
@@ -223,7 +280,9 @@ public class QuizController {
         Map<String, Object> reviewSummary = (Map<String, Object>) session.getAttribute(LAST_QUIZ_REVIEW_SUMMARY);
         List<Map<String, Object>> reviewItems = (List<Map<String, Object>>) session.getAttribute(LAST_QUIZ_REVIEW_ITEMS);
 
-        if (reviewSummary == null) return "redirect:/dashboard";
+        if (reviewSummary == null) {
+            return "redirect:/dashboard";
+        }
 
         model.addAllAttributes(reviewSummary);
         model.addAttribute("reviewItems", reviewItems);
@@ -231,26 +290,29 @@ public class QuizController {
     }
 
     private String resolveAnswerText(Question question, String optionKey) {
-        if (question == null || optionKey == null) return "No Answer";
+        if (question == null || optionKey == null) return "";
         return switch (optionKey.toUpperCase()) {
             case "A" -> question.getOptionA();
             case "B" -> question.getOptionB();
             case "C" -> question.getOptionC();
             case "D" -> question.getOptionD();
-            default -> "N/A";
+            default -> optionKey;
         };
     }
 
     private String normalizeFilter(String requested, String fallback) {
-        return (requested != null && !requested.isBlank()) ? requested.trim() : (fallback == null ? "" : fallback.trim());
+        if (requested != null && !requested.isBlank()) {
+            return requested.trim();
+        }
+        return fallback == null ? "" : fallback.trim();
     }
 
     private void buildInvalidQuizResponse(Model model, String error) {
         model.addAttribute("error", error);
         model.addAttribute("score", 0);
         model.addAttribute("total", 0);
+        model.addAttribute("passMark", systemSettingService.getInt(SystemSettingService.PASS_MARK, 60));
         model.addAttribute("passed", false);
-        model.addAttribute("userPercentage", 0);
     }
 
     private void clearActiveQuiz(HttpSession session) {
