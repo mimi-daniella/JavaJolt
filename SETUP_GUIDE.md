@@ -193,3 +193,4 @@ If you encounter issues:
 - Added env variables
 - Changed port from smtp(587) to ssl(465)
 - Added mimemessage helper for customizing email ui
+
